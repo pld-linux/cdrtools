@@ -2,7 +2,7 @@
 Summary:	A command line CD/DVD-Recorder
 Summary(pl):	Program do nagrywania p³yt CD/DVD
 Name:		cdrtools
-Version:	%{ver}a07
+Version:	%{ver}a10
 Release:	1
 License:	GPL
 Group:		Applications/System
@@ -32,15 +32,16 @@ Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
 
 %description devel
-The %{name} distribution contains a SCSI user level transport
-library. The SCSI library is suitable to talk to any SCSI device
-without having a special driver for it. Cdrecord may be easily ported
-to any system that has a SCSI device driver similar to the scg driver.
+The %{name} distribution contains a SCSI user level transport library.
+The SCSI library is suitable to talk to any SCSI device without having
+a special driver for it. Cdrecord may be easily ported to any system
+that has a SCSI device driver similar to the scg driver.
 
 %description devel -l pl
-Dystrybucja %{name} zawiera bibliotekê dostêpu do warstwy transportu
-w SCSI. Poprzez bibliotekê mo¿na komunikowaæ siê z dowolnym urz±dzeniem
-SCSI bez potrzeby posiadania specjalnego sterownika do tego urz±dzenia.
+Dystrybucja %{name} zawiera bibliotekê dostêpu do warstwy transportu w
+SCSI. Poprzez bibliotekê mo¿na komunikowaæ siê z dowolnym urz±dzeniem
+SCSI bez potrzeby posiadania specjalnego sterownika do tego
+urz±dzenia.
 
 %package cdda2wav
 Summary:	Get WAV files from digital audio cd's
@@ -59,8 +60,9 @@ sun format sound files. Options control the recording format
 (stereo/mono; 8,12,16 bits; different rates).
 
 %description -l pl cdda2wav
-Narzêdzie do zczytywania danych z napêdów cdrom, które s± w stanie wysy³aæ
-strumieñ audio. Dane mog± zostaæ zapisane w formacie plików wav lub suna.
+Narzêdzie do zczytywania danych z napêdów cdrom, które s± w stanie
+wysy³aæ strumieñ audio. Dane mog± zostaæ zapisane w formacie plików
+wav lub suna.
 
 %package readcd
 Summary:	Read/Write data Compact Discs
@@ -89,14 +91,14 @@ Utility programs for dumping and verifying iso9660 images.
 Narzêdzia do zrzucania i weryfikacji obrazów iso9660.
 
 %package mkisofs
-Summary:        Creates an ISO9660 filesystem image
-Summary(de):    Erstellt ein Dateisystem-Abbild nach ISO9660
-Summary(fr):    Crée un image système de fichiers ISO9660
-Summary(pl):    Tworzy obraz systemu plikow ISO9660
-Summary(tr):    ISO9660 dosya sistemi kopyasý oluþturur
-Group:          Applications/System
-Group(de):      Applikationen/System
-Group(pl):      Aplikacje/System
+Summary:	Creates an ISO9660 filesystem image
+Summary(de):	Erstellt ein Dateisystem-Abbild nach ISO9660
+Summary(fr):	Crée un image système de fichiers ISO9660
+Summary(pl):	Tworzy obraz systemu plikow ISO9660
+Summary(tr):	ISO9660 dosya sistemi kopyasý oluþturur
+Group:		Applications/System
+Group(de):	Applikationen/System
+Group(pl):	Aplikacje/System
 Provides:	mkisofs
 Obsoletes:	mkisofs
 
