@@ -2,13 +2,14 @@ Summary:	A command line CD/DVD-Recorder
 Summary(pl):	Program do nagrywania p³yt CD/DVD
 Name:		cdrtools
 Version:	1.10
-Release:	1
+Release:	2
 Epoch:		2
 License:	GPL
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
 Source0:	ftp://ftp.fokus.gmd.de/pub/unix/cdrecord/%{name}-%{version}.tar.gz
+Source1:	ftp://ftp.kernel.org/pub/linux/kernel/people/hpa/zisofs/zisofs-tools-0.06.tar.gz
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/cdrecord.html
@@ -114,13 +115,17 @@ To jest pakiet mkisofs. Jest on u¿ywany do tworzenia obrazów systemów
 plików ISO9660 potrzebnych do tworzenia p³yt CD-ROM.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -a1 -n %{name}-%{version}
 %patch0 -p1
 %patch1 -p1
+patch -p1 < zisofs-tools-0.06/cdrtools-1.10-zisofs.diff
 
 %build
 (cd conf; autoconf)
 CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" ./Gmake.linux
+
+cd zisofs-tools-0.06
+%{__make} CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -142,13 +147,17 @@ echo "man8/isoinfo.so" >	$RPM_BUILD_ROOT%{_mandir}/man8/devdump.8
 echo "man8/isoinfo.so" >        $RPM_BUILD_ROOT%{_mandir}/man8/isovfy.8
 echo "man8/isoinfo.so" >        $RPM_BUILD_ROOT%{_mandir}/man8/isodump.8
 
+install zisofs-tools-0.06/mkzftree $RPM_BUILD_ROOT%{_bindir}
+cp zisofs-tools-0.06/README README.zisofs
+
 gzip -9nf AN-%{version} doc/cdrecord.ps Changelog README README.ATAPI \
 	README.WORM README.audio README.cdplus README.cdrw README.linux \
 	README.mkisofs README.multi README.sony README.verify README.copy \
 	cdda2wav/Frontends cdda2wav/HOWTOUSE cdda2wav/OtherProgs \
 	cdda2wav/README cdda2wav/THANKS cdda2wav/TODO cdda2wav/cdda2mp3 \
 	cdda2wav/cdda2mp3.new cdda2wav/cdda_links cdda2wav/pitchplay \
-	cdda2wav/readmult cdda2wav/tracknames.pl cdda2wav/tracknames.txt
+	cdda2wav/readmult cdda2wav/tracknames.pl cdda2wav/tracknames.txt \
+	README.zisofs
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -200,7 +209,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files mkisofs
 %defattr(644,root,root,755)
+%doc README.zisofs*
 %{_mandir}/man8/mkisofs.8*
 %{_mandir}/man8/mkhybrid.8*
 %attr(755,root,root) %{_bindir}/mkisofs
 %attr(755,root,root) %{_bindir}/mkhybrid
+%attr(755,root,root) %{_bindir}/mkzftree
