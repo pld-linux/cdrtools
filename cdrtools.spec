@@ -5,7 +5,7 @@ Summary:	A command line CD/DVD-Recorder
 Summary(pl):	Program do nagrywania p³yt CD/DVD
 Name:		cdrtools
 Version:	1.10
-Release:	5
+Release:	6
 Epoch:		2
 License:	GPL
 Group:		Applications/System
@@ -53,6 +53,7 @@ Summary(fr):	convertisseur CD-Audio->.wav
 Group:		Applications/Sound
 Provides:	cdda2wav
 Obsoletes:	cdda2wav
+Obsoletes:	cdrecord-cdda2wav
 
 %description cdda2wav
 A sampling utility for cdrom drives that are capable of sending audio
@@ -69,6 +70,7 @@ wav lub suna.
 Summary:	Read/Write data Compact Discs
 Summary(pl):	Odczytuje/Zapisuje dane z P³yt Kompaktowych
 Group:		Applications/System
+Obsoletes:	cdrecord-readcd
 
 %description readcd
 Read/Write data Compact Discs
@@ -114,13 +116,16 @@ patch -p1 < zisofs-tools-%{_zisofs_ver}/cdrtools-1.11a09-zisofs.diff
 # don't worry, works on 1.10 too
 
 %build
-(cd conf; autoconf)
+cd conf
+autoconf
+cd ..
 CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" ./Gmake.linux
 
-(cd zisofs-tools-%{_zisofs_ver}
+cd zisofs-tools-%{_zisofs_ver}
 autoconf
 %configure
-%{__make})
+%{__make}
+cd ..
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -143,8 +148,9 @@ echo "man8/isoinfo.so" >	$RPM_BUILD_ROOT%{_mandir}/man8/devdump.8
 echo "man8/isoinfo.so" >        $RPM_BUILD_ROOT%{_mandir}/man8/isovfy.8
 echo "man8/isoinfo.so" >        $RPM_BUILD_ROOT%{_mandir}/man8/isodump.8
 
-(cd zisofs-tools-%{_zisofs_ver}
-%{__make} install INSTALLROOT=$RPM_BUILD_ROOT)
+cd zisofs-tools-%{_zisofs_ver}
+%{__make} install INSTALLROOT=$RPM_BUILD_ROOT
+cd ..
 
 cp -f zisofs-tools-%{_zisofs_ver}/README README.zisofs
 
