@@ -116,7 +116,7 @@ plików ISO9660 potrzebnych do tworzenia p³yt CD-ROM.
 %patch0 -p1
 
 %build
-CFLAGS="%{?debug:-O -g}%{!?debug:$RPM_OPT_FLAGS}" LDFLAGS="%{!?debug:-s}" ./Gmake.linux
+CFLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS}" LDFLAGS="%{!?debug:-s}" ./Gmake.linux
 
 %install
 rm -rf $RPM_BUILD_ROOT
