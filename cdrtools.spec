@@ -1,15 +1,18 @@
+
+%define		_zisofs_ver	1.0.3
+
 Summary:	A command line CD/DVD-Recorder
 Summary(pl):	Program do nagrywania p³yt CD/DVD
 Name:		cdrtools
 Version:	1.10
-Release:	4
+Release:	5
 Epoch:		2
 License:	GPL
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
 Source0:	ftp://ftp.fokus.gmd.de/pub/unix/cdrecord/%{name}-%{version}.tar.gz
-Source1:	ftp://ftp.kernel.org/pub/linux/kernel/people/hpa/zisofs/zisofs-tools-1.0.1.tar.gz
+Source1:	ftp://ftp.kernel.org/pub/linux/kernel/people/hpa/zisofs/zisofs-tools-%{_zisofs_ver}.tar.gz
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 Patch2:		%{name}-ac250.patch
@@ -124,14 +127,17 @@ plików ISO9660 potrzebnych do tworzenia p³yt CD-ROM.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-patch -p1 < zisofs-tools-1.0.1/cdrtools-1.10-zisofs.diff
+patch -p1 < zisofs-tools-%{_zisofs_ver}/cdrtools-1.11a09-zisofs.diff
+# don't worry, works on 1.10 too
 
 %build
 (cd conf; autoconf)
 CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" ./Gmake.linux
 
-cd zisofs-tools-1.0.1
-%{__make} CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}"
+(cd zisofs-tools-%{_zisofs_ver}
+autoconf
+%configure
+%{__make})
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -154,8 +160,10 @@ echo "man8/isoinfo.so" >	$RPM_BUILD_ROOT%{_mandir}/man8/devdump.8
 echo "man8/isoinfo.so" >        $RPM_BUILD_ROOT%{_mandir}/man8/isovfy.8
 echo "man8/isoinfo.so" >        $RPM_BUILD_ROOT%{_mandir}/man8/isodump.8
 
-install zisofs-tools-1.0.1/mkzftree $RPM_BUILD_ROOT%{_bindir}
-cp -f zisofs-tools-1.0.1/README README.zisofs
+(cd zisofs-tools-%{_zisofs_ver}
+%{__make} install INSTALLROOT=$RPM_BUILD_ROOT)
+
+cp -f zisofs-tools-%{_zisofs_ver}/README README.zisofs
 
 gzip -9nf AN-%{version} doc/cdrecord.ps Changelog README README.ATAPI \
 	README.WORM README.audio README.cdplus README.cdrw README.linux \
