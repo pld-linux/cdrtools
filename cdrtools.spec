@@ -9,6 +9,7 @@ Group:		Applications/System
 Source0:	ftp://ftp.berlios.de/pub/cdrecord/%{name}-%{version}.tar.gz
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
+Patch2:		%{name}-silo.patch
 URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/cdrecord.html
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -108,6 +109,9 @@ plików ISO9660 potrzebnych do tworzenia p³yt CD-ROM.
 chmod +w -R *
 %patch0 -p1
 %patch1 -p1
+%ifarch sparc sparcv9 sparc64
+%patch2 -p1
+%endif
 
 %build
 cd conf
