@@ -1,13 +1,12 @@
 Summary:	A command line CD/DVD-Recorder
 Summary(pl):	Program do nagrywania p³yt CD/DVD
 Name:		cdrtools
-Version:	1.11a40
+Version:	2.0
 Release:	1
 Epoch:		2
 License:	GPL v2
 Group:		Applications/System
-#Source0:	ftp://ftp.fokus.gmd.de/pub/unix/cdrecord/%{name}-%{version}.tar.gz
-Source0:	ftp://ftp.fokus.gmd.de/pub/unix/cdrecord/alpha/%{name}-%{version}.tar.bz2
+Source0:	ftp://ftp.berlios.de/pub/cdrecord/%{name}-%{version}.tar.gz
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/cdrecord.html
@@ -105,7 +104,7 @@ To jest pakiet mkisofs. Jest on u¿ywany do tworzenia obrazów systemów
 plików ISO9660 potrzebnych do tworzenia p³yt CD-ROM.
 
 %prep
-%setup -q -n %{name}-1.11
+%setup -q
 chmod +w -R *
 %patch0 -p1
 %patch1 -p1
@@ -128,6 +127,9 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_includedir}/schily/scg}
 	MANDIR=share/man \
 	INS_BASE=$RPM_BUILD_ROOT%{_prefix}
 
+install cdda2wav/cdda2mp3	$RPM_BUILD_ROOT%{_bindir}/
+install cdda2wav/cdda2ogg	$RPM_BUILD_ROOT%{_bindir}/
+
 # Installing Header files for use with devel package
 rm -f include/scg
 
@@ -147,11 +149,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AN-%{version} doc/cdrecord.ps Changelog README README.ATAPI README.WORM
-%doc README.audio README.cdplus README.cdtext README.cdrw README.copy
-%doc README.linux README.mkisofs README.multi README.parallel README.raw
-%doc README.rscsi README.sony README.verify
-%doc cdrecord/cdrecord.dfl
+%doc AN-* doc/cdrecord.ps Changelog README README.ATAPI README.DiskT@2
+%doc README.WORM README.audio README.cdplus README.cdtext README.cdrw
+%doc README.copy README.linux README.mkisofs README.multi README.parallel
+%doc README.raw README.rscsi README.sony README.verify make_diskt@2.sh
+%doc cdrecord/cdrecord.dfl cdrecord/LICENSE
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/cdrecord.conf
 %attr(755,root,root) %{_bindir}/cdrecord
 %attr(755,root,root) %{_bindir}/scgcheck
@@ -170,12 +172,15 @@ rm -rf $RPM_BUILD_ROOT
 %files cdda2wav
 %defattr(644,root,root,755)
 %doc cdda2wav/Frontends cdda2wav/HOWTOUSE cdda2wav/OtherProgs
-%doc cdda2wav/README cdda2wav/THANKS cdda2wav/TODO cdda2wav/cdda2mp3
+%doc cdda2wav/README cdda2wav/THANKS cdda2wav/TODO
 %doc cdda2wav/cdda2mp3.new cdda2wav/cdda_links cdda2wav/pitchplay
 %doc cdda2wav/readmult cdda2wav/tracknames.pl cdda2wav/tracknames.txt
-%doc cdda2wav/FAQ cdda2wav/cdda2ogg
+%doc cdda2wav/FAQ
 %attr(755,root,root) %{_bindir}/cdda2wav
+%attr(755,root,root) %{_bindir}/cdda2mp3
+%attr(755,root,root) %{_bindir}/cdda2ogg
 %{_mandir}/man1/cdda2wav.1*
+%{_mandir}/man1/cdda2ogg.1*
 
 %files readcd
 %defattr(644,root,root,755)
