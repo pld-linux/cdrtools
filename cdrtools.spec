@@ -9,8 +9,6 @@ Release:	5
 Epoch:		2
 License:	GPL
 Group:		Applications/System
-Group(de):	Applikationen/System
-Group(pl):	Aplikacje/System
 Source0:	ftp://ftp.fokus.gmd.de/pub/unix/cdrecord/%{name}-%{version}.tar.gz
 Source1:	ftp://ftp.kernel.org/pub/linux/kernel/people/hpa/zisofs/zisofs-tools-%{_zisofs_ver}.tar.gz
 Patch0:		%{name}-config.patch
@@ -34,13 +32,6 @@ dyski z danymi, d¼wiêkiem, mieszane, wielosesyjne, CD+ i inne.
 Summary:	The libschily SCSI user level transport library
 Summary(pl):	Biblioteka dostêpu do poziomu SCSI przez u¿ytkownika
 Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
-Group(es):	Desarrollo/Bibliotecas
-Group(fr):	Development/Librairies
-Group(pl):	Programowanie/Biblioteki
-Group(pt_BR):	Desenvolvimento/Bibliotecas
-Group(ru):	òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
-Group(uk):	òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Obsoletes:	cdrecord-devel
 
 %description devel
@@ -60,8 +51,6 @@ Summary:	Get WAV files from digital audio cd's
 Summary(pl):	Uzyskaj pliki WAV z cyfrowego kompaktu audio
 Summary(fr):	convertisseur CD-Audio->.wav
 Group:		Applications/Sound
-Group(de):	Applikationen/Laut
-Group(pl):	Aplikacje/D¼wiêk
 Provides:	cdda2wav
 Obsoletes:	cdda2wav
 
@@ -80,8 +69,6 @@ wav lub suna.
 Summary:	Read/Write data Compact Discs
 Summary(pl):	Odczytuje/Zapisuje dane z P³yt Kompaktowych
 Group:		Applications/System
-Group(de):	Applikationen/System
-Group(pl):	Aplikacje/System
 
 %description readcd
 Read/Write data Compact Discs
@@ -93,8 +80,6 @@ Odczytuje/Zapisuje dane z P³yt Kompaktowych
 Summary:	Dumping and verifying iso9660 images.
 Summary(pl):	Zrzucanie i weryfikacja obrazów iso9660.
 Group:		Applications/System
-Group(de):	Applikationen/System
-Group(pl):	Aplikacje/System
 
 %description utils
 Utility programs for dumping and verifying iso9660 images.
@@ -109,8 +94,6 @@ Summary(fr):	Crée un image système de fichiers ISO9660
 Summary(pl):	Tworzy obraz systemu plikow ISO9660
 Summary(tr):	ISO9660 dosya sistemi kopyasý oluþturur
 Group:		Applications/System
-Group(de):	Applikationen/System
-Group(pl):	Aplikacje/System
 Provides:	mkisofs
 Obsoletes:	mkisofs
 
