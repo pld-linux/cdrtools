@@ -92,11 +92,11 @@ SCSI-устройства, похожим на драйвер scg.
 %package cdda2wav
 Summary:	Get WAV files from digital audio cd's
 Summary(es):	Crea archivos tipo WAV a partir de CDs de audio
-Summary(fr):	convertisseur CD-Audio->.wav
+Summary(fr):	convertisseur CD-Audio->.WAV
 Summary(pl):	Uzyskaj pliki WAV z cyfrowego kompaktu audio
 Summary(pt_BR):	Cria arquivos tipo WAV a partir de CDs de Аudio
-Summary(ru):	Утилита для получения файлов .wav с digital audio CD
-Summary(uk):	Утил╕та для генерац╕╖ файл╕в .wav з digital audio CD
+Summary(ru):	Утилита для получения файлов .WAV с digital audio CD
+Summary(uk):	Утил╕та для генерац╕╖ файл╕в .WAV з digital audio CD
 Group:		Applications/Sound
 Provides:	cdda2wav
 Obsoletes:	cdda2wav
@@ -104,39 +104,39 @@ Obsoletes:	cdrecord-cdda2wav
 
 %description cdda2wav
 A sampling utility for cdrom drives that are capable of sending audio
-cd data in digital form to your host. Data can be dumped into wav or
+cd data in digital form to your host. Data can be dumped into WAV or
 sun format sound files. Options control the recording format
 (stereo/mono; 8,12,16 bits; different rates).
 
 %description cdda2wav -l es
 Un utilitario para leer mЗsicas en accionadores de cdrom capaces de
 transmitir datos de CDs de audio en forma digital para tu mАquina. Los
-datos pueden ser grabados en formato wav o sun. Existen opciones para
+datos pueden ser grabados en formato WAV o sun. Existen opciones para
 controlar el formato de la grabaciСn (stereo/mono, 8, 12, 16 bits,
 tasas diferentes).
 
 %description cdda2wav -l pl
 NarzЙdzie do zczytywania danych z napЙdСw cdrom, ktСre s╠ w stanie
 wysyЁaФ strumieЯ audio. Dane mog╠ zostaФ zapisane w formacie plikСw
-wav lub suna.
+WAV lub suna.
 
 %description cdda2wav -l pt_BR
 Um utilitАrio para ler mЗsicas em acionadores de cdrom capazes de
 transmitir dados de CDs de Аudio em forma digital para sua mАquina. Os
-dados podem ser gravados em formato wav ou sun. Existem opГУes para
+dados podem ser gravados em formato WAV ou sun. Existem opГУes para
 controlar o formato da gravaГЦo (estИreo/mono, 8, 12, 16 bits, taxas
 diferentes).
 
 %description cdda2wav -l ru
 Cdda2wav - это сэмплер, способный считывать аудиоданные с CD в
 цифровой форме и сохранять их на диск в виде звуковых файлов формата
-.wav или .sun. Форматы записи включают стерео/моно, 8/12/16 бит и
+.WAV или .sun. Форматы записи включают стерео/моно, 8/12/16 бит и
 различные частоты дискретизации. Cdda2wav также может быть использован
 как CD-плейер.
 
 %description cdda2wav -l uk
 Cdda2wav - це семплер, здатний зчитувати ауд╕одан╕ ╕ CD у цифров╕й
-форм╕ та збер╕гати ╖х на диск у вигляд╕ звукових файл╕в формату .wav
+форм╕ та збер╕гати ╖х на диск у вигляд╕ звукових файл╕в формату .WAV
 або .sun. Формати запису включають стерео/моно, 8/12/16 б╕т та р╕зн╕
 частоты дискретизац╕╖. Cdda2wav також може бути використаний як
 CD-плей╓р.
