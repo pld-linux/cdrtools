@@ -1,14 +1,14 @@
---- cdrtools-1.10/mkisofs/Makefile
-+++ cdrtools-1.10/mkisofs/Makefile
-@@ -35,7 +35,7 @@
+--- cdrtools-2.01/mkisofs/Makefile.orig	Sat Mar  1 23:44:58 2003
++++ cdrtools-2.01/mkisofs/Makefile	Mon Mar 10 20:59:39 2003
+@@ -41,7 +41,7 @@
  		getopt.c getopt1.c \
  		scsi.c \
  		scsi_cdr.c cd_misc.c \
 -		modes.c \
 +		modes.c silo.c \
- 		apple.c volume.c desktop.c mac_label.c
+ 		apple.c volume.c desktop.c mac_label.c stream.c \
+ 		ifo_read.c dvd_file.c dvd_reader.c
  HFILES=		apple.h bootinfo.h config.h defaults.h diskmbr.h exclude.h \
- 		fnmatch.h getopt.h iso9660.h mac_label.h mactypes.h match.h \
 --- cdrtools-1.10/mkisofs/defaults.h
 +++ cdrtools-1.10/mkisofs/defaults.h
 @@ -22,6 +22,10 @@
@@ -24,21 +24,6 @@
  #define  APPLE_CREATOR_DEFAULT	"unix"
 --- cdrtools-1.10/mkisofs/mkisofs.8
 +++ cdrtools-1.10/mkisofs/mkisofs.8
-@@ -85,6 +85,14 @@
- .I boot_catalog
- ]
- [
-+.B \-s
-+.I silo_conf_file
-+]
-+[
-+.B \-S
-+.I silo_bootblock
-+]
-+[
- .B \-check-oldnames
- ]
- [
 @@ -1272,6 +1280,25 @@
  .B \&.m\&kisofsrc
  with SYSI=system_id.
@@ -65,17 +50,17 @@
  .TP
  .B \-T
  Generate a file TRANS.TBL in each directory on the CDROM, which can be used
---- cdrtools-1.10/mkisofs/mkisofs.c
-+++ cdrtools-1.10/mkisofs/mkisofs.c
-@@ -94,6 +94,7 @@
- int	use_genboot = 0;
- int	use_RockRidge = 0;
- int	use_Joliet = 0;
-+int     use_silo = 0;
+--- cdrtools-2.01/mkisofs/mkisofs.c.orig	Sun Mar  2 17:28:33 2003
++++ cdrtools-2.01/mkisofs/mkisofs.c	Mon Mar 10 21:21:18 2003
+@@ -98,6 +98,7 @@
  int	verbose = 1;
+ int	debug = 0;
  int	gui = 0;
++int	use_silo = 0;
  int	all_files = 1;	/* New default is to include all files */
-@@ -131,6 +132,10 @@
+ int	follow_links = 0;
+ #ifdef	IS_CYGWIN
+@@ -133,6 +134,10 @@
  char	*boot_catalog = BOOT_CATALOG_DEFAULT;
  char	*boot_image = BOOT_IMAGE_DEFAULT;
  char	*genboot_image = BOOT_IMAGE_DEFAULT;
@@ -86,7 +71,7 @@
  int	ucs_level = 3;		/* We now have Unicode tables so use level 3 */
  int	volume_set_size = 1;
  int	volume_sequence_number = 1;
-@@ -377,6 +382,8 @@
+@@ -408,6 +413,8 @@
  
  #endif	/* APPLE_HYB */
  
@@ -95,7 +80,7 @@
  static int	save_pname = 0;
  
  static const struct ld_option ld_options[] =
-@@ -407,6 +414,8 @@
+@@ -440,6 +447,8 @@
  	'\0', NULL, "Start specifying alternative El Torito boot parameters", ONE_DASH},
  	{{"sparc-boot", required_argument, NULL, 'B'},
  	'B', "FILES", "Set sparc boot image names", ONE_DASH},
@@ -104,7 +89,7 @@
  	{{"generic-boot", required_argument, NULL, 'G'},
  	'G', "FILE", "Set generic boot image name", ONE_DASH},
  	{{"sparc-label", required_argument, NULL, OPTION_SPARCLABEL},
-@@ -513,7 +522,10 @@
+@@ -548,7 +557,10 @@
  	{ {"sort", required_argument, NULL, OPTION_SORT},
  	'\0', "FILE", "Sort file content locations according to rules in FILE" , ONE_DASH },
  #endif /* SORTING */
@@ -115,8 +100,8 @@
 +	  'S', "FILE", "Set SILO first stage bootblock image name", ONE_DASH },
  	{{"split-output", no_argument, NULL, OPTION_SPLIT_OUTPUT},
  	'\0', NULL, "Split output into files of approx. 1GB size", ONE_DASH},
- 	{{"sysid", required_argument, NULL, OPTION_SYSID},
-@@ -1288,6 +1300,34 @@
+ 	{{"stream-file-name", required_argument, NULL, OPTION_STREAM_FILE_NAME},
+@@ -1362,6 +1374,34 @@
  #endif
  			}
  			break;
@@ -151,29 +136,29 @@
  		case OPTION_ABSTRACT:
  			abstract = optarg;
  			if (strlen(abstract) > 37) {
-@@ -2742,7 +2782,10 @@
+@@ -3004,7 +3044,10 @@
  		outputlist_insert(&sunlabel_desc);
  	if (use_genboot)
  		outputlist_insert(&genboot_desc);
--	outputlist_insert(&padblock_desc);
+-	outputlist_insert(&startpad_desc);
 +        if (use_silo)
-+	  outputlist_insert(&silo_desc);
++ 		outputlist_insert(&silo_desc);
 +	else
-+	  outputlist_insert(&padblock_desc);
++		outputlist_insert(&padblock_desc);
  
  	/* PVD for disc. */
  	outputlist_insert(&voldesc_desc);
---- cdrtools-1.10/mkisofs/mkisofs.h
-+++ cdrtools-1.10/mkisofs/mkisofs.h
-@@ -160,6 +160,7 @@
+--- cdrtools-2.01/mkisofs/mkisofs.h.orig	Fri Feb 28 01:30:36 2003
++++ cdrtools-2.01/mkisofs/mkisofs.h	Mon Mar 10 21:22:48 2003
+@@ -167,6 +167,7 @@
  extern struct output_fragment *out_tail;
  
- extern struct output_fragment padblock_desc;
+ extern struct output_fragment startpad_desc;
 +extern struct output_fragment silo_desc;
  extern struct output_fragment voldesc_desc;
+ extern struct output_fragment xvoldesc_desc;
  extern struct output_fragment joliet_desc;
- extern struct output_fragment torito_desc;
-@@ -228,8 +229,15 @@
+@@ -268,8 +269,15 @@
  	struct directory_entry *s_entry;
  	unsigned int    pad;
  	off_t		off;
@@ -189,7 +174,7 @@
  struct eltorito_boot_entry_info {
  	struct eltorito_boot_entry_info *next; 
  	char		*boot_image;
-@@ -565,6 +573,9 @@
+@@ -616,6 +624,9 @@
  extern char    *boot_catalog;
  extern char    *boot_image;
  extern char    *genboot_image;
@@ -498,9 +483,9 @@
  	};
  
  	close_file(rab);
---- cdrtools-1.10/mkisofs/write.c
-+++ cdrtools-1.10/mkisofs/write.c
-@@ -78,10 +78,10 @@
+--- cdrtools-2.01/mkisofs/write.c.orig	Fri Feb 28 01:32:13 2003
++++ cdrtools-2.01/mkisofs/write.c	Mon Mar 10 21:27:06 2003
+@@ -77,10 +77,10 @@
  						FILE *file));
  static	int	assign_directory_addresses __PR((struct directory *node));
  #ifdef APPLE_HYB
@@ -513,7 +498,7 @@
  					FILE *outfile));
  #endif
  static	void	write_files	__PR((FILE *outfile));
-@@ -292,7 +292,7 @@
+@@ -297,7 +297,7 @@
  static struct deferred_write mac_boot;
  
  #endif	/* APPLE_HYB */
@@ -522,7 +507,7 @@
  				*dw_tail = NULL;
  
  unsigned int	last_extent_written = 0;
-@@ -350,16 +350,14 @@
+@@ -354,16 +354,14 @@
  
  #ifdef APPLE_HYB
  static void
@@ -543,31 +528,31 @@
  	FILE		*outfile;
  #endif	/* APPLE_HYB */
  {
-@@ -375,18 +373,19 @@
+@@ -379,18 +377,18 @@
  	FILE		*infile;
  	int		remain;
  	int	use;
-+        int             offset;
++	int		offset;
  
- 
+-
 -	if ((infile = fopen(filename, "rb")) == NULL) {
 +	if ((infile = fopen(dwpnt->name, "rb")) == NULL) {
  #ifdef	USE_LIBSCHILY
 -		comerr("cannot open '%s'\n", filename);
 +		comerr("cannot open '%s'\n", dwpnt->name);
  #else
- #if defined(sun) || defined(_AUX_SOURCE)
- 		fprintf(stderr, "cannot open %s: (%d)\n",
+ #ifndef	HAVE_STRERROR
+ 		fprintf(stderr, "cannot open '%s': (%d)\n",
 -				filename, errno);
 +				dwpnt->name, errno);
  #else
- 		fprintf(stderr, "cannot open %s: %s\n",
+ 		fprintf(stderr, "cannot open '%s': %s\n",
 -				filename, strerror(errno));
 +				dwpnt->name, strerror(errno));
  #endif
  		exit(1);
  #endif
-@@ -394,8 +393,8 @@
+@@ -398,8 +396,8 @@
  #ifdef APPLE_HYB
  	fseek(infile, off, SEEK_SET);
  #endif	/* APPLE_HYB */
@@ -578,26 +563,26 @@
  	while (remain > 0) {
  		use = (remain > SECTOR_SIZE * NSECT - 1 ?
  				NSECT * SECTOR_SIZE : remain);
-@@ -404,13 +403,16 @@
+@@ -408,13 +406,16 @@
  		memset(buffer, 0, use);
  		if (fread(buffer, 1, use, infile) == 0) {
  #ifdef	USE_LIBSCHILY
--			comerr("cannot read from %s\n", filename);
-+			comerr("cannot read from %s\n", dwpnt->name);
+-			comerr("cannot read from '%s'\n", filename);
++			comerr("cannot read from '%s'\n", dwpnt->name);
  #else
--			fprintf(stderr, "cannot read from %s\n", filename);
-+			fprintf(stderr, "cannot read from %s\n", dwpnt->name);
+-			fprintf(stderr, "cannot read from '%s'\n", filename);
++			fprintf(stderr, "cannot read from '%s'\n", dwpnt->name);
  			exit(1);
  #endif
  		}
-+		if (dwpnt->filter)
-+		  (* dwpnt->filter)(buffer, use, offset);
++	      	if (dwpnt->filter)
++			(* dwpnt->filter)(buffer, use, offset);
  		xfwrite(buffer, 1, use, outfile);
 +		offset += use;
  		last_extent_written += use / SECTOR_SIZE;
  #if 0
  		if ((last_extent_written % 1000) < use / SECTOR_SIZE) {
-@@ -465,13 +467,12 @@
+@@ -474,13 +475,12 @@
  		} else {
  
  #ifdef VMS
@@ -614,7 +599,7 @@
  #endif	/* APPLE_HYB */
  #endif
  			free(dwpnt->name);
-@@ -1054,6 +1055,7 @@
+@@ -1145,6 +1145,7 @@
  				dwpnt->next = NULL;
  				dwpnt->size = s_entry->size;
  				dwpnt->extent = last_extent;
@@ -622,7 +607,7 @@
  				set_733((char *) s_entry->isorec.extent,
  								last_extent);
  				s_entry->starting_block = last_extent;
-@@ -1613,8 +1615,7 @@
+@@ -1716,8 +1717,7 @@
  
  		/* write out HFS boot block */
  		if (mac_boot.name)
