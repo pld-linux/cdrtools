@@ -16,7 +16,7 @@ Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 Patch2:		%{name}-silo.patch
 Patch3:		%{name}-man.patch
-Patch4:		%{name}-u8-type.aptch
+Patch4:		%{name}-no-kernel-headers.patch
 URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/cdrecord.html
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -228,7 +228,7 @@ cd conf
 	cp xconfig.h.in xconfig.h.in.org
 	sed -e 's#/\*.*\*/##g' xconfig.h.in.org > xconfig.h.in
 	rm -f acgeneral.m4 acspecific.m4 autoheader.m4 acoldnames.m4 autoconf.m4
-	%{__aclocal}
+	# don't run aclocal, aclocal.m4 contains only local defs
 	%{__autoconf}
 cd ..
 CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" ./Gmake.linux
@@ -280,8 +280,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/lib*.a
 %{_includedir}/schily
 %{_includedir}/*.h
-#%attr(755,root,root) %{_bindir}/scgcheck
-#%%{_mandir}/man1/scgcheck.1*
 
 %files cdda2wav
 %defattr(644,root,root,755)
