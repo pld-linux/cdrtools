@@ -154,8 +154,10 @@ rm -rf $RPM_BUILD_ROOT
 %doc cdrecord/cdrecord.dfl
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/cdrecord.conf
 %attr(755,root,root) %{_bindir}/cdrecord
+%attr(755,root,root) %{_bindir}/scgcheck
 %attr(755,root,root) %{_sbindir}/rscsi
 %{_mandir}/man1/cdrecord.1*
+%{_mandir}/man1/scgcheck.1*
 
 %files devel
 %defattr(644,root,root,755)
