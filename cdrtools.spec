@@ -4,7 +4,7 @@ Name:		cdrtools
 Version:	1.11a23
 Release:	2
 Epoch:		2
-License:	GPL
+License:	GPL v2
 Group:		Applications/System
 #Source0:	ftp://ftp.fokus.gmd.de/pub/unix/cdrecord/%{name}-%{version}.tar.gz
 Source0:	ftp://ftp.fokus.gmd.de/pub/unix/cdrecord/alpha/%{name}-%{version}.tar.gz
