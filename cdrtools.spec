@@ -226,6 +226,9 @@ chmod +w -R *
 ln -sf i586-linux-gcc.rul RULES/x86_64-linux-gcc.rul
 ln -sf i586-linux-cc.rul RULES/x86_64-linux-cc.rul
 
+%{__perl} -pi -e 's/^(INSDIR=.*)lib/$1%{_lib}/' \
+	libfile/Makefile libhfs_iso/Makefile lib*/*.mk
+
 %build
 cd conf
 cp -f /usr/share/automake/config.* .
