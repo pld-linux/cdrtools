@@ -10,6 +10,7 @@ Source0:	ftp://ftp.berlios.de/pub/cdrecord/alpha/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 Patch2:		%{name}-silo.patch
+Patch3:		%{name}-man.patch
 URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/cdrecord.html
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -112,6 +113,7 @@ chmod +w -R *
 %ifarch sparc sparcv9 sparc64
 %patch2 -p1
 %endif
+%patch3 -p1
 
 %build
 cd conf
