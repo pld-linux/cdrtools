@@ -12,6 +12,7 @@ Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/cdrecord.html
 BuildRequires:	autoconf
+BuildRequires:	automake
 Obsoletes:	cdrecord
 Provides:	cdrecord
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -186,6 +187,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/isovfy.8*
 %{_mandir}/man8/isodump.8*
 %attr(755,root,root) %{_bindir}/devdump
+%attr(755,root,root) %{_bindir}/isodebug
 %attr(755,root,root) %{_bindir}/isoinfo
 %attr(755,root,root) %{_bindir}/isovfy
 %attr(755,root,root) %{_bindir}/isodump
