@@ -254,9 +254,10 @@ install libscg/scg/*		$RPM_BUILD_ROOT%{_includedir}/schily/scg
 install cdrecord/cdrecord.dfl	$RPM_BUILD_ROOT%{_sysconfdir}/cdrecord.conf
 
 # fix manual pages
-echo ".so man8/isoinfo.8" >	$RPM_BUILD_ROOT%{_mandir}/man8/devdump.8
-echo ".so man8/isoinfo.8" >     $RPM_BUILD_ROOT%{_mandir}/man8/isovfy.8
-echo ".so man8/isoinfo.8" >     $RPM_BUILD_ROOT%{_mandir}/man8/isodump.8
+echo '.so isoinfo.8' > $RPM_BUILD_ROOT%{_mandir}/man8/devdump.8
+echo '.so isoinfo.8' > $RPM_BUILD_ROOT%{_mandir}/man8/isovfy.8
+echo '.so isoinfo.8' > $RPM_BUILD_ROOT%{_mandir}/man8/isodump.8
+echo '.so cdda2ogg.1' > $RPM_BUILD_ROOT%{_mandir}/man1/cdda2mp3.1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -293,7 +294,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/cdda2mp3
 %attr(755,root,root) %{_bindir}/cdda2ogg
 %{_mandir}/man1/cdda2wav.1*
-#%{_mandir}/man1/cdda2ogg.1*
+%{_mandir}/man1/cdda2mp3.1*
+%{_mandir}/man1/cdda2ogg.1*
 
 %files readcd
 %defattr(644,root,root,755)
