@@ -17,7 +17,7 @@ Patch1:		%{name}-smmap.patch
 Patch2:		%{name}-man.patch
 Patch3:		%{name}-no-kernel-headers.patch
 Patch4:		%{name}-min_gracetime.patch
-URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/cdrecord.html
+URL:		http://cdrecord.berlios.de/old/private/cdrecord.html
 BuildRequires:	autoconf
 BuildRequires:	automake
 Provides:	cdrecord
