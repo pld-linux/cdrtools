@@ -5,13 +5,13 @@ Summary(pt_BR):	Um programa de gravaГЦo de CD/DVD
 Summary(ru):	Программа для записи CD/DVD, запускаемая из командной строки
 Summary(uk):	Програма для запису CD/DVD, яка запуска╓ться з командно╖ стр╕чки
 Name:		cdrtools
-Version:	2.01a22
+Version:	2.01a23
 Release:	1
 Epoch:		3
 License:	GPL v2
 Group:		Applications/System
 Source0:	ftp://ftp.berlios.de/pub/cdrecord/alpha/%{name}-%{version}.tar.bz2
-# Source0-md5:	ba5136dbdebfdc0b110bed3395586db1
+# Source0-md5:	2d5f7a9a6a71d9d9fa1d9075a8f42c01
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 Patch2:		%{name}-silo.patch
