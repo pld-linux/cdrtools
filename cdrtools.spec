@@ -2,7 +2,7 @@ Summary:	A command line CD/DVD-Recorder
 Summary(pl):	Program do nagrywania p³yt CD/DVD
 Name:		cdrtools
 Version:	1.10
-Release:	2
+Release:	3
 Epoch:		2
 License:	GPL
 Group:		Applications/System
@@ -12,6 +12,7 @@ Source0:	ftp://ftp.fokus.gmd.de/pub/unix/cdrecord/%{name}-%{version}.tar.gz
 Source1:	ftp://ftp.kernel.org/pub/linux/kernel/people/hpa/zisofs/zisofs-tools-0.06.tar.gz
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
+Patch2:		%{name}-ac250.patch
 URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/cdrecord.html
 BuildRequires:	autoconf
 Obsoletes:	cdrecord
@@ -118,6 +119,7 @@ plików ISO9660 potrzebnych do tworzenia p³yt CD-ROM.
 %setup -q -a1 -n %{name}-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 patch -p1 < zisofs-tools-0.06/cdrtools-1.10-zisofs.diff
 
 %build
@@ -148,7 +150,7 @@ echo "man8/isoinfo.so" >        $RPM_BUILD_ROOT%{_mandir}/man8/isovfy.8
 echo "man8/isoinfo.so" >        $RPM_BUILD_ROOT%{_mandir}/man8/isodump.8
 
 install zisofs-tools-0.06/mkzftree $RPM_BUILD_ROOT%{_bindir}
-cp zisofs-tools-0.06/README README.zisofs
+cp -f zisofs-tools-0.06/README README.zisofs
 
 gzip -9nf AN-%{version} doc/cdrecord.ps Changelog README README.ATAPI \
 	README.WORM README.audio README.cdplus README.cdrw README.linux \
