@@ -171,7 +171,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/schily
 %{_includedir}/*.h
 #%attr(755,root,root) %{_bindir}/scgcheck
-#%{_mandir}/man1/scgcheck.1*
+#%%{_mandir}/man1/scgcheck.1*
 
 %files cdda2wav
 %defattr(644,root,root,755)
