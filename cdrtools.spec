@@ -4,7 +4,7 @@ Summary:	A command line CD/DVD-Recorder
 Summary(pl):	Program do nagrywania p³yt CD/DVD
 Name:		cdrtools
 Version:	1.11a21
-Release:	0.1
+Release:	2
 Epoch:		2
 License:	GPL
 Group:		Applications/System
