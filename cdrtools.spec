@@ -172,7 +172,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc {README.cdrw,README.linux,README.mkisofs,README.multi}.gz
 %doc {README.sony,README.verify,README.copy}.gz
 %doc cdrecord/cdrecord.dfl
-%config(noreplace) %{_sysconfdir}/cdrecord.conf
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/cdrecord.conf
 %attr(755,root,root) %{_bindir}/cdrecord
 %{_mandir}/man1/cdrecord.1*
 
