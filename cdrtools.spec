@@ -7,7 +7,7 @@ Epoch:		2
 License:	GPL v2
 Group:		Applications/System
 #Source0:	ftp://ftp.fokus.gmd.de/pub/unix/cdrecord/%{name}-%{version}.tar.gz
-Source0:	ftp://ftp.fokus.gmd.de/pub/unix/cdrecord/alpha/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.fokus.gmd.de/pub/unix/cdrecord/alpha/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/cdrecord.html
