@@ -2,7 +2,7 @@ Summary:	A command line CD/DVD-Recorder
 Summary(pl):	Program do nagrywania p³yt CD/DVD
 Name:		cdrtools
 Version:	1.10
-Release:	3
+Release:	4
 Epoch:		2
 License:	GPL
 Group:		Applications/System
@@ -140,6 +140,7 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_includedir}/schily/scg}
 rm -f include/scg
 
 install include/*		$RPM_BUILD_ROOT%{_includedir}/schily
+install incs/*/xconfig.h	$RPM_BUILD_ROOT%{_includedir}/schily
 install libscg/scg/*		$RPM_BUILD_ROOT%{_includedir}/schily/scg
 
 install cdrecord/cdrecord.dfl	$RPM_BUILD_ROOT%{_sysconfdir}/cdrecord.conf
