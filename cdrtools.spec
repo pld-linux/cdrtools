@@ -1,7 +1,7 @@
 Summary:	A command line CD/DVD-Recorder
 Summary(pl):	Program do nagrywania p³yt CD/DVD
 Name:		cdrtools
-Version:	1.11a23
+Version:	1.11a30
 Release:	2
 Epoch:		2
 License:	GPL v2
@@ -10,7 +10,6 @@ Group:		Applications/System
 Source0:	ftp://ftp.fokus.gmd.de/pub/unix/cdrecord/alpha/%{name}-%{version}.tar.gz
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
-Patch2:		%{name}-ac250.patch
 URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/cdrecord.html
 BuildRequires:	autoconf
 Obsoletes:	cdrecord
@@ -109,11 +108,13 @@ plików ISO9660 potrzebnych do tworzenia p³yt CD-ROM.
 chmod +w -R *
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 cd conf
+cp xconfig.h.in xconfig.h.in.org
+sed -e 's#/\*.*\*/##g' xconfig.h.in.org > xconfig.h.in
 rm -f acgeneral.m4 acspecific.m4 autoheader.m4 acoldnames.m4 autoconf.m4
+%{__aclocal}
 %{__autoconf}
 cd ..
 CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" ./Gmake.linux
