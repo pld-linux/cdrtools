@@ -1,10 +1,9 @@
-# --without	zisofs		don;t build zisofs support (compressed isofs)
 
 Summary:	A command line CD/DVD-Recorder
 Summary(pl):	Program do nagrywania p³yt CD/DVD
 Name:		cdrtools
 Version:	1.11a21
-Release:	2
+Release:	3
 Epoch:		2
 License:	GPL
 Group:		Applications/System
@@ -13,13 +12,10 @@ Source0:	ftp://ftp.fokus.gmd.de/pub/unix/cdrecord/alpha/%{name}-%{version}.tar.g
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 Patch2:		%{name}-ac250.patch
-# patch from zisofs-tools distribution
-%{!?_without_zisofs:Patch3:	%{name}-zisofs.patch}
 URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/cdrecord.html
 BuildRequires:	autoconf
 Obsoletes:	cdrecord
 Provides:	cdrecord
-%{!?_without_zisofs:Requires:	zisofs-tools}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -115,7 +111,6 @@ chmod +w -R *
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%{!?_without_zisofs:%patch3 -p1}
 
 %build
 cd conf
@@ -148,11 +143,18 @@ echo "man8/isoinfo.so" >        $RPM_BUILD_ROOT%{_mandir}/man8/isodump.8
 
 gzip -9nf AN-%{version} doc/cdrecord.ps Changelog README README.ATAPI \
 	README.WORM README.audio README.cdplus README.cdrw README.linux \
+	README.cdtext README.parallel README.raw README.rscsi \
 	README.mkisofs README.multi README.sony README.verify README.copy \
 	cdda2wav/Frontends cdda2wav/HOWTOUSE cdda2wav/OtherProgs \
 	cdda2wav/README cdda2wav/THANKS cdda2wav/TODO cdda2wav/cdda2mp3 \
 	cdda2wav/cdda2mp3.new cdda2wav/cdda_links cdda2wav/pitchplay \
-	cdda2wav/readmult cdda2wav/tracknames.pl cdda2wav/tracknames.txt
+	cdda2wav/readmult cdda2wav/tracknames.pl cdda2wav/tracknames.txt \
+	cdda2wav/FAQ cdda2wav/cdda2ogg \
+	mkisofs/README.compression mkisofs/README.eltorito mkisofs/README \
+	mkisofs/README.graft_dirs mkisofs/README.hfs_boot mkisofs/README.hfs_magic \
+	mkisofs/README.hide mkisofs/README.joliet mkisofs/README.mkhybrid \
+	mkisofs/README.prep_boot mkisofs/README.rootinfo mkisofs/README.session \
+	mkisofs/README.sort mkisofs/README.sparcboot
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -162,10 +164,12 @@ rm -rf $RPM_BUILD_ROOT
 %doc {AN-%{version},doc/cdrecord.ps,Changelog,README}.gz
 %doc {README.ATAPI,README.WORM,README.audio,README.cdplus}.gz
 %doc {README.cdrw,README.linux,README.mkisofs,README.multi}.gz
+%doc {README.cdtext,README.parallel,README.raw,README.rscsi}.gz
 %doc {README.sony,README.verify,README.copy}.gz
 %doc cdrecord/cdrecord.dfl
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/cdrecord.conf
 %attr(755,root,root) %{_bindir}/cdrecord
+%attr(755,root,root) %{_sbindir}/rscsi
 %{_mandir}/man1/cdrecord.1*
 
 %files devel
@@ -175,6 +179,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libschily.a
 %{_includedir}/schily
 %{_includedir}/*.h
+%{_mandir}/man1/scgcheck.1*
 
 %files cdda2wav
 %defattr(644,root,root,755)
@@ -182,6 +187,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc {cdda2wav/README,cdda2wav/THANKS,cdda2wav/TODO,cdda2wav/cdda2mp3}.gz
 %doc {cdda2wav/cdda2mp3.new,cdda2wav/cdda_links,cdda2wav/pitchplay}.gz
 %doc {cdda2wav/readmult,cdda2wav/tracknames.pl,cdda2wav/tracknames.txt}.gz
+%doc {cdda2wav/FAQ,cdda2wav/cdda2ogg}.gz
 %doc AN-%{version}.gz
 %attr(755,root,root) %{_bindir}/cdda2wav
 %{_mandir}/man1/cdda2wav.1*
@@ -208,3 +214,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/mkhybrid.8*
 %attr(755,root,root) %{_bindir}/mkisofs
 %attr(755,root,root) %{_bindir}/mkhybrid
+%doc {mkisofs/README.compression,mkisofs/README.eltorito,mkisofs/README}.gz
+%doc {mkisofs/README.graft_dirs,mkisofs/README.hfs_boot,mkisofs/README.hfs_magic}.gz
+%doc {mkisofs/README.hide,mkisofs/README.joliet,mkisofs/README.mkhybrid}.gz
+%doc {mkisofs/README.prep_boot,mkisofs/README.rootinfo,mkisofs/README.session}.gz
+%doc {mkisofs/README.sort,mkisofs/README.sparcboot}.gz
