@@ -84,18 +84,21 @@ diff -ruN cdrtools-2.0-/cdrecord/cdrecord.1 cdrtools-2.0/cdrecord/cdrecord.1
  .TP
  .B CDR_SPEED
  Sets the default speed value for writing (see also 
-@@ -1417,8 +1417,8 @@
+@@ -1417,8 +1417,11 @@
  
  .SH FILES
  .TP
 -/etc/default/cdrecord
 -Default values can be set for the following options in /etc/default/cdrecord.
 +/etc/cdrecord.conf
-+Default values can be set for the following options in /etc/cdrecord.conf
++Default values can be set for the following options in /etc/cdrecord.conf .
++Note that this path has been changed from standard location in cdrtools
++distribution (/etc/default/cdrecord) to be consistent with other packages
++which don't use /etc/default directory in general.
  For example:
  .SM CDR_FIFOSIZE=8m
  or
-@@ -1427,7 +1427,7 @@
+@@ -1427,7 +1430,7 @@
  .TP
  CDR_DEVICE
  This may either hold a device identifier that is suitable to the open
