@@ -1,8 +1,8 @@
 Summary:	A command line CD/DVD-Recorder
-Summary(pt_BR):	Um programa de gravaГЦo de CD/DVD.
-Summary(es):	Un programa de grabaciСn de CD/DVD.
+Summary(pt_BR):	Um programa de gravaГЦo de CD/DVD
+Summary(es):	Un programa de grabaciСn de CD/DVD
 Summary(pl):	Program do nagrywania pЁyt CD/DVD
-Summary(pt_BR):	Um programa de gravaГЦo de CD/DVD.
+Summary(pt_BR):	Um programa de gravaГЦo de CD/DVD
 Summary(ru):	Программа для записи CD/DVD, запускаемая из командной строки
 Summary(uk):	Програма для запису CD/DVD, яка запуска╓ться з командно╖ стр╕чки
 Name:		cdrtools
@@ -22,8 +22,8 @@ URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/privat
 BuildRequires:	autoconf
 BuildRequires:	automake
 Provides:	cdrecord
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	cdrecord
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Cdrecord allows you to create CD's on a CD-Recorder (SCSI/ATAPI).
@@ -92,10 +92,10 @@ SCSI-устройства, похожим на драйвер scg.
 
 %package cdda2wav
 Summary:	Get WAV files from digital audio cd's
-Summary(es):	Crea archivos tipo WAV a partir de CDs de audio.
+Summary(es):	Crea archivos tipo WAV a partir de CDs de audio
 Summary(fr):	convertisseur CD-Audio->.wav
 Summary(pl):	Uzyskaj pliki WAV z cyfrowego kompaktu audio
-Summary(pt_BR):	Cria arquivos tipo WAV a partir de CDs de Аudio.
+Summary(pt_BR):	Cria arquivos tipo WAV a partir de CDs de Аudio
 Summary(ru):	Утилита для получения файлов .wav с digital audio CD
 Summary(uk):	Утил╕та для генерац╕╖ файл╕в .wav з digital audio CD
 Group:		Applications/Sound
@@ -149,10 +149,10 @@ Group:		Applications/System
 Obsoletes:	cdrecord-readcd
 
 %description readcd
-Read/Write data Compact Discs
+Read/Write data Compact Discs.
 
 %description readcd -l pl
-Odczytuje/Zapisuje dane z PЁyt Kompaktowych
+Odczytuje/Zapisuje dane z PЁyt Kompaktowych.
 
 %package utils
 Summary:	Dumping and verifying iso9660 images
