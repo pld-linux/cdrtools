@@ -1,0 +1,12 @@
+diff -Nura cdrtools-2.01/cdrecord/cdrecord.h cdrtools-2.01.new/cdrecord/cdrecord.h
+--- cdrtools-2.01/cdrecord/cdrecord.h	2004-05-25 00:36:01.000000000 +0200
++++ cdrtools-2.01.new/cdrecord/cdrecord.h	2004-06-12 11:13:13.000000000 +0200
+@@ -96,7 +96,7 @@
+ #define	CDR_MAX_BUF_SIZE	(256*1024)
+ 
+ #ifndef	MIN_GRACE_TIME
+-#define	MIN_GRACE_TIME	2		/* 2 seconds */
++#define	MIN_GRACE_TIME	0		/* 2 seconds */
+ #endif
+ #ifndef	GRACE_TIME
+ #define	GRACE_TIME	9		/* 9 seconds */
