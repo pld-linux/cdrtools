@@ -9,7 +9,7 @@ Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
 Source0:	ftp://ftp.fokus.gmd.de/pub/unix/cdrecord/%{name}-%{version}.tar.gz
-Source1:	ftp://ftp.kernel.org/pub/linux/kernel/people/hpa/zisofs/zisofs-tools-0.06.tar.gz
+Source1:	ftp://ftp.kernel.org/pub/linux/kernel/people/hpa/zisofs/zisofs-tools-1.0.1.tar.gz
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 Patch2:		%{name}-ac250.patch
@@ -120,13 +120,13 @@ plików ISO9660 potrzebnych do tworzenia p³yt CD-ROM.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-patch -p1 < zisofs-tools-0.06/cdrtools-1.10-zisofs.diff
+patch -p1 < zisofs-tools-1.0.1/cdrtools-1.10-zisofs.diff
 
 %build
 (cd conf; autoconf)
 CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" ./Gmake.linux
 
-cd zisofs-tools-0.06
+cd zisofs-tools-1.0.1
 %{__make} CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}"
 
 %install
@@ -149,8 +149,8 @@ echo "man8/isoinfo.so" >	$RPM_BUILD_ROOT%{_mandir}/man8/devdump.8
 echo "man8/isoinfo.so" >        $RPM_BUILD_ROOT%{_mandir}/man8/isovfy.8
 echo "man8/isoinfo.so" >        $RPM_BUILD_ROOT%{_mandir}/man8/isodump.8
 
-install zisofs-tools-0.06/mkzftree $RPM_BUILD_ROOT%{_bindir}
-cp -f zisofs-tools-0.06/README README.zisofs
+install zisofs-tools-1.0.1/mkzftree $RPM_BUILD_ROOT%{_bindir}
+cp -f zisofs-tools-1.0.1/README README.zisofs
 
 gzip -9nf AN-%{version} doc/cdrecord.ps Changelog README README.ATAPI \
 	README.WORM README.audio README.cdplus README.cdrw README.linux \
