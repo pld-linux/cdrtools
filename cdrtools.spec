@@ -1,8 +1,10 @@
+# --without	zisofs		don;t build zisofs support (compressed isofs)
+
 Summary:	A command line CD/DVD-Recorder
 Summary(pl):	Program do nagrywania p³yt CD/DVD
 Name:		cdrtools
 Version:	1.11a21
-Release:	0
+Release:	0.1
 Epoch:		2
 License:	GPL
 Group:		Applications/System
@@ -11,10 +13,13 @@ Source0:	ftp://ftp.fokus.gmd.de/pub/unix/cdrecord/alpha/%{name}-%{version}.tar.g
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 Patch2:		%{name}-ac250.patch
+# patch from zisofs-tools distribution
+%{!?_without_zisofs:Patch3:	%{name}-zisofs.patch}
 URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/cdrecord.html
 BuildRequires:	autoconf
 Obsoletes:	cdrecord
 Provides:	cdrecord
+%{!?_without_zisofs:Requires:	zisofs-tools}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -110,6 +115,7 @@ chmod +w -R *
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%{!?_without_zisofs:%patch3 -p1}
 
 %build
 cd conf
@@ -198,9 +204,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files mkisofs
 %defattr(644,root,root,755)
-#%doc README.zisofs*
 %{_mandir}/man8/mkisofs.8*
 %{_mandir}/man8/mkhybrid.8*
 %attr(755,root,root) %{_bindir}/mkisofs
 %attr(755,root,root) %{_bindir}/mkhybrid
-#%attr(755,root,root) %{_bindir}/mkzftree
