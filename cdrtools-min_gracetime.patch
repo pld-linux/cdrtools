@@ -6,7 +6,7 @@ diff -Nura cdrtools-2.01/cdrecord/cdrecord.h cdrtools-2.01.new/cdrecord/cdrecord
  
  #ifndef	MIN_GRACE_TIME
 -#define	MIN_GRACE_TIME	2		/* 2 seconds */
-+#define	MIN_GRACE_TIME	0		/* 2 seconds */
++#define	MIN_GRACE_TIME	0		/* no delay */
  #endif
  #ifndef	GRACE_TIME
  #define	GRACE_TIME	9		/* 9 seconds */
