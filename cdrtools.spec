@@ -223,6 +223,8 @@ chmod +w -R *
 %patch3 -p1
 %patch4 -p1
 
+ln -sf i586-linux-gcc.rul RULES/x86_64-linux-gcc.rul
+
 %build
 cd conf
 	cp xconfig.h.in xconfig.h.in.org
