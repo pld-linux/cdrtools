@@ -76,8 +76,8 @@ Read/Write data Compact Discs
 Odczytuje/Zapisuje dane z P³yt Kompaktowych
 
 %package utils
-Summary:	Dumping and verifying iso9660 images.
-Summary(pl):	Zrzucanie i weryfikacja obrazów iso9660.
+Summary:	Dumping and verifying iso9660 images
+Summary(pl):	Zrzucanie i weryfikacja obrazów iso9660
 Group:		Applications/System
 
 %description utils
