@@ -265,9 +265,8 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AN-* doc/cdrecord.ps Changelog README README.ATAPI README.DiskT@2
-%doc README.WORM README.audio README.cdplus README.cdtext README.cdrw
-%doc README.copy README.linux README.mkisofs README.multi README.parallel
-%doc README.raw README.rscsi README.sony README.verify make_diskt@2.sh
+%doc README.{WORM,audio,cdplus,cdtext,cdrw,clone,copy,linux,mkisofs,multi}
+%doc README.{parallel,raw,rscsi,sony,verify} make_diskt@2.sh
 %doc cdrecord/cdrecord.dfl cdrecord/LICENSE
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/cdrecord.conf
 %attr(755,root,root) %{_bindir}/cdrecord
