@@ -228,13 +228,16 @@ ln -sf i586-linux-cc.rul RULES/x86_64-linux-cc.rul
 
 %build
 cd conf
-	cp xconfig.h.in xconfig.h.in.org
-	sed -e 's#/\*.*\*/##g' xconfig.h.in.org > xconfig.h.in
-	rm -f acgeneral.m4 acspecific.m4 autoheader.m4 acoldnames.m4 autoconf.m4
-	# don't run aclocal, aclocal.m4 contains only local defs
-	%{__autoconf}
+cp -f /usr/share/automake/config.* .
+cp xconfig.h.in xconfig.h.in.org
+sed -e 's#/\*.*\*/##g' xconfig.h.in.org > xconfig.h.in
+rm -f acgeneral.m4 acspecific.m4 autoheader.m4 acoldnames.m4 autoconf.m4
+# don't run aclocal, aclocal.m4 contains only local defs
+%{__autoconf}
 cd ..
-CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" ./Gmake.linux
+CFLAGS="%{rpmcflags}" \
+LDFLAGS="%{rpmldflags}" \
+./Gmake.linux
 
 %install
 rm -rf $RPM_BUILD_ROOT
