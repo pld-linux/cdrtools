@@ -224,6 +224,7 @@ chmod +w -R *
 %patch4 -p1
 
 ln -sf i586-linux-gcc.rul RULES/x86_64-linux-gcc.rul
+ln -sf i586-linux-cc.rul RULES/x86_64-linux-cc.rul
 
 %build
 cd conf
