@@ -11,6 +11,7 @@ Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 Patch2:		%{name}-silo.patch
 Patch3:		%{name}-man.patch
+Patch4:		%{name}-u8-type.aptch
 URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/cdrecord.html
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -114,6 +115,7 @@ chmod +w -R *
 %patch2 -p1
 %endif
 %patch3 -p1
+%patch4 -p1
 
 %build
 cd conf
