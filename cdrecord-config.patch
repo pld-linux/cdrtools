@@ -1,65 +1,6 @@
---- cdrecord-1.8/include/deflts.h.redhat	Sat Dec  5 08:04:18 1998
-+++ cdrecord-1.8/include/deflts.h	Mon Sep 20 11:38:23 1999
-@@ -27,7 +27,7 @@
- #include <mconfig.h>
- #endif
- 
--#define	DEFLT	"/etc/default"
-+#define	DEFLT	"/etc"
- 
- /*
-  * cmd's to defltcntl()
---- cdrecord-1.8/doc/cdrecord.man.redhat	Tue Sep  7 12:56:07 1999
-+++ cdrecord-1.8/doc/cdrecord.man	Mon Sep 20 11:39:18 1999
-@@ -51,7 +51,7 @@
-        try the --ssccaannbbuuss option of ccddrreeccoorrdd described below.
- 
- 
--       If  a  file /etc/default/cdrecord exists, the parameter to
-+       If  a  file /etc/cdrecord.conf exists, the parameter to
-        the ddeevv== option may also be a drive  name  label  in  said
-        file (see FILES section).
- 
-@@ -356,7 +356,7 @@
-               If the argument to the ddeevv== option does not contain
-               the characters ',', '/', '@' or ':', it  is  inter­
-               preted  as  an  label name that may be found in the
--              file /etc/default/cdrecord (see FILES section).
-+              file /etc/cdrecord.conf (see FILES section).
- 
-        ttiimmeeoouutt==_#
-               Set the default SCSI command timeout  value  to  _#.
-@@ -844,7 +844,7 @@
-               This  may  either  hold a device identifier that is
-               suitable to the open call  of  the  SCSI  transport
-               library     or     a     label    in    the    file
--              /etc/default/cdrecord.
-+              /etc/cdrecord.conf.
- 
-        CDR_SPEED
-               Sets the default speed value for writing (see  also
-@@ -868,16 +868,16 @@
- 
- 
- FFIILLEESS
--       /etc/default/cdrecord
-+       /etc/cdrecord.conf
-               Default values can be set for the following options
--              in  /etc/default/cdrecord.  For example: CDR_FIFOS­
-+              in  /etc/cdrecord.conf.  For example: CDR_FIFOS­
-               IZE=8m or CDR_SPEED=2
- 
-               CDR_DEVICE
-                      This may either  hold  a  device  identifier
-                      that  is  suitable  to  the open call of the
-                      SCSI transport library or  a  label  in  the
--                     file  /etc/default/cdrecord  that  allows to
-+                     file  /etc/cdrecord.conf  that  allows to
-                      identify a specific drive on the system.
- 
-               CDR_SPEED
---- cdrecord-1.8/cdrecord/cdrecord.1.redhat	Tue Sep  7 09:46:06 1999
-+++ cdrecord-1.8/cdrecord/cdrecord.1	Mon Sep 20 11:38:23 1999
+diff -urN cdrecord-1.8/cdrecord/cdrecord.1 cdrecord-1.8.new/cdrecord/cdrecord.1
+--- cdrecord-1.8/cdrecord/cdrecord.1	Wed Dec 29 00:34:41 1999
++++ cdrecord-1.8.new/cdrecord/cdrecord.1	Sat Feb 19 13:16:43 2000
 @@ -118,7 +118,7 @@
  described below.
  
@@ -78,7 +19,7 @@
  .TP
  .BI timeout= #
  Set the default SCSI command timeout value to 
-@@ -922,7 +922,7 @@
+@@ -923,7 +923,7 @@
  .TP
  CDR_DEVICE
  This may either hold a device identifier that is suitable to the open
@@ -87,7 +28,7 @@
  .TP
  CDR_SPEED
  Sets the default speed value for writing (see also 
-@@ -936,8 +936,8 @@
+@@ -937,8 +937,8 @@
  
  .SH FILES
  .TP
@@ -98,7 +39,7 @@
  For example:
  .SM CDR_FIFOSIZE=8m
  or
-@@ -946,7 +946,7 @@
+@@ -947,7 +947,7 @@
  .TP
  CDR_DEVICE
  This may either hold a device identifier that is suitable to the open
@@ -107,8 +48,32 @@
  that allows to identify a specific drive on the system.
  .TP
  CDR_SPEED
---- cdrecord-1.8/cdrecord/defaults.c.redhat	Sun Apr 18 14:04:16 1999
-+++ cdrecord-1.8/cdrecord/defaults.c	Mon Sep 20 11:38:23 1999
+diff -urN cdrecord-1.8/cdrecord/cdrecord.dfl cdrecord-1.8.new/cdrecord/cdrecord.dfl
+--- cdrecord-1.8/cdrecord/cdrecord.dfl	Sun Dec  6 12:24:01 1998
++++ cdrecord-1.8.new/cdrecord/cdrecord.dfl	Sat Feb 19 13:16:43 2000
+@@ -1,6 +1,6 @@
+ #ident @(#)cdrecord.dfl	1.1 98/12/06 Copyr 1998 J. Schilling
+ #
+-# This file is /etc/default/cdrecord
++# This file is /etc/cdrecord.conf
+ # It contains defaults that are used if no command line option
+ # or environment is present.
+ # 
+@@ -25,7 +25,7 @@
+ #
+ # drive name	device	speed	fifosize
+ #
+-teac=		1,3,0	-1	-1
+-panasonic=	1,4,0	-1	-1
+-yamaha=		1,5,0	-1	-1
+-cdrom=		0,6,0	2	1m
++#teac=		1,3,0	-1	-1
++#panasonic=	1,4,0	-1	-1
++#yamaha=		1,5,0	-1	-1
++#cdrom=		0,6,0	2	1m
+diff -urN cdrecord-1.8/cdrecord/defaults.c cdrecord-1.8.new/cdrecord/defaults.c
+--- cdrecord-1.8/cdrecord/defaults.c	Thu Jan 13 01:11:46 2000
++++ cdrecord-1.8.new/cdrecord/defaults.c	Sat Feb 19 13:19:21 2000
 @@ -32,6 +32,8 @@
  #include <utypes.h>
  #include "cdrecord.h"
@@ -119,11 +84,11 @@
  LOCAL	void	cdr_xdefaults	__PR((char **devp, int *speedp, long *fsp));
  LOCAL	char *	strsv		__PR((char* s));
 @@ -49,7 +51,7 @@
- 	if (!dev)
- 		*devp = getenv("CDR_DEVICE");
  	if (!dev) {
--		if (defltopen("/etc/default/cdrecord") == 0) {
-+		if (defltopen(DEFAULT_CONFIG) == 0) {
+ 		*devp = getenv("CDR_DEVICE");
+ 
+-		if (!*devp && defltopen("/etc/default/cdrecord") == 0) {
++		if (!*devp && defltopen(DEFAULT_CONFIG) == 0) {
  			dev = defltread("CDR_DEVICE=");
  			if (dev != NULL)
  				*devp = strsv(dev);
@@ -154,25 +119,65 @@
  		return;
  
  	p = defltread(dname);
---- cdrecord-1.8/cdrecord/cdrecord.dfl.redhat	Sun Dec  6 06:24:01 1998
-+++ cdrecord-1.8/cdrecord/cdrecord.dfl	Mon Sep 20 11:38:23 1999
-@@ -1,6 +1,6 @@
- #ident @(#)cdrecord.dfl	1.1 98/12/06 Copyr 1998 J. Schilling
- #
--# This file is /etc/default/cdrecord
-+# This file is /etc/cdrecord.conf
- # It contains defaults that are used if no command line option
- # or environment is present.
- # 
-@@ -25,7 +25,7 @@
- #
- # drive name	device	speed	fifosize
- #
--teac=		1,3,0	-1	-1
--panasonic=	1,4,0	-1	-1
--yamaha=		1,5,0	-1	-1
--cdrom=		0,6,0	2	1m
-+#teac=		1,3,0	-1	-1
-+#panasonic=	1,4,0	-1	-1
-+#yamaha=		1,5,0	-1	-1
-+#cdrom=		0,6,0	2	1m
+diff -urN cdrecord-1.8/doc/cdrecord.man cdrecord-1.8.new/doc/cdrecord.man
+--- cdrecord-1.8/doc/cdrecord.man	Wed Dec 29 14:50:11 1999
++++ cdrecord-1.8.new/doc/cdrecord.man	Sat Feb 19 13:18:30 2000
+@@ -50,7 +50,7 @@
+      the ----ssssccccaaaannnnbbbbuuuussss option of ccccddddrrrreeeeccccoooorrrrdddd described below.
+ 
+ 
+-     If a file /etc/default/cdrecord exists, the parameter to the
++     If a file /etc/cdrecord.conf exists, the parameter to the
+      ddddeeeevvvv==== option may also be a drive name label in said file (see
+      FILES section).
+ 
+@@ -358,7 +358,7 @@
+           If the argument to the ddddeeeevvvv==== option does not contain the
+           characters  ',',  '/', '@' or ':', it is interpreted as
+           an  label  name  that  may  be  found   in   the   file
+-          /etc/default/cdrecord (see FILES section).
++          /etc/cdrecord.conf (see FILES section).
+ 
+      ttttiiiimmmmeeeeoooouuuutttt====#
+           Set the default SCSI command timeout value to  #.   The
+@@ -848,7 +848,7 @@
+      CDR_DEVICE
+           This may either hold a device identifier that is  suit-
+           able  to the open call of the SCSI transport library or
+-          a label in the file /etc/default/cdrecord.
++          a label in the file /etc/cdrecord.conf.
+ 
+ 
+ 
+@@ -873,16 +873,16 @@
+ 
+ 
+ FFFFIIIILLLLEEEESSSS
+-     /etc/default/cdrecord
++     /etc/cdrecord.conf
+           Default values can be set for the following options  in
+-          /etc/default/cdrecord.   For  example:  CDR_FIFOSIZE=8m
++          /etc/cdrecord.conf.   For  example:  CDR_FIFOSIZE=8m
+           or CDR_SPEED=2
+ 
+           CDR_DEVICE
+                This may either hold a device identifier  that  is
+                suitable  to  the  open call of the SCSI transport
+                library    or    a    label    in     the     file
+-               /etc/default/cdrecord  that  allows  to identify a
++               /etc/cdrecord.conf  that  allows  to identify a
+                specific drive on the system.
+ 
+           CDR_SPEED
+diff -urN cdrecord-1.8/include/deflts.h cdrecord-1.8.new/include/deflts.h
+--- cdrecord-1.8/include/deflts.h	Sat Dec  5 14:04:18 1998
++++ cdrecord-1.8.new/include/deflts.h	Sat Feb 19 13:16:43 2000
+@@ -27,7 +27,7 @@
+ #include <mconfig.h>
+ #endif
+ 
+-#define	DEFLT	"/etc/default"
++#define	DEFLT	"/etc"
+ 
+ /*
+  * cmd's to defltcntl()
