@@ -60,7 +60,7 @@ cd data in digital form to your host. Data can be dumped into wav or
 sun format sound files. Options control the recording format
 (stereo/mono; 8,12,16 bits; different rates).
 
-%description -l pl cdda2wav
+%description cdda2wav -l pl
 Narzêdzie do zczytywania danych z napêdów cdrom, które s± w stanie
 wysy³aæ strumieñ audio. Dane mog± zostaæ zapisane w formacie plików
 wav lub suna.
@@ -73,7 +73,7 @@ Group:		Applications/System
 %description readcd
 Read/Write data Compact Discs
 
-%description -l pl readcd
+%description readcd -l pl
 Odczytuje/Zapisuje dane z P³yt Kompaktowych
 
 %package utils
@@ -84,7 +84,7 @@ Group:		Applications/System
 %description utils
 Utility programs for dumping and verifying iso9660 images.
 
-%description -l pl utils
+%description utils -l pl
 Narzêdzia do zrzucania i weryfikacji obrazów iso9660.
 
 %package mkisofs
@@ -101,7 +101,7 @@ Obsoletes:	mkisofs
 This is the mkisofs package. It is used to create ISO 9660 file system
 images for creating CD-ROMs.
 
-%description -l pl mkisofs
+%description mkisofs -l pl
 To jest pakiet mkisofs. Jest on u¿ywany do tworzenia obrazów systemów
 plików ISO9660 potrzebnych do tworzenia p³yt CD-ROM.
 
