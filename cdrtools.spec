@@ -227,6 +227,9 @@ ln -sf i586-linux-cc.rul RULES/x86_64-linux-cc.rul
 %{__perl} -pi -e 's/^(INSDIR=.*)lib/$1%{_lib}/' \
 	libfile/Makefile libhfs_iso/Makefile lib*/*.mk
 
+# kill annoying beep and sleep
+%{__perl} -pi -e 's/^__gmake_warn.*//' RULES/mk-gmake.id
+
 %build
 cd conf
 cp -f /usr/share/automake/config.* .
