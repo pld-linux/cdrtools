@@ -158,12 +158,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%{_libdir}/libdeflt.a
-%{_libdir}/libscg.a
-%{_libdir}/libschily.a
+%{_libdir}/lib*.a
 %{_includedir}/schily
 %{_includedir}/*.h
-%{_mandir}/man1/scgcheck.1*
+#%attr(755,root,root) %{_bindir}/scgcheck
+#%{_mandir}/man1/scgcheck.1*
 
 %files cdda2wav
 %defattr(644,root,root,755)
