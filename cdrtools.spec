@@ -21,9 +21,9 @@ Patch4:		%{name}-u8-type.aptch
 URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/cdrecord.html
 BuildRequires:	autoconf
 BuildRequires:	automake
-Obsoletes:	cdrecord
 Provides:	cdrecord
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+Obsoletes:	cdrecord
 
 %description
 Cdrecord allows you to create CD's on a CD-Recorder (SCSI/ATAPI).
@@ -226,11 +226,11 @@ chmod +w -R *
 
 %build
 cd conf
-cp xconfig.h.in xconfig.h.in.org
-sed -e 's#/\*.*\*/##g' xconfig.h.in.org > xconfig.h.in
-rm -f acgeneral.m4 acspecific.m4 autoheader.m4 acoldnames.m4 autoconf.m4
-%{__aclocal}
-%{__autoconf}
+	cp xconfig.h.in xconfig.h.in.org
+	sed -e 's#/\*.*\*/##g' xconfig.h.in.org > xconfig.h.in
+	rm -f acgeneral.m4 acspecific.m4 autoheader.m4 acoldnames.m4 autoconf.m4
+	%{__aclocal}
+	%{__autoconf}
 cd ..
 CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" ./Gmake.linux
 
@@ -299,29 +299,29 @@ rm -rf $RPM_BUILD_ROOT
 
 %files readcd
 %defattr(644,root,root,755)
-%{_mandir}/man1/readcd.1*
 %attr(755,root,root) %{_bindir}/readcd
+%{_mandir}/man1/readcd.1*
 
 %files utils
 %defattr(644,root,root,755)
-%{_mandir}/man8/isoinfo.8*
-%{_mandir}/man8/devdump.8*
-%{_mandir}/man8/isovfy.8*
-%{_mandir}/man8/isodump.8*
 %attr(755,root,root) %{_bindir}/devdump
 %attr(755,root,root) %{_bindir}/isodebug
 %attr(755,root,root) %{_bindir}/isoinfo
 %attr(755,root,root) %{_bindir}/isovfy
 %attr(755,root,root) %{_bindir}/isodump
+%{_mandir}/man8/isoinfo.8*
+%{_mandir}/man8/devdump.8*
+%{_mandir}/man8/isovfy.8*
+%{_mandir}/man8/isodump.8*
 
 %files mkisofs
 %defattr(644,root,root,755)
-%{_mandir}/man8/mkisofs.8*
-%{_mandir}/man8/mkhybrid.8*
-%attr(755,root,root) %{_bindir}/mkisofs
-%attr(755,root,root) %{_bindir}/mkhybrid
 %doc mkisofs/README.compression mkisofs/README.eltorito mkisofs/README
 %doc mkisofs/README.graft_dirs mkisofs/README.hfs_boot mkisofs/README.hfs_magic
 %doc mkisofs/README.hide mkisofs/README.joliet mkisofs/README.mkhybrid
 %doc mkisofs/README.prep_boot mkisofs/README.rootinfo mkisofs/README.session
 %doc mkisofs/README.sort mkisofs/README.sparcboot
+%attr(755,root,root) %{_bindir}/mkisofs
+%attr(755,root,root) %{_bindir}/mkhybrid
+%{_mandir}/man8/mkisofs.8*
+%{_mandir}/man8/mkhybrid.8*
