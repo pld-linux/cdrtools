@@ -1,619 +1,627 @@
---- cdrtools-2.01/mkisofs/Makefile.orig	Sat Mar  1 23:44:58 2003
-+++ cdrtools-2.01/mkisofs/Makefile	Mon Mar 10 20:59:39 2003
+diff -urN cdrtools-2.01.silo/mkisofs/defaults.h cdrtools-2.01/mkisofs/defaults.h
+--- cdrtools-2.01.silo/mkisofs/defaults.h	2003-06-14 12:25:29.000000000 +0000
++++ cdrtools-2.01/mkisofs/defaults.h	2001-04-03 20:33:26.000000000 +0000
+@@ -22,10 +22,6 @@
+ #define  VOLUME_ID_DEFAULT 	"CDROM"
+ #define  BOOT_CATALOG_DEFAULT   "boot.catalog"
+ #define  BOOT_IMAGE_DEFAULT     NULL
+-#define  SILO_BOOT_IMAGE_DEFAULT "boot/second.b"
+-#define  SILO_BOOTBLOCK_DEFAULT	"boot/cd.b"
+-#define  SILO_CONF_FILE_DEFAULT	"/etc/silo.conf"
+-
+ #ifdef APPLE_HYB
+ #define  APPLE_TYPE_DEFAULT	"TEXT"
+ #define  APPLE_CREATOR_DEFAULT	"unix"
+diff -urN cdrtools-2.01.silo/mkisofs/Makefile cdrtools-2.01/mkisofs/Makefile
+--- cdrtools-2.01.silo/mkisofs/Makefile	2003-06-14 12:25:29.000000000 +0000
++++ cdrtools-2.01/mkisofs/Makefile	2003-03-01 22:44:58.000000000 +0000
 @@ -41,7 +41,7 @@
  		getopt.c getopt1.c \
  		scsi.c \
  		scsi_cdr.c cd_misc.c \
--		modes.c \
-+		modes.c silo.c \
+-		modes.c silo.c \
++		modes.c \
  		apple.c volume.c desktop.c mac_label.c stream.c \
  		ifo_read.c dvd_file.c dvd_reader.c
  HFILES=		apple.h bootinfo.h config.h defaults.h diskmbr.h exclude.h \
---- cdrtools-1.10/mkisofs/defaults.h
-+++ cdrtools-1.10/mkisofs/defaults.h
-@@ -22,6 +22,10 @@
- #define  VOLUME_ID_DEFAULT 	"CDROM"
- #define  BOOT_CATALOG_DEFAULT   "boot.catalog"
- #define  BOOT_IMAGE_DEFAULT     NULL
-+#define  SILO_BOOT_IMAGE_DEFAULT "boot/second.b"
-+#define  SILO_BOOTBLOCK_DEFAULT	"boot/cd.b"
-+#define  SILO_CONF_FILE_DEFAULT	"/etc/silo.conf"
-+
- #ifdef APPLE_HYB
- #define  APPLE_TYPE_DEFAULT	"TEXT"
- #define  APPLE_CREATOR_DEFAULT	"unix"
---- cdrtools-1.10/mkisofs/mkisofs.8
-+++ cdrtools-1.10/mkisofs/mkisofs.8
-@@ -1272,6 +1280,25 @@
- .B \&.m\&kisofsrc
+diff -urN cdrtools-2.01.silo/mkisofs/mkisofs.8 cdrtools-2.01/mkisofs/mkisofs.8
+--- cdrtools-2.01.silo/mkisofs/mkisofs.8	2003-06-14 12:25:29.000000000 +0000
++++ cdrtools-2.01/mkisofs/mkisofs.8	2003-04-27 22:44:30.000000000 +0000
+@@ -972,25 +972,6 @@
  with SYSI=system_id.
  If specified in both places, the command line version is used.
-+.TP
-+.BI \-s " silo_conf_file
-+Specifies the path and filename of the SILO configuration file to be
-+used when making a "SILO" bootable CD. The pathname must be relative to the
-+source path specified to
-+.B mkisofs
-+and start with a slash.
-+The default is
-+.I /etc/silo.conf
-+See SILO documentation for the syntax of this file.
-+.TP
-+.BI \-S " silo_bootblock
-+Specifies the path and filename of the SILO first stage boot image to be
-+used when making a "SILO" bootable CD. The pathname must be relative to the
-+source path specified to
-+.B mkisofs.
-+The default is
-+.I boot/cd.b
-+The boot image must come from SILO 0.8.7 and higher.
  .TP
+-.BI \-s " silo_conf_file
+-Specifies the path and filename of the SILO configuration file to be
+-used when making a "SILO" bootable CD. The pathname must be relative to the
+-source path specified to
+-.B mkisofs
+-and start with a slash.
+-The default is
+-.I /etc/silo.conf
+-See SILO documentation for the syntax of this file.
+-.TP
+-.BI \-S " silo_bootblock
+-Specifies the path and filename of the SILO first stage boot image to be
+-used when making a "SILO" bootable CD. The pathname must be relative to the
+-source path specified to
+-.B mkisofs.
+-The default is
+-.I boot/cd.b
+-The boot image must come from SILO 0.8.7 and higher.
+-.TP
  .B \-T
  Generate a file TRANS.TBL in each directory on the CDROM, which can be used
---- cdrtools-2.01/mkisofs/mkisofs.c.orig	Sun Mar  2 17:28:33 2003
-+++ cdrtools-2.01/mkisofs/mkisofs.c	Mon Mar 10 21:21:18 2003
-@@ -98,6 +98,7 @@
+ on non-Rock Ridge capable systems to help establish the correct file names.
+diff -urN cdrtools-2.01.silo/mkisofs/mkisofs.c cdrtools-2.01/mkisofs/mkisofs.c
+--- cdrtools-2.01.silo/mkisofs/mkisofs.c	2003-06-14 12:25:29.000000000 +0000
++++ cdrtools-2.01/mkisofs/mkisofs.c	2003-04-29 22:19:33.000000000 +0000
+@@ -101,7 +101,6 @@
  int	verbose = 1;
  int	debug = 0;
  int	gui = 0;
-+int	use_silo = 0;
+-int	use_silo = 0;
  int	all_files = 1;	/* New default is to include all files */
  int	follow_links = 0;
  #ifdef	IS_CYGWIN
-@@ -133,6 +134,10 @@
+@@ -137,10 +136,6 @@
  char	*boot_catalog = BOOT_CATALOG_DEFAULT;
  char	*boot_image = BOOT_IMAGE_DEFAULT;
  char	*genboot_image = BOOT_IMAGE_DEFAULT;
-+char    *silo_boot_image = SILO_BOOT_IMAGE_DEFAULT;
-+char    *silo_bootblock = SILO_BOOTBLOCK_DEFAULT;
-+char    *silo_conf_file = SILO_CONF_FILE_DEFAULT;
-+
+-char    *silo_boot_image = SILO_BOOT_IMAGE_DEFAULT;
+-char    *silo_bootblock = SILO_BOOTBLOCK_DEFAULT;
+-char    *silo_conf_file = SILO_CONF_FILE_DEFAULT;
+-
  int	ucs_level = 3;		/* We now have Unicode tables so use level 3 */
  int	volume_set_size = 1;
  int	volume_sequence_number = 1;
-@@ -408,6 +413,8 @@
+@@ -419,8 +414,6 @@
  
  #endif	/* APPLE_HYB */
  
-+#define OPTION_SILO_BOOT		2200
-+
+-#define OPTION_SILO_BOOT		2200
+-
  static int	save_pname = 0;
  
  static const struct ld_option ld_options[] =
-@@ -440,6 +447,8 @@
+@@ -453,8 +446,6 @@
  	'\0', NULL, "Start specifying alternative El Torito boot parameters", ONE_DASH},
  	{{"sparc-boot", required_argument, NULL, 'B'},
  	'B', "FILES", "Set sparc boot image names", ONE_DASH},
-+	{{"silo-boot", required_argument, NULL, OPTION_SILO_BOOT},
-+	'\0', "FILE", "Set SILO second stage boot image name" , ONE_DASH },
+-	{{"silo-boot", required_argument, NULL, OPTION_SILO_BOOT},
+-	'\0', "FILE", "Set SILO second stage boot image name" , ONE_DASH },
  	{{"generic-boot", required_argument, NULL, 'G'},
  	'G', "FILE", "Set generic boot image name", ONE_DASH},
  	{{"sparc-label", required_argument, NULL, OPTION_SPARCLABEL},
-@@ -548,7 +557,10 @@
+@@ -565,10 +556,7 @@
  	{ {"sort", required_argument, NULL, OPTION_SORT},
- 	'\0', "FILE", "Sort file content locations according to rules in FILE" , ONE_DASH },
+ 	'\0', "FILE", "Sort file content locations according to rules in FILE", ONE_DASH },
  #endif /* SORTING */
--
-+	{ {"silo-conf-file", required_argument, NULL, 's'},
-+	  's', "FILE", "Set name of SILO configuration file on the CD", ONE_DASH },
-+	{ {"silo-bootblock", required_argument, NULL, 'S'},
-+	  'S', "FILE", "Set SILO first stage bootblock image name", ONE_DASH },
+-	{ {"silo-conf-file", required_argument, NULL, 's'},
+-	  's', "FILE", "Set name of SILO configuration file on the CD", ONE_DASH },
+-	{ {"silo-bootblock", required_argument, NULL, 'S'},
+-	  'S', "FILE", "Set SILO first stage bootblock image name", ONE_DASH },
++
  	{{"split-output", no_argument, NULL, OPTION_SPLIT_OUTPUT},
  	'\0', NULL, "Split output into files of approx. 1GB size", ONE_DASH},
  	{{"stream-file-name", required_argument, NULL, OPTION_STREAM_FILE_NAME},
-@@ -1362,6 +1374,34 @@
+@@ -1387,34 +1375,6 @@
  #endif
  			}
  			break;
-+		  case OPTION_SILO_BOOT:
-+		    use_silo++;
-+		    silo_boot_image = optarg;  /* pathname of the boot image on cd */
-+		    if (silo_boot_image == NULL) {
-+		      fprintf(stderr,"Required boot image pathname missing\n");
-+		      exit(1);
-+		    }
-+		    break;
-+		  case 'S':
-+		    use_silo++;
-+		    silo_bootblock = optarg;  /* pathname of the boot image on cd */
-+		    if (silo_bootblock == NULL) {
-+		      fprintf(stderr,"Required bootblock pathname missing\n");
-+		      exit(1);
-+		    }
-+		    break;
-+		  case 's':
-+		    use_silo++;
-+		    silo_conf_file = optarg;  /* pathname of the boot image on cd */
-+		    if (silo_conf_file == NULL) {
-+		      fprintf(stderr,"Required SILO config file pathname missing\n");
-+		      exit(1);
-+		    }
-+		    if (*silo_conf_file != '/') {
-+		      fprintf(stderr,"SILO config file pathname must start with /\n");
-+		      exit(1);
-+		    }
-+		    break;
+-		  case OPTION_SILO_BOOT:
+-		    use_silo++;
+-		    silo_boot_image = optarg;  /* pathname of the boot image on cd */
+-		    if (silo_boot_image == NULL) {
+-		      fprintf(stderr,"Required boot image pathname missing\n");
+-		      exit(1);
+-		    }
+-		    break;
+-		  case 'S':
+-		    use_silo++;
+-		    silo_bootblock = optarg;  /* pathname of the boot image on cd */
+-		    if (silo_bootblock == NULL) {
+-		      fprintf(stderr,"Required bootblock pathname missing\n");
+-		      exit(1);
+-		    }
+-		    break;
+-		  case 's':
+-		    use_silo++;
+-		    silo_conf_file = optarg;  /* pathname of the boot image on cd */
+-		    if (silo_conf_file == NULL) {
+-		      fprintf(stderr,"Required SILO config file pathname missing\n");
+-		      exit(1);
+-		    }
+-		    if (*silo_conf_file != '/') {
+-		      fprintf(stderr,"SILO config file pathname must start with /\n");
+-		      exit(1);
+-		    }
+-		    break;
  		case OPTION_ABSTRACT:
  			abstract = optarg;
  			if (strlen(abstract) > 37) {
-@@ -3004,7 +3044,10 @@
+@@ -3087,10 +3047,7 @@
  		outputlist_insert(&sunlabel_desc);
  	if (use_genboot)
  		outputlist_insert(&genboot_desc);
--	outputlist_insert(&startpad_desc);
-+        if (use_silo)
-+ 		outputlist_insert(&silo_desc);
-+	else
-+		outputlist_insert(&padblock_desc);
+-        if (use_silo)
+- 		outputlist_insert(&silo_desc);
+-	else
+-		outputlist_insert(&padblock_desc);
++	outputlist_insert(&startpad_desc);
  
  	/* PVD for disc. */
  	outputlist_insert(&voldesc_desc);
---- cdrtools-2.01/mkisofs/mkisofs.h.orig	Fri Feb 28 01:30:36 2003
-+++ cdrtools-2.01/mkisofs/mkisofs.h	Mon Mar 10 21:22:48 2003
-@@ -167,6 +167,7 @@
+diff -urN cdrtools-2.01.silo/mkisofs/mkisofs.h cdrtools-2.01/mkisofs/mkisofs.h
+--- cdrtools-2.01.silo/mkisofs/mkisofs.h	2003-06-14 12:53:17.000000000 +0000
++++ cdrtools-2.01/mkisofs/mkisofs.h	2003-04-29 22:15:59.000000000 +0000
+@@ -168,7 +168,6 @@
  extern struct output_fragment *out_tail;
  
  extern struct output_fragment startpad_desc;
-+extern struct output_fragment silo_desc;
+-extern struct output_fragment silo_desc;
  extern struct output_fragment voldesc_desc;
  extern struct output_fragment xvoldesc_desc;
  extern struct output_fragment joliet_desc;
-@@ -268,8 +269,15 @@
+@@ -270,15 +269,8 @@
  	struct directory_entry *s_entry;
- 	unsigned int    pad;
+ 	unsigned int	pad;
  	off_t		off;
-+#ifdef __STDC__
-+        int           (*filter)(char *, int, int);
-+#else
-+	int           (*filter)();
-+#endif
+-#ifdef __STDC__
+-        int           (*filter)(char *, int, int);
+-#else
+-	int           (*filter)();
+-#endif
  };
  
-+extern struct deferred_write * dw_head, * dw_tail;
-+
+-extern struct deferred_write * dw_head, * dw_tail;
+-
  struct eltorito_boot_entry_info {
- 	struct eltorito_boot_entry_info *next; 
+ 	struct eltorito_boot_entry_info *next;
  	char		*boot_image;
-@@ -616,6 +624,9 @@
- extern char    *boot_catalog;
- extern char    *boot_image;
- extern char    *genboot_image;
-+extern char    *silo_boot_image;
-+extern char    *silo_bootblock;
-+extern char    *silo_conf_file;
+@@ -626,9 +618,6 @@
+ extern char	*boot_catalog;
+ extern char	*boot_image;
+ extern char	*genboot_image;
+-extern char	*silo_boot_image;
+-extern char	*silo_bootblock;
+-extern char	*silo_conf_file;
  extern int	ucs_level;
- extern int      volume_set_size;
- extern int      volume_sequence_number;
---- cdrtools-1.10/mkisofs/silo.c
-+++ cdrtools-1.10/mkisofs/silo.c
-@@ -0,0 +1,255 @@
-+/*
-+ * Program silo.c - Handle SILO bootable iso9660 CD-ROMs.
-+ * 
-+
-+   Copyright (C) 1999 Jakub Jelinek <jakub@redhat.com>.
-+
-+   This program is free software; you can redistribute it and/or modify
-+   it under the terms of the GNU General Public License as published by
-+   the Free Software Foundation; either version 2, or (at your option)
-+   any later version.
-+
-+   This program is distributed in the hope that it will be useful,
-+   but WITHOUT ANY WARRANTY; without even the implied warranty of
-+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+   GNU General Public License for more details.
-+
-+   You should have received a copy of the GNU General Public License
-+   along with this program; if not, write to the Free Software
-+   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.   */
-+
-+
-+static char rcsid[] ="$Id$";
-+
-+#include <mconfig.h>
-+#include <stdio.h>
-+#include <sys/types.h>
-+#include <sys/stat.h>
-+#include <unistd.h>
-+#include <fcntl.h>
-+#include <stdlib.h>
-+
-+#include "mkisofs.h"
-+#include "iso9660.h"
-+#include <schily.h>
-+
-+/* used by Win32 for opening binary file - not used by Unix */
-+#ifndef O_BINARY
-+#define O_BINARY 0
-+#endif /* O_BINARY */
-+
-+struct sun_disklabel {
-+    char	info[128];	/* Informative text string */
-+    char	spare0[14];
-+    struct sun_info {
-+	char	spare1;
-+	char	id;
-+	char	spare2;
-+	char	flags;
-+    } infos[8];
-+    char	spare1[246];	/* Boot information etc. */
-+    char	rspeed[2];      /* 722 - Disk rotational speed */
-+    char	pcylcount[2];   /* 722 - Physical cylinder count */
-+    char	sparecyl[2];    /* 722 - extra sects per cylinder */
-+    char	spare2[4];	/* More magic... */
-+    char	ilfact[2];      /* 722 - Interleave factor */
-+    char	ncyl[2];        /* 722 - Data cylinder count */
-+    char	nacyl[2];       /* 722 - Alt. cylinder count */
-+    char	ntrks[2];       /* 722 - Tracks per cylinder */
-+    char	nsect[2];       /* 722 - Sectors per track */
-+    char	spare3[4];	/* Even more magic... */
-+    struct sun_partition {
-+        char start_cylinder[4];	/* 732 */
-+	char num_sectors[4];	/* 732 */
-+    } partitions[8];
-+    char	magic[2];       /* 722 - Magic number */
-+    char	csum[2];        /* 722 - Label xor'd checksum */
-+    struct bootblock_header {
-+	char	magic[4];	/* 732 */
-+	char	aout[20];
-+	char	siloid[8];
-+	char	insn[16];
-+	char	extent[4];	/* 732 */
-+	char	size[4];	/* 732 */
-+	char	text[2048-512-56];
-+    } bootblock;
-+};
-+
-+static struct {
-+    char id;
-+    char conf_part;
-+    char part;
-+    char pad;
-+    char conf_file[256];
-+} silo_info;
-+
-+static int silo_size(int starting_extent)
-+{
-+    last_extent += 16;
-+    return 0;
-+}
-+
-+static int silo_filter(char * buffer, int size, int offset)
-+{
-+    if (offset < 0x808 + sizeof(silo_info)
-+	&& offset + size > 0x808)
-+    {
-+	int i;
-+	if (offset < 0x808)
-+	{
-+	    offset = 0x808 - offset;
-+	    size -= offset;
-+	    buffer += offset;
-+	    offset = 0;
-+	}
-+	else
-+	    offset -= 0x808;
-+	i = sizeof(silo_info) - offset;
-+	if (i > size) i = size;
-+	memcpy (buffer, ((char *)&silo_info) + offset, i);
-+    }
-+    return 0;
-+}
-+
-+static int silo_write(FILE * outfile)
-+{
-+    struct directory_entry      * de;
-+    struct directory_entry      * de2;
-+    struct deferred_write	* dwpnt;
-+    int bootblock, i, should_write;
-+    struct sun_disklabel	silo_bb;
-+    
-+    memset (&silo_bb, 0, sizeof (silo_bb));
-+    
-+    if (*silo_bootblock == '/') silo_bootblock++;
-+    if (*silo_boot_image == '/') silo_boot_image++;
-+
-+    /*
-+     * search from root of iso fs to find boot catalog 
-+     */
-+    de2 = search_tree_file(root, silo_bootblock);
-+    if (!de2) 
-+    {
-+	fprintf(stderr,"Uh oh, I cant find the SILO bootblock!\n");
-+	exit(1);
-+    }
-+
-+    /*
-+     * now read it from disk
-+     */
-+    bootblock = open(de2->whole_name, O_RDWR | O_BINARY);
-+    if (bootblock == -1) 
-+    {
-+	fprintf(stderr,"Error opening SILO bootblock for reading.\n");
-+	perror("");
-+	exit(1);
-+    }
-+    
-+    if (read (bootblock, (char *)&silo_bb.bootblock, 1024) != 1024)
-+    {
-+	fprintf(stderr,"Error reading SILO bootblock.\n");
-+	perror("");
-+	exit(1);
-+    }
-+
-+    close (bootblock);
-+
-+    if (get_732 (silo_bb.bootblock.magic) != 0x01030107
-+	|| strncmp (silo_bb.bootblock.siloid, "SILO", 4)
-+	|| silo_bb.bootblock.siloid[5] != '.'
-+	|| silo_bb.bootblock.siloid[4] < '0'
-+	|| silo_bb.bootblock.siloid[4] > '9'
-+	|| silo_bb.bootblock.siloid[6] < '0'
-+	|| silo_bb.bootblock.siloid[6] > '9'
-+	|| silo_bb.bootblock.siloid[7] < '0'
-+	|| silo_bb.bootblock.siloid[7] > '9')
-+    {
-+	fprintf(stderr,"Error: the file %s is not a valid SILO bootblock.\n", silo_bootblock);
-+	perror("");
-+	exit(1);
-+    }
-+    
-+    /* Check version number. Only SILO 0.87 and up is valid. */
-+    if (silo_bb.bootblock.siloid[4] == '0'
-+	&& (silo_bb.bootblock.siloid[6] < '8'
-+	    || (silo_bb.bootblock.siloid[6] == '8'
-+		&& silo_bb.bootblock.siloid[7] <= '6')))
-+    {
-+	fprintf(stderr,"Error: SILO bootblock is too old. Must be at least 0.8.7.\n");
-+	perror("");
-+	exit(1);
-+    }
-+
-+    /*
-+     * search from root of iso fs to find boot catalog 
-+     */
-+    de = search_tree_file(root, silo_boot_image);
-+    if (!de) 
-+    {
-+	fprintf(stderr,"Uh oh, I cant find the SILO boot image!\n");
-+	exit(1);
-+    }
-+
-+    /*
-+     * need to filter second.b, so that we can seed
-+     * silo.conf location and other stuff.
-+     * We could write it into the de->whole_name file,
-+     * but I prefer filtering it like this because
-+     * then the tree can be e.g. read only NFS mounted.
-+     */
-+    for (dwpnt = dw_head; dwpnt; dwpnt = dwpnt->next)
-+    {
-+	if (!dwpnt->name) continue;
-+	if (!strcmp (dwpnt->name, de->whole_name))
-+	    dwpnt->filter = silo_filter;
-+    }
-+
-+    set_732 (silo_bb.bootblock.extent, de->starting_block);
-+    set_732 (silo_bb.bootblock.size, de->size);
-+
-+    strcpy (silo_bb.info, "SPARC bootable CD-ROM: ");
-+    strcat (silo_bb.info, volume_id);
-+
-+    should_write = (last_extent - session_start) << 2;
-+
-+    /* Now some magic */
-+    silo_bb.spare0[3] = 1;
-+    silo_bb.spare0[13] = 8;
-+    for (i = 0; i < 8; i++) {
-+	silo_bb.infos[i].id = 0x83;
-+	silo_bb.infos[i].flags = 0x18;
-+    }
-+    set_732 (silo_bb.spare1 + 14, 0x600ddeee);
-+    set_722 (silo_bb.rspeed, 0x15e);
-+    set_722 (silo_bb.pcylcount, (should_write + 639) / 640);
-+    set_722 (silo_bb.ilfact, 1);
-+    set_722 (silo_bb.ncyl, (should_write + 639) / 640);
-+    set_722 (silo_bb.ntrks, 1);
-+    set_722 (silo_bb.nsect, 640);
-+    set_732 (silo_bb.partitions[0].num_sectors, should_write);
-+    set_722 (silo_bb.magic, 0xdabe);
-+    for (i = 0; i < 510; i+=2) {
-+	silo_bb.csum[0] ^= silo_bb.info[i];
-+	silo_bb.csum[1] ^= silo_bb.info[i+1];
-+    }
-+
-+    xfwrite(&silo_bb, 1, sizeof(silo_bb), outfile);
-+    memset (&silo_bb, 0, sizeof(silo_bb));
-+
-+    for(i=1; i<16; i++)
-+    {
-+	xfwrite(&silo_bb, 1, sizeof(silo_bb), outfile);
-+    }
-+
-+    memset (&silo_info, 0, sizeof(silo_info));
-+    silo_info.id = 'L';
-+    silo_info.conf_part = 1;
-+    strncpy (silo_info.conf_file, silo_conf_file, 256);
-+    silo_info.conf_file[259] = '\0';
-+
-+    last_extent_written += 16;
-+    
-+    return 0;
-+}
-+
-+struct output_fragment silo_desc  = {NULL, silo_size, NULL,     silo_write};
---- cdrtools-1.10/mkisofs/vms.c
-+++ cdrtools-1.10/mkisofs/vms.c
-@@ -288,7 +288,7 @@
+ extern int	volume_set_size;
+ extern int	volume_sequence_number;
+diff -urN cdrtools-2.01.silo/mkisofs/silo.c cdrtools-2.01/mkisofs/silo.c
+--- cdrtools-2.01.silo/mkisofs/silo.c	2003-06-14 12:25:29.000000000 +0000
++++ cdrtools-2.01/mkisofs/silo.c	1970-01-01 00:00:00.000000000 +0000
+@@ -1,255 +0,0 @@
+-/*
+- * Program silo.c - Handle SILO bootable iso9660 CD-ROMs.
+- * 
+-
+-   Copyright (C) 1999 Jakub Jelinek <jakub@redhat.com>.
+-
+-   This program is free software; you can redistribute it and/or modify
+-   it under the terms of the GNU General Public License as published by
+-   the Free Software Foundation; either version 2, or (at your option)
+-   any later version.
+-
+-   This program is distributed in the hope that it will be useful,
+-   but WITHOUT ANY WARRANTY; without even the implied warranty of
+-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-   GNU General Public License for more details.
+-
+-   You should have received a copy of the GNU General Public License
+-   along with this program; if not, write to the Free Software
+-   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.   */
+-
+-
+-static char rcsid[] ="$Id$";
+-
+-#include <mconfig.h>
+-#include <stdio.h>
+-#include <sys/types.h>
+-#include <sys/stat.h>
+-#include <unistd.h>
+-#include <fcntl.h>
+-#include <stdlib.h>
+-
+-#include "mkisofs.h"
+-#include "iso9660.h"
+-#include <schily.h>
+-
+-/* used by Win32 for opening binary file - not used by Unix */
+-#ifndef O_BINARY
+-#define O_BINARY 0
+-#endif /* O_BINARY */
+-
+-struct sun_disklabel {
+-    char	info[128];	/* Informative text string */
+-    char	spare0[14];
+-    struct sun_info {
+-	char	spare1;
+-	char	id;
+-	char	spare2;
+-	char	flags;
+-    } infos[8];
+-    char	spare1[246];	/* Boot information etc. */
+-    char	rspeed[2];      /* 722 - Disk rotational speed */
+-    char	pcylcount[2];   /* 722 - Physical cylinder count */
+-    char	sparecyl[2];    /* 722 - extra sects per cylinder */
+-    char	spare2[4];	/* More magic... */
+-    char	ilfact[2];      /* 722 - Interleave factor */
+-    char	ncyl[2];        /* 722 - Data cylinder count */
+-    char	nacyl[2];       /* 722 - Alt. cylinder count */
+-    char	ntrks[2];       /* 722 - Tracks per cylinder */
+-    char	nsect[2];       /* 722 - Sectors per track */
+-    char	spare3[4];	/* Even more magic... */
+-    struct sun_partition {
+-        char start_cylinder[4];	/* 732 */
+-	char num_sectors[4];	/* 732 */
+-    } partitions[8];
+-    char	magic[2];       /* 722 - Magic number */
+-    char	csum[2];        /* 722 - Label xor'd checksum */
+-    struct bootblock_header {
+-	char	magic[4];	/* 732 */
+-	char	aout[20];
+-	char	siloid[8];
+-	char	insn[16];
+-	char	extent[4];	/* 732 */
+-	char	size[4];	/* 732 */
+-	char	text[2048-512-56];
+-    } bootblock;
+-};
+-
+-static struct {
+-    char id;
+-    char conf_part;
+-    char part;
+-    char pad;
+-    char conf_file[256];
+-} silo_info;
+-
+-static int silo_size(int starting_extent)
+-{
+-    last_extent += 16;
+-    return 0;
+-}
+-
+-static int silo_filter(char * buffer, int size, int offset)
+-{
+-    if (offset < 0x808 + sizeof(silo_info)
+-	&& offset + size > 0x808)
+-    {
+-	int i;
+-	if (offset < 0x808)
+-	{
+-	    offset = 0x808 - offset;
+-	    size -= offset;
+-	    buffer += offset;
+-	    offset = 0;
+-	}
+-	else
+-	    offset -= 0x808;
+-	i = sizeof(silo_info) - offset;
+-	if (i > size) i = size;
+-	memcpy (buffer, ((char *)&silo_info) + offset, i);
+-    }
+-    return 0;
+-}
+-
+-static int silo_write(FILE * outfile)
+-{
+-    struct directory_entry      * de;
+-    struct directory_entry      * de2;
+-    struct deferred_write	* dwpnt;
+-    int bootblock, i, should_write;
+-    struct sun_disklabel	silo_bb;
+-    
+-    memset (&silo_bb, 0, sizeof (silo_bb));
+-    
+-    if (*silo_bootblock == '/') silo_bootblock++;
+-    if (*silo_boot_image == '/') silo_boot_image++;
+-
+-    /*
+-     * search from root of iso fs to find boot catalog 
+-     */
+-    de2 = search_tree_file(root, silo_bootblock);
+-    if (!de2) 
+-    {
+-	fprintf(stderr,"Uh oh, I cant find the SILO bootblock!\n");
+-	exit(1);
+-    }
+-
+-    /*
+-     * now read it from disk
+-     */
+-    bootblock = open(de2->whole_name, O_RDWR | O_BINARY);
+-    if (bootblock == -1) 
+-    {
+-	fprintf(stderr,"Error opening SILO bootblock for reading.\n");
+-	perror("");
+-	exit(1);
+-    }
+-    
+-    if (read (bootblock, (char *)&silo_bb.bootblock, 1024) != 1024)
+-    {
+-	fprintf(stderr,"Error reading SILO bootblock.\n");
+-	perror("");
+-	exit(1);
+-    }
+-
+-    close (bootblock);
+-
+-    if (get_732 (silo_bb.bootblock.magic) != 0x01030107
+-	|| strncmp (silo_bb.bootblock.siloid, "SILO", 4)
+-	|| silo_bb.bootblock.siloid[5] != '.'
+-	|| silo_bb.bootblock.siloid[4] < '0'
+-	|| silo_bb.bootblock.siloid[4] > '9'
+-	|| silo_bb.bootblock.siloid[6] < '0'
+-	|| silo_bb.bootblock.siloid[6] > '9'
+-	|| silo_bb.bootblock.siloid[7] < '0'
+-	|| silo_bb.bootblock.siloid[7] > '9')
+-    {
+-	fprintf(stderr,"Error: the file %s is not a valid SILO bootblock.\n", silo_bootblock);
+-	perror("");
+-	exit(1);
+-    }
+-    
+-    /* Check version number. Only SILO 0.87 and up is valid. */
+-    if (silo_bb.bootblock.siloid[4] == '0'
+-	&& (silo_bb.bootblock.siloid[6] < '8'
+-	    || (silo_bb.bootblock.siloid[6] == '8'
+-		&& silo_bb.bootblock.siloid[7] <= '6')))
+-    {
+-	fprintf(stderr,"Error: SILO bootblock is too old. Must be at least 0.8.7.\n");
+-	perror("");
+-	exit(1);
+-    }
+-
+-    /*
+-     * search from root of iso fs to find boot catalog 
+-     */
+-    de = search_tree_file(root, silo_boot_image);
+-    if (!de) 
+-    {
+-	fprintf(stderr,"Uh oh, I cant find the SILO boot image!\n");
+-	exit(1);
+-    }
+-
+-    /*
+-     * need to filter second.b, so that we can seed
+-     * silo.conf location and other stuff.
+-     * We could write it into the de->whole_name file,
+-     * but I prefer filtering it like this because
+-     * then the tree can be e.g. read only NFS mounted.
+-     */
+-    for (dwpnt = dw_head; dwpnt; dwpnt = dwpnt->next)
+-    {
+-	if (!dwpnt->name) continue;
+-	if (!strcmp (dwpnt->name, de->whole_name))
+-	    dwpnt->filter = silo_filter;
+-    }
+-
+-    set_732 (silo_bb.bootblock.extent, de->starting_block);
+-    set_732 (silo_bb.bootblock.size, de->size);
+-
+-    strcpy (silo_bb.info, "SPARC bootable CD-ROM: ");
+-    strcat (silo_bb.info, volume_id);
+-
+-    should_write = (last_extent - session_start) << 2;
+-
+-    /* Now some magic */
+-    silo_bb.spare0[3] = 1;
+-    silo_bb.spare0[13] = 8;
+-    for (i = 0; i < 8; i++) {
+-	silo_bb.infos[i].id = 0x83;
+-	silo_bb.infos[i].flags = 0x18;
+-    }
+-    set_732 (silo_bb.spare1 + 14, 0x600ddeee);
+-    set_722 (silo_bb.rspeed, 0x15e);
+-    set_722 (silo_bb.pcylcount, (should_write + 639) / 640);
+-    set_722 (silo_bb.ilfact, 1);
+-    set_722 (silo_bb.ncyl, (should_write + 639) / 640);
+-    set_722 (silo_bb.ntrks, 1);
+-    set_722 (silo_bb.nsect, 640);
+-    set_732 (silo_bb.partitions[0].num_sectors, should_write);
+-    set_722 (silo_bb.magic, 0xdabe);
+-    for (i = 0; i < 510; i+=2) {
+-	silo_bb.csum[0] ^= silo_bb.info[i];
+-	silo_bb.csum[1] ^= silo_bb.info[i+1];
+-    }
+-
+-    xfwrite(&silo_bb, 1, sizeof(silo_bb), outfile);
+-    memset (&silo_bb, 0, sizeof(silo_bb));
+-
+-    for(i=1; i<16; i++)
+-    {
+-	xfwrite(&silo_bb, 1, sizeof(silo_bb), outfile);
+-    }
+-
+-    memset (&silo_info, 0, sizeof(silo_info));
+-    silo_info.id = 'L';
+-    silo_info.conf_part = 1;
+-    strncpy (silo_info.conf_file, silo_conf_file, 256);
+-    silo_info.conf_file[259] = '\0';
+-
+-    last_extent_written += 16;
+-    
+-    return 0;
+-}
+-
+-struct output_fragment silo_desc  = {NULL, silo_size, NULL,     silo_write};
+diff -urN cdrtools-2.01.silo/mkisofs/vms.c cdrtools-2.01/mkisofs/vms.c
+--- cdrtools-2.01.silo/mkisofs/vms.c	2003-06-14 12:31:23.000000000 +0000
++++ cdrtools-2.01/mkisofs/vms.c	2003-04-12 22:32:15.000000000 +0000
+@@ -278,7 +278,7 @@
  extern unsigned int last_extent_written;
  
  int
--vms_write_one_file(char *filename, int size, FILE * outfile)
-+vms_write_one_file(struct deferred_write * dwpnt, FILE * outfile)
+-vms_write_one_file(struct deferred_write * dwpnt, FILE * outfile)
++vms_write_one_file(char *filename, off_t size, FILE * outfile)
  {
  	int		status,
  			i;
-@@ -296,10 +296,12 @@
+@@ -286,11 +286,10 @@
  	int		count;
  	int		use;
- 	int		remain;
-+	int             offset = 0;
+ 	off_t		remain;
+-	int             offset = 0;
  
--	open_file(filename);
+-	open_file(dwpnt->name);
++	open_file(filename);
  
--	remain = size;
-+	open_file(dwpnt->name);
-+
-+	remain = dwpnt->size;
+-	remain = dwpnt->size;
++	remain = size;
  
  	while (remain > 0) {
  		use = (remain > SECTOR_SIZE * NSECT - 1 ? NSECT * SECTOR_SIZE : remain);
-@@ -308,11 +310,14 @@
+@@ -299,14 +298,11 @@
  		rab->rab$l_ubf = buffer;
  		rab->rab$w_usz = sizeof(buffer);
  		status = sys$read(rab);
-+		if (dwpnt->filter)
-+		  (* dwpnt->filter)(buffer, use, offset);
+-		if (dwpnt->filter)
+-		  (* dwpnt->filter)(buffer, use, offset);
  		fwrite(buffer, 1, use, outfile);
  		last_extent_written += use / SECTOR_SIZE;
  		if ((last_extent_written % 1000) < use / SECTOR_SIZE)
  			fprintf(stderr, "%d..", last_extent_written);
  		remain -= use;
-+		offset += use;
+-		offset += use;
  	};
  
  	close_file(rab);
---- cdrtools-2.01/mkisofs/write.c.orig	Fri Feb 28 01:32:13 2003
-+++ cdrtools-2.01/mkisofs/write.c	Mon Mar 10 21:27:06 2003
-@@ -77,10 +77,10 @@
- 						FILE *file));
+diff -urN cdrtools-2.01.silo/mkisofs/write.c cdrtools-2.01/mkisofs/write.c
+--- cdrtools-2.01.silo/mkisofs/write.c	2003-06-14 12:51:36.000000000 +0000
++++ cdrtools-2.01/mkisofs/write.c	2003-04-29 18:22:52.000000000 +0000
+@@ -84,7 +84,7 @@
+ 					FILE *file, int submode, BOOL islast));
  static	int	assign_directory_addresses __PR((struct directory *node));
  #ifdef APPLE_HYB
--static	void	write_one_file	__PR((char *filename, unsigned int size,
-+static	void	write_one_file	__PR((struct deferred_write *dwpnt,
+-static void	write_one_file	__PR((struct deferred_write *dwpnt,
++static	void	write_one_file	__PR((char *filename, off_t size,
  					FILE *outfile, off_t off));
  #else
--static	void	write_one_file	__PR((char *filename, unsigned int size,
-+static	void	write_one_file	__PR((struct deferred_write *dwpnt,
- 					FILE *outfile));
- #endif
- static	void	write_files	__PR((FILE *outfile));
-@@ -297,7 +297,7 @@
- static struct deferred_write mac_boot;
+ static	void	write_one_file	__PR((char *filename, off_t size,
+@@ -367,10 +367,10 @@
+ /*
+  * use the deferred_write struct to store info about the hfs_boot_file
+  */
+-struct deferred_write mac_boot;
++static struct deferred_write mac_boot;
  
  #endif	/* APPLE_HYB */
--static struct deferred_write	*dw_head = NULL,
-+struct deferred_write	*dw_head = NULL,
+-struct deferred_write	*dw_head = NULL,
++static struct deferred_write	*dw_head = NULL,
  				*dw_tail = NULL;
  
  unsigned int	last_extent_written = 0;
-@@ -354,16 +354,14 @@
+@@ -427,14 +427,16 @@
  
  #ifdef APPLE_HYB
  static void
--write_one_file(filename, size, outfile, off)
--	char		*filename;
--	unsigned int	size;
-+write_one_file(dwpnt, outfile, off)
-+        struct deferred_write *dwpnt;
+-write_one_file(dwpnt, outfile, off)
+-	struct deferred_write *dwpnt;
++write_one_file(filename, size, outfile, off)
++	char		*filename;
++	off_t		size;
  	FILE		*outfile;
  	off_t		off;
  #else
  static void
--write_one_file(filename, size, outfile)
--	char		*filename;
--	unsigned int	size;
-+write_one_file(dwpnt, outfile)
-+        struct deferred_write *dwpnt;
+-write_one_file(dwpnt, outfile)
+-	struct deferred_write *dwpnt;
++write_one_file(filename, size, outfile)
++	char		*filename;
++	off_t		size;
  	FILE		*outfile;
  #endif	/* APPLE_HYB */
  {
-@@ -379,18 +377,18 @@
+@@ -450,18 +452,18 @@
  	FILE		*infile;
- 	int		remain;
+ 	off_t		remain;
  	int	use;
-+	int		offset;
+-	int		offset;
  
--
--	if ((infile = fopen(filename, "rb")) == NULL) {
-+	if ((infile = fopen(dwpnt->name, "rb")) == NULL) {
+-	if ((infile = fopen(dwpnt->name, "rb")) == NULL) {
++
++	if ((infile = fopen(filename, "rb")) == NULL) {
  #ifdef	USE_LIBSCHILY
--		comerr("cannot open '%s'\n", filename);
-+		comerr("cannot open '%s'\n", dwpnt->name);
+-		comerr("cannot open '%s'\n", dwpnt->name);
++		comerr("cannot open '%s'\n", filename);
  #else
  #ifndef	HAVE_STRERROR
  		fprintf(stderr, "cannot open '%s': (%d)\n",
--				filename, errno);
-+				dwpnt->name, errno);
+-				dwpnt->name, errno);
++				filename, errno);
  #else
  		fprintf(stderr, "cannot open '%s': %s\n",
--				filename, strerror(errno));
-+				dwpnt->name, strerror(errno));
+-				dwpnt->name, strerror(errno));
++				filename, strerror(errno));
  #endif
  		exit(1);
  #endif
-@@ -398,8 +396,8 @@
+@@ -469,8 +471,8 @@
  #ifdef APPLE_HYB
  	fseek(infile, off, SEEK_SET);
  #endif	/* APPLE_HYB */
--	remain = size;
--
-+	remain = dwpnt->size;
-+	offset = 0; 
+-	remain = dwpnt->size;
+-	offset = 0; 
++	remain = size;
++
  	while (remain > 0) {
  		use = (remain > SECTOR_SIZE * NSECT - 1 ?
  				NSECT * SECTOR_SIZE : remain);
-@@ -408,13 +406,16 @@
+@@ -479,17 +481,14 @@
  		memset(buffer, 0, use);
  		if (fread(buffer, 1, use, infile) == 0) {
  #ifdef	USE_LIBSCHILY
--			comerr("cannot read from '%s'\n", filename);
-+			comerr("cannot read from '%s'\n", dwpnt->name);
+-			comerr("cannot read from '%s'\n", dwpnt->filename);
++			comerr("cannot read from '%s'\n", filename);
  #else
--			fprintf(stderr, "cannot read from '%s'\n", filename);
-+			fprintf(stderr, "cannot read from '%s'\n", dwpnt->name);
+-			fprintf(stderr, "cannot read from '%s'\n", dwpnt->filename);
++			fprintf(stderr, "cannot read from '%s'\n", filename);
  			exit(1);
  #endif
  		}
-+	      	if (dwpnt->filter)
-+			(* dwpnt->filter)(buffer, use, offset);
- 		xfwrite(buffer, 1, use, outfile);
-+		offset += use;
+-		if (dwpnt->filter)
+-			(* dwpnt->filter)(buffer, use, offset);
+ 		xfwrite(buffer, use, 1, outfile,
+ 				XA_SUBH_DATA, remain <= (SECTOR_SIZE * NSECT));
+-		offset += use;
  		last_extent_written += use / SECTOR_SIZE;
  #if 0
  		if ((last_extent_written % 1000) < use / SECTOR_SIZE) {
-@@ -474,13 +475,12 @@
+@@ -551,12 +550,13 @@
  		} else {
  
  #ifdef VMS
--			vms_write_one_file(dwpnt->name, dwpnt->size, outfile);
-+			vms_write_one_file(dwpnt, outfile);
+-			vms_write_one_file(dwpnt, outfile);
++			vms_write_one_file(dwpnt->name, dwpnt->size, outfile);
  #else
  #ifdef APPLE_HYB
--			write_one_file(dwpnt->name, dwpnt->size, outfile,
--								dwpnt->off);
-+			write_one_file(dwpnt, outfile,dwpnt->off);
+-			write_one_file(dwpnt, outfile,dwpnt->off);
++			write_one_file(dwpnt->name, dwpnt->size, outfile,
++								dwpnt->off);
  #else
--			write_one_file(dwpnt->name, dwpnt->size, outfile);
-+			write_one_file(dwpnt, outfile);
+-			write_one_file(dwpnt, outfile);
++			write_one_file(dwpnt->name, dwpnt->size, outfile);
  #endif	/* APPLE_HYB */
  #endif
  			free(dwpnt->name);
-@@ -1145,6 +1145,7 @@
+@@ -1221,7 +1221,6 @@
  				dwpnt->next = NULL;
  				dwpnt->size = s_entry->size;
  				dwpnt->extent = last_extent;
-+				dwpnt->filter = NULL;
+-				dwpnt->filter = NULL;
  				set_733((char *) s_entry->isorec.extent,
  								last_extent);
  				s_entry->starting_block = last_extent;
-@@ -1716,8 +1717,7 @@
+@@ -1806,7 +1805,8 @@
  
  		/* write out HFS boot block */
  		if (mac_boot.name)
--			write_one_file(mac_boot.name, mac_boot.size, outfile,
--								mac_boot.off);
-+			write_one_file(&mac_boot, outfile, mac_boot.off);
+-			write_one_file(&mac_boot, outfile, mac_boot.off);
++			write_one_file(mac_boot.name, mac_boot.size, outfile,
++								mac_boot.off);
  	}
  #endif	/* APPLE_HYB */
  
