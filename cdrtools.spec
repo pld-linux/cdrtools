@@ -6,7 +6,7 @@ Summary(ru):	Программа для записи CD/DVD, запускаемая из командной строки
 Summary(uk):	Програма для запису CD/DVD, яка запуска╓ться з командно╖ стр╕чки
 Name:		cdrtools
 Version:	2.01a31
-Release:	1
+Release:	2
 Epoch:		3
 License:	GPL v2
 Group:		Applications/System
@@ -16,6 +16,7 @@ Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 Patch2:		%{name}-man.patch
 Patch3:		%{name}-no-kernel-headers.patch
+Patch4:		%{name}-min_gracetime.patch
 URL:		http://www.fokus.gmd.de/research/cc/glone/employees/joerg.schilling/private/cdrecord.html
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -218,6 +219,7 @@ chmod +w -R *
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 ln -sf i586-linux-gcc.rul RULES/x86_64-linux-gcc.rul
 ln -sf i586-linux-cc.rul RULES/x86_64-linux-cc.rul
