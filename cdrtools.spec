@@ -32,7 +32,7 @@ Supports data, audio, mixed, multi-session and CD+ discs etc.
 Cdrecord pozwala tworzyæ CD na nagrywarce CD (SCSI/ATAPI). Obs³uguje
 dyski z danymi, d¼wiêkiem, mieszane, wielosesyjne, CD+ i inne.
 
-%description cdrecord -l pt_BR
+%description -l pt_BR
 Cdrecord permite que você crie CDs em seu gravador de CDs SCSI/ATAPI.
 É possível gravar dados, áudio, misturados, multi-seção e CD+.
 
