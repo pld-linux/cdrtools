@@ -1,6 +1,3 @@
-
-%define		_zisofs_ver	1.0.3
-
 Summary:	A command line CD/DVD-Recorder
 Summary(pl):	Program do nagrywania p³yt CD/DVD
 Name:		cdrtools
@@ -11,7 +8,6 @@ License:	GPL
 Group:		Applications/System
 #Source0:	ftp://ftp.fokus.gmd.de/pub/unix/cdrecord/%{name}-%{version}.tar.gz
 Source0:	ftp://ftp.fokus.gmd.de/pub/unix/cdrecord/alpha/%{name}-%{version}.tar.gz
-#Source1:	ftp://ftp.kernel.org/pub/linux/kernel/people/hpa/zisofs/zisofs-tools-%{_zisofs_ver}.tar.gz
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 Patch2:		%{name}-ac250.patch
@@ -113,25 +109,19 @@ plików ISO9660 potrzebnych do tworzenia p³yt CD-ROM.
 chmod +w -R *
 %patch0 -p1
 %patch1 -p1
-#%patch2 -p1
-#patch -p1 < zisofs-tools-%{_zisofs_ver}/cdrtools-1.11a09-zisofs.diff
-# don't worry, works on 1.10 too
+%patch2 -p1
 
 %build
 cd conf
+rm -f acgeneral.m4 acspecific.m4 autoheader.m4 acoldnames.m4 autoconf.m4
 autoconf
 cd ..
 CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" ./Gmake.linux
 
-#cd zisofs-tools-%{_zisofs_ver}
-#autoconf
-#%configure
-#%{__make}
-#cd ..
-
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_includedir}/schily/scg}
+
 ./Gmake.linux install \
 	MANDIR=share/man \
 	INS_BASE=$RPM_BUILD_ROOT%{_prefix}
@@ -150,20 +140,13 @@ echo "man8/isoinfo.so" >	$RPM_BUILD_ROOT%{_mandir}/man8/devdump.8
 echo "man8/isoinfo.so" >        $RPM_BUILD_ROOT%{_mandir}/man8/isovfy.8
 echo "man8/isoinfo.so" >        $RPM_BUILD_ROOT%{_mandir}/man8/isodump.8
 
-#cd zisofs-tools-%{_zisofs_ver}
-#%{__make} install INSTALLROOT=$RPM_BUILD_ROOT
-#cd ..
-
-#cp -f zisofs-tools-%{_zisofs_ver}/README README.zisofs
-
 gzip -9nf AN-%{version} doc/cdrecord.ps Changelog README README.ATAPI \
 	README.WORM README.audio README.cdplus README.cdrw README.linux \
 	README.mkisofs README.multi README.sony README.verify README.copy \
 	cdda2wav/Frontends cdda2wav/HOWTOUSE cdda2wav/OtherProgs \
 	cdda2wav/README cdda2wav/THANKS cdda2wav/TODO cdda2wav/cdda2mp3 \
 	cdda2wav/cdda2mp3.new cdda2wav/cdda_links cdda2wav/pitchplay \
-	cdda2wav/readmult cdda2wav/tracknames.pl cdda2wav/tracknames.txt 
-#	README.zisofs
+	cdda2wav/readmult cdda2wav/tracknames.pl cdda2wav/tracknames.txt
 
 %clean
 rm -rf $RPM_BUILD_ROOT
