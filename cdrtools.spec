@@ -203,4 +203,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/mkhybrid.8*
 %attr(755,root,root) %{_bindir}/mkisofs
 %attr(755,root,root) %{_bindir}/mkhybrid
-%attr(755,root,root) %{_bindir}/mkzftree
+#%attr(755,root,root) %{_bindir}/mkzftree
