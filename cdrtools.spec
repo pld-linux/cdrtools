@@ -142,10 +142,9 @@ echo "man8/isoinfo.so" >	$RPM_BUILD_ROOT%{_mandir}/man8/devdump.8
 echo "man8/isoinfo.so" >        $RPM_BUILD_ROOT%{_mandir}/man8/isovfy.8
 echo "man8/isoinfo.so" >        $RPM_BUILD_ROOT%{_mandir}/man8/isodump.8
 
-gzip -9nf AN-%{version} doc/cdrecord.ps Changelog README \
-	README.ATAPI README.WORM README.audio README.cdplus \
-	README.cdrw README.linux README.mkisofs README.multi \
-	README.sony README.verify README.copy Linux.scsi-patch \
+gzip -9nf AN-%{version} doc/cdrecord.ps Changelog README README.ATAPI \
+	README.WORM README.audio README.cdplus README.cdrw README.linux \
+	README.mkisofs README.multi README.sony README.verify README.copy \
 	cdda2wav/Frontends cdda2wav/HOWTOUSE cdda2wav/OtherProgs \
 	cdda2wav/README cdda2wav/THANKS cdda2wav/TODO cdda2wav/cdda2mp3 \
 	cdda2wav/cdda2mp3.new cdda2wav/cdda_links cdda2wav/pitchplay \
@@ -159,7 +158,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc {AN-%{version},doc/cdrecord.ps,Changelog,README}.gz
 %doc {README.ATAPI,README.WORM,README.audio,README.cdplus}.gz
 %doc {README.cdrw,README.linux,README.mkisofs,README.multi}.gz
-%doc {README.sony,README.verify,README.copy,Linux.scsi-patch}.gz
+%doc {README.sony,README.verify,README.copy}.gz
 %doc cdrecord/cdrecord.dfl
 %config(noreplace) %{_sysconfdir}/cdrecord.conf
 %attr(755,root,root) %{_bindir}/cdrecord
