@@ -1,6 +1,6 @@
-diff -Naur cdrecord-1.8.1/cdrecord/cdrecord.1 cdrecord-1.8.1-p/cdrecord/cdrecord.1
---- cdrecord-1.8.1/cdrecord/cdrecord.1	Thu Apr 27 14:06:43 2000
-+++ cdrecord-1.8.1-p/cdrecord/cdrecord.1	Thu May 25 19:17:08 2000
+diff -Naur cdrecord-1.9/cdrecord/cdrecord.1 cdrecord-1.9-p/cdrecord/cdrecord.1
+--- cdrecord-1.9/cdrecord/cdrecord.1	Thu Jul 20 19:14:40 2000
++++ cdrecord-1.9-p/cdrecord/cdrecord.1	Mon Jul 24 16:58:47 2000
 @@ -118,7 +118,7 @@
  described below.
  
@@ -10,7 +10,7 @@ diff -Naur cdrecord-1.8.1/cdrecord/cdrecord.1 cdrecord-1.8.1-p/cdrecord/cdrecord
  .B dev=
  option may also be a drive name label in said file (see FILES section).
  
-@@ -445,7 +445,7 @@
+@@ -446,7 +446,7 @@
  .B dev=
  option does not contain the characters ',', '/', '@' or ':',
  it is interpreted as an label name that may be found in the file
@@ -19,7 +19,7 @@ diff -Naur cdrecord-1.8.1/cdrecord/cdrecord.1 cdrecord-1.8.1-p/cdrecord/cdrecord
  .TP
  .BI timeout= #
  Set the default SCSI command timeout value to 
-@@ -957,7 +957,7 @@
+@@ -969,7 +969,7 @@
  .TP
  CDR_DEVICE
  This may either hold a device identifier that is suitable to the open
@@ -28,7 +28,7 @@ diff -Naur cdrecord-1.8.1/cdrecord/cdrecord.1 cdrecord-1.8.1-p/cdrecord/cdrecord
  .TP
  CDR_SPEED
  Sets the default speed value for writing (see also 
-@@ -971,8 +971,8 @@
+@@ -983,8 +983,8 @@
  
  .SH FILES
  .TP
@@ -39,7 +39,7 @@ diff -Naur cdrecord-1.8.1/cdrecord/cdrecord.1 cdrecord-1.8.1-p/cdrecord/cdrecord
  For example:
  .SM CDR_FIFOSIZE=8m
  or
-@@ -981,7 +981,7 @@
+@@ -993,7 +993,7 @@
  .TP
  CDR_DEVICE
  This may either hold a device identifier that is suitable to the open
@@ -48,9 +48,9 @@ diff -Naur cdrecord-1.8.1/cdrecord/cdrecord.1 cdrecord-1.8.1-p/cdrecord/cdrecord
  that allows to identify a specific drive on the system.
  .TP
  CDR_SPEED
-diff -Naur cdrecord-1.8.1/cdrecord/cdrecord.dfl cdrecord-1.8.1-p/cdrecord/cdrecord.dfl
---- cdrecord-1.8.1/cdrecord/cdrecord.dfl	Sun Apr 16 02:08:15 2000
-+++ cdrecord-1.8.1-p/cdrecord/cdrecord.dfl	Thu May 25 19:17:08 2000
+diff -Naur cdrecord-1.9/cdrecord/cdrecord.dfl cdrecord-1.9-p/cdrecord/cdrecord.dfl
+--- cdrecord-1.9/cdrecord/cdrecord.dfl	Sun Apr 16 02:08:15 2000
++++ cdrecord-1.9-p/cdrecord/cdrecord.dfl	Mon Jul 24 16:58:47 2000
 @@ -1,6 +1,6 @@
  #ident @(#)cdrecord.dfl	1.2 00/04/16 Copyr 1998 J. Schilling
  #
@@ -59,11 +59,11 @@ diff -Naur cdrecord-1.8.1/cdrecord/cdrecord.dfl cdrecord-1.8.1-p/cdrecord/cdreco
  # It contains defaults that are used if no command line option
  # or environment is present.
  # 
-diff -Naur cdrecord-1.8.1/cdrecord/defaults.c cdrecord-1.8.1-p/cdrecord/defaults.c
---- cdrecord-1.8.1/cdrecord/defaults.c	Sun Apr 16 02:08:58 2000
-+++ cdrecord-1.8.1-p/cdrecord/defaults.c	Thu May 25 19:17:08 2000
+diff -Naur cdrecord-1.9/cdrecord/defaults.c cdrecord-1.9-p/cdrecord/defaults.c
+--- cdrecord-1.9/cdrecord/defaults.c	Fri Jun  2 20:44:44 2000
++++ cdrecord-1.9-p/cdrecord/defaults.c	Mon Jul 24 17:00:10 2000
 @@ -32,6 +32,8 @@
- #include <utypes.h>
+ #include <schily.h>
  #include "cdrecord.h"
  
 +#define DEFAULT_CONFIG	"/etc/cdrecord.conf"
@@ -101,15 +101,15 @@ diff -Naur cdrecord-1.8.1/cdrecord/defaults.c cdrecord-1.8.1-p/cdrecord/defaults
 @@ -110,7 +112,7 @@
  		x++;
  	}
- 	sprintf(dname, "%s=", p);
+ 	js_snprintf(dname, sizeof(dname), "%s=", p);
 -	if (defltopen("/etc/default/cdrecord") != 0)
 +	if (defltopen(DEFAULT_CONFIG) != 0)
  		return;
  
  	p = defltread(dname);
-diff -Naur cdrecord-1.8.1/doc/cdrecord.man cdrecord-1.8.1-p/doc/cdrecord.man
---- cdrecord-1.8.1/doc/cdrecord.man	Thu Apr 27 14:07:33 2000
-+++ cdrecord-1.8.1-p/doc/cdrecord.man	Thu May 25 19:17:08 2000
+diff -Naur cdrecord-1.9/doc/cdrecord.man cdrecord-1.9-p/doc/cdrecord.man
+--- cdrecord-1.9/doc/cdrecord.man	Thu Apr 27 14:07:33 2000
++++ cdrecord-1.9-p/doc/cdrecord.man	Mon Jul 24 16:58:47 2000
 @@ -50,7 +50,7 @@
       the ----ssssccccaaaannnnbbbbuuuussss option of ccccddddrrrreeeeccccoooorrrrdddd described below.
  
@@ -157,9 +157,9 @@ diff -Naur cdrecord-1.8.1/doc/cdrecord.man cdrecord-1.8.1-p/doc/cdrecord.man
                 specific drive on the system.
  
            CDR_SPEED
-diff -Naur cdrecord-1.8.1/include/deflts.h cdrecord-1.8.1-p/include/deflts.h
---- cdrecord-1.8.1/include/deflts.h	Sat Dec  5 14:04:18 1998
-+++ cdrecord-1.8.1-p/include/deflts.h	Thu May 25 19:17:08 2000
+diff -Naur cdrecord-1.9/include/deflts.h cdrecord-1.9-p/include/deflts.h
+--- cdrecord-1.9/include/deflts.h	Sat Dec  5 14:04:18 1998
++++ cdrecord-1.9-p/include/deflts.h	Mon Jul 24 16:58:47 2000
 @@ -27,7 +27,7 @@
  #include <mconfig.h>
  #endif
