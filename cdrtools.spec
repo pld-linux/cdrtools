@@ -1,12 +1,12 @@
 Summary:	A command line CD/DVD-Recorder
 Summary(pl):	Program do nagrywania p³yt CD/DVD
 Name:		cdrtools
-Version:	2.0
+Version:	2.01a03
 Release:	1
 Epoch:		2
 License:	GPL v2
 Group:		Applications/System
-Source0:	ftp://ftp.berlios.de/pub/cdrecord/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.berlios.de/pub/cdrecord/alpha/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 Patch2:		%{name}-silo.patch
@@ -105,7 +105,7 @@ To jest pakiet mkisofs. Jest on u¿ywany do tworzenia obrazów systemów
 plików ISO9660 potrzebnych do tworzenia p³yt CD-ROM.
 
 %prep
-%setup -q
+%setup -q -n cdrtools-2.01
 chmod +w -R *
 %patch0 -p1
 %patch1 -p1
