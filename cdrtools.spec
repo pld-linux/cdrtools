@@ -90,7 +90,7 @@ Narzêdzia do zrzucania i weryfikacji obrazów iso9660.
 Summary:	Creates an ISO9660 filesystem image
 Summary(de):	Erstellt ein Dateisystem-Abbild nach ISO9660
 Summary(fr):	Crée un image système de fichiers ISO9660
-Summary(pl):	Tworzy obraz systemu plikow ISO9660
+Summary(pl):	Tworzy obraz systemu plików ISO9660
 Summary(tr):	ISO9660 dosya sistemi kopyasý oluþturur
 Group:		Applications/System
 Provides:	mkisofs
