@@ -1,5 +1,4 @@
 Summary:	A command line CD/DVD-Recorder
-Summary(pt_BR):	Um programa de gravação de CD/DVD
 Summary(es):	Un programa de grabación de CD/DVD
 Summary(pl):	Program do nagrywania p³yt CD/DVD
 Summary(pt_BR):	Um programa de gravação de CD/DVD
