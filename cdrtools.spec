@@ -219,7 +219,7 @@ chmod +w -R *
 %patch0 -p1
 %patch1 -p1
 %ifarch sparc sparcv9 sparc64
-%patch2 -p1
+#%patch2 -p1
 %endif
 %patch3 -p1
 %patch4 -p1
