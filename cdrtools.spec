@@ -114,7 +114,7 @@ chmod +w -R *
 %build
 cd conf
 rm -f acgeneral.m4 acspecific.m4 autoheader.m4 acoldnames.m4 autoconf.m4
-autoconf
+%{__autoconf}
 cd ..
 CFLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" ./Gmake.linux
 
