@@ -1,0 +1,39 @@
+--- cdrecord/cdrecord.c
++++ cdrecord/cdrecord.c
+@@ -359,7 +359,7 @@
+ 								HOST_CPU, HOST_VENDOR, HOST_OS);
+   		printf("Note: This version is an unofficial (modified) version with DVD support\n");
+                 printf("Note: and therefore may have bugs that are not present in the original.\n");
+-                printf("Note: Please send bug reports or support requests to <warly@mandrakesoft.com>.\n");           
++                printf("Note: Please send bug reports or support requests to http://bugzilla.redhat.com/bugzilla\n");           
+                 printf("Note: The author of cdrecord should not be bothered with problems in this version.\n");
+ 
+ #if	defined(SOURCE_MODIFIED) || !defined(IS_SCHILY_XCONFIG)
+--- cdrecord/drv_mmc.c
++++ cdrecord/drv_mmc.c
+@@ -1491,7 +1491,7 @@
+        dsp->ds_disktype&= ~DT_CD;
+        dsp->ds_disktype|= DT_DVD;
+ 	
+-       return (ret);
++       return (0);
+   
+ }
+ 
+@@ -2663,13 +2663,14 @@
+ 	 The BIG timeout is needed in case there was a very short rzone to write at the 
+ 	 beginning of the disk, because lead-out needs to be at some distance.
+       */
++      int ret;
+       scg_settimeout(scgp, 1000);
+       if(is_packet(trackp)){
+ 	  scsi_close_tr_session(scgp, 2, 0, FALSE);
+       }
+-      fixate_mmc(scgp, dp, trackp);
++      ret = fixate_mmc(scgp, dp, trackp);
+       scg_settimeout(scgp, 200);
+-      
++      return ret;
+ }
+ 
+ char	*blank_types[] = {

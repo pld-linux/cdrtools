@@ -1,0 +1,57 @@
+--- cdrtools-2.01/mkisofs/mkisofs.c.sopwith	2005-04-06 13:45:44.374388145 -0400
++++ cdrtools-2.01/mkisofs/mkisofs.c	2005-04-06 13:51:59.163713250 -0400
+@@ -129,7 +129,7 @@
+ int	dirmode_to_use = 0;	/* if non-zero, when rationalizing dir mode */
+ int	new_dir_mode = 0555;
+ int	generate_tables = 0;
+-int	dopad = 1;	/* Now default to do padding */
++int	dopad = 1, padsize=150;	/* Now default to do padding */
+ int	print_size = 0;
+ int	split_output = 0;
+ char	*icharset = NULL;	/* input charset to convert to UNICODE */
+@@ -375,6 +375,7 @@
+ 
+ #define	OPTION_ALLOW_LEADING_DOTS	1070
+ #define	OPTION_PUBLISHER		1071
++#define	OPTION_PAD_SIZE			1072
+ 
+ #ifdef UDF
+ #define	OPTION_UDF			1500
+@@ -563,6 +564,8 @@
+ 	0, NULL, "Pad output to a multiple of 32k (default)", ONE_DASH},
+ 	{{"no-pad", no_argument, NULL, OPTION_NOPAD},
+ 	0, NULL, "Do not pad output to a multiple of 32k", ONE_DASH},
++	{{"pad-size", required_argument, NULL, OPTION_PAD_SIZE},
++	0, "SIZE", "Pad output to a multiple of SIZE kilobytes", ONE_DASH},
+ 	{{"prev-session", required_argument, NULL, 'M'},
+ 	'M', "FILE", "Set path to previous session to merge", ONE_DASH},
+ 	{{"dev", required_argument, NULL, 'M'},
+@@ -1596,6 +1599,9 @@
+ 		case OPTION_NOPAD:
+ 			dopad = 0;
+ 			break;
++		case OPTION_PAD_SIZE:
++			padsize = atoi(optarg);
++			break;
+ 		case OPTION_P_LIST:
+ 			pathnames = optarg;
+ 			break;
+--- cdrtools-2.01/mkisofs/stream.c.sopwith	2005-04-06 13:49:45.432343629 -0400
++++ cdrtools-2.01/mkisofs/stream.c	2005-04-06 13:50:44.995801016 -0400
+@@ -64,6 +64,7 @@
+ {
+ 	int	n;
+ extern	int	dopad;
++extern	int	padsize;
+ 
+ 	stream_extent = last_extent;	/* Start of stream file content */
+ 
+@@ -76,7 +77,7 @@
+ 		n = 50;			/* Make net. size easy to compute */
+ 	}
+ 	if (dopad)
+-		n += 150;		/* Room for final padding */
++		n += padsize;		/* Room for final padding */
+ 	avail_extent -= n;
+ 
+ 	last_extent += avail_extent + stream_pad;
