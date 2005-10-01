@@ -18,18 +18,6 @@ diff -ruN cdrtools-2.0-/README.ATAPI cdrtools-2.0/README.ATAPI
  9. It's done! Insert a CD and try "cdrecord -v -toc"
  /*--------------------------------------------------------------------------*/
  He had constant buffer underrun problems:
-diff -ruN cdrtools-2.0-/README.linux cdrtools-2.0/README.linux
---- cdrtools-2.0-/README.linux	Sun Apr  1 12:08:41 2001
-+++ cdrtools-2.0/README.linux	Thu Dec 26 18:25:53 2002
-@@ -169,7 +169,7 @@
- 	If dev=0,0,0 does not work but -dev=0,0,0 works you found this
- 	incompatibility. This problem is caused by an incompatibility
- 	in ctype.h and it seems that there are other compatibility problems
--	e.g. with reading /etc/default/cdrecord.
-+	e.g. with reading /etc/cdrecord.conf
- 
- 	You cannot copy binaries between different Linux versions,
- 	always compile the sources by yourself. 
 diff -ruN cdrtools-2.0-/README.openserver cdrtools-2.0/README.openserver
 --- cdrtools-2.0-/README.openserver	Tue Jan 25 17:37:48 2000
 +++ cdrtools-2.0/README.openserver	Thu Dec 26 18:25:53 2002
