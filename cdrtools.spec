@@ -5,13 +5,14 @@ Summary(pt_BR):	Um programa de gravaГЦo de CD/DVD
 Summary(ru):	Программа для записи CD/DVD, запускаемая из командной строки
 Summary(uk):	Програма для запису CD/DVD, яка запуска╓ться з командно╖ стр╕чки
 Name:		cdrtools
-Version:	2.01
-Release:	2
+%define	sver	2.01.01
+Version:	%{sver}a03
+Release:	1
 Epoch:		4
 License:	GPL v2
 Group:		Applications/System
-Source0:	ftp://ftp.berlios.de/pub/cdrecord/%{name}-%{version}.tar.bz2
-# Source0-md5:	d44a81460e97ae02931c31188fe8d3fd
+Source0:	ftp://ftp.berlios.de/pub/cdrecord/alpha/%{name}-%{version}.tar.bz2
+# Source0-md5:	6c5683a6f85c89cc163307a5e434086c
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 Patch2:		%{name}-man.patch
@@ -19,13 +20,13 @@ Patch3:		%{name}-no-kernel-headers.patch
 Patch4:		%{name}-min_gracetime.patch
 Patch5:		%{name}-dvd-2.patch
 Patch6:		%{name}-dvd-fix.patch
-Patch7:		%{name}-nodebug.patch
-Patch8:		%{name}-scan.patch
-Patch9:		%{name}-mkisofs-iconv-10.patch
-Patch10:	%{name}-mkisofs-padsize-123548.patch
+Patch7:		%{name}-scan.patch
+Patch8:		%{name}-mkisofs-iconv-10.patch
+Patch9:		%{name}-mkisofs-padsize-123548.patch
 URL:		http://cdrecord.berlios.de/old/private/cdrecord.html
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	acl-devel
 Provides:	cdrecord
 Obsoletes:	cdrecord
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -219,7 +220,7 @@ fazer CD-ROMs de boot "El Torito".
 завантажуваних El Torito CD-ROM'╕в.
 
 %prep
-%setup -q -n cdrtools-2.01
+%setup -q -n %{name}-%{sver}
 chmod +w -R *
 %patch0 -p1
 %patch1 -p1
@@ -229,9 +230,8 @@ chmod +w -R *
 %patch5 -p1
 %patch6 -p0
 %patch7 -p1
-%patch8 -p1
+#%patch8 -p1
 %patch9 -p1
-%patch10 -p1
 
 ln -sf i586-linux-gcc.rul RULES/x86_64-linux-gcc.rul
 ln -sf i586-linux-cc.rul RULES/x86_64-linux-cc.rul
@@ -287,7 +287,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AN-* doc/cdrecord.ps Changelog README README.ATAPI README.DiskT@2
-%doc README.{WORM,audio,cdplus,cdtext,cdrw,clone,copy,linux,mkisofs,multi}
+%doc README.{WORM,audio,cdplus,cdtext,cdrw,clone,copy,mkisofs,multi}
 %doc README.{parallel,raw,rscsi,sony,verify} make_diskt@2.sh
 %doc cdrecord/cdrecord.dfl cdrecord/LICENSE
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/cdrecord.conf
