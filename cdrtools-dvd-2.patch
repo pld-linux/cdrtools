@@ -40,13 +40,14 @@
  LOCAL	int	opt2_mmc		__PR((SCSI *scgp, cdr_t *dp));
  LOCAL	int	scsi_sony_write		__PR((SCSI *scgp, caddr_t bp, long sectaddr, long size, int blocks, BOOL islast));
  LOCAL	int	gen_cue_mmc		__PR((track_t *trackp, void *vcuep, BOOL needgap));
-@@ -197,6 +209,46 @@
+@@ -197,6 +209,47 @@
  	opt2_mmc,
  };
  
 +cdr_t   cdr_mdvd = {
 +         0, 0,
 +         CDR_SWABAUDIO,
++	 CDR_CDRW_ALL,
 + 	 370,370,
 +         "mmc_mdvd",
 +         "generic SCSI-3/mmc DVD-R(W) driver",
