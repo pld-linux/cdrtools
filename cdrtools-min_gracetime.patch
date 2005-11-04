@@ -5,7 +5,7 @@ diff -Nura cdrtools-2.01/cdrecord/cdrecord.h cdrtools-2.01.new/cdrecord/cdrecord
  #define	CDR_MAX_BUF_SIZE	(256*1024)
  
  #ifndef	MIN_GRACE_TIME
--#define	MIN_GRACE_TIME	3		/* 3 seconds */
+-#define	MIN_GRACE_TIME	2		/* 2 seconds */
 +#define	MIN_GRACE_TIME	0		/* no delay */
  #endif
  #ifndef	GRACE_TIME
