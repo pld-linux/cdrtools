@@ -278,7 +278,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc README.{WORM,audio,cdplus,cdtext,cdrw,clone,copy,linux,mkisofs,multi}
 %doc README.{parallel,raw,rscsi,sony,verify} make_diskt@2.sh
 %doc cdrecord/cdrecord.dfl cdrecord/LICENSE
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/cdrecord.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/cdrecord.conf
 %attr(755,root,root) %{_bindir}/cdrecord
 %attr(755,root,root) %{_bindir}/scgcheck
 %attr(755,root,root) %{_sbindir}/rscsi
