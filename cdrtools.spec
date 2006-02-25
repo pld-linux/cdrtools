@@ -239,15 +239,16 @@ rm -f acgeneral.m4 acspecific.m4 autoheader.m4 acoldnames.m4 autoconf.m4
 # don't run aclocal, aclocal.m4 contains only local defs
 %{__autoconf}
 cd ..
-CFLAGS="%{rpmcflags}" \
-LDFLAGS="%{rpmldflags}" \
-./Gmake.linux
+%{__make} \
+	CC="%{__cc}" \
+	CFLAGS="%{rpmcflags}" \
+	LDFLAGS="%{rpmldflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_includedir}/schily/scg}
 
-./Gmake.linux install \
+%{__make} install \
 	MANDIR=share/man \
 	INS_BASE=$RPM_BUILD_ROOT%{_prefix}
 
