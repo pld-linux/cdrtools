@@ -241,6 +241,7 @@ rm -f acgeneral.m4 acspecific.m4 autoheader.m4 acoldnames.m4 autoconf.m4
 cd ..
 %{__make} \
 	CC="%{__cc}" \
+	COPTOPT="%{rpmcflags}" \
 	CFLAGS="%{rpmcflags}" \
 	LDFLAGS="%{rpmldflags}"
 
