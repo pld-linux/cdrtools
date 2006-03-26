@@ -175,7 +175,7 @@ Summary(ru):	Создает образ файловой системы ISO9660
 Summary(tr):	ISO9660 dosya sistemi kopyasЩ oluЧturur
 Summary(uk):	Створю╓ образ файлово╖ системи ISO9660
 Group:		Applications/System
-Provides:	mkisofs
+Provides:	mkisofs = %{epoch}:%{version}-%{release}
 Obsoletes:	mkisofs
 
 %description mkisofs
