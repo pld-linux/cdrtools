@@ -1,3 +1,4 @@
+%define		_alpha	a10
 Summary:	A command line CD/DVD-Recorder
 Summary(es):	Un programa de grabaciСn de CD/DVD
 Summary(pl):	Program do nagrywania pЁyt CD/DVD
@@ -5,13 +6,13 @@ Summary(pt_BR):	Um programa de gravaГЦo de CD/DVD
 Summary(ru):	Программа для записи CD/DVD, запускаемая из командной строки
 Summary(uk):	Програма для запису CD/DVD, яка запуска╓ться з командно╖ стр╕чки
 Name:		cdrtools
-Version:	2.01
-Release:	3
+Version:	2.01.01
+Release:	0.%{_alpha}.1
 Epoch:		5
 License:	GPL v2
 Group:		Applications/System
-Source0:	ftp://ftp.berlios.de/pub/cdrecord/%{name}-%{version}.tar.bz2
-# Source0-md5:	d44a81460e97ae02931c31188fe8d3fd
+Source0:	ftp://ftp.berlios.de/pub/cdrecord/alpha/%{name}-%{version}%{_alpha}.tar.bz2
+# Source0-md5:	dc189f1e34d484cb73639fe3b1067845
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 Patch2:		%{name}-man.patch
@@ -219,7 +220,7 @@ chmod +w -R *
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
+#%patch4 -p1
 
 ln -sf i586-linux-gcc.rul RULES/x86_64-linux-gcc.rul
 ln -sf i586-linux-cc.rul RULES/x86_64-linux-cc.rul
@@ -230,6 +231,8 @@ ln -sf i586-linux-cc.rul RULES/x86_64-linux-cc.rul
 # kill annoying beep and sleep
 %{__perl} -pi -e 's/^__gmake_warn.*//' RULES/mk-gmake.id
 
+sed -i -e "s/-o \$(INSUSR) -g \$(INSGRP)//g" RULES/rules.prg
+
 %build
 cd conf
 cp -f /usr/share/automake/config.* .
@@ -239,6 +242,7 @@ rm -f acgeneral.m4 acspecific.m4 autoheader.m4 acoldnames.m4 autoconf.m4
 # don't run aclocal, aclocal.m4 contains only local defs
 %{__autoconf}
 cd ..
+
 %{__make} \
 	CC="%{__cc}" \
 	COPTOPT="%{rpmcflags}" \
@@ -266,10 +270,14 @@ install libscg/scg/*		$RPM_BUILD_ROOT%{_includedir}/schily/scg
 install cdrecord/cdrecord.dfl	$RPM_BUILD_ROOT%{_sysconfdir}/cdrecord.conf
 
 # fix manual pages
+chmod u+rw $RPM_BUILD_ROOT -R
+
 echo '.so isoinfo.8' > $RPM_BUILD_ROOT%{_mandir}/man8/devdump.8
 echo '.so isoinfo.8' > $RPM_BUILD_ROOT%{_mandir}/man8/isovfy.8
 echo '.so isoinfo.8' > $RPM_BUILD_ROOT%{_mandir}/man8/isodump.8
 echo '.so cdda2ogg.1' > $RPM_BUILD_ROOT%{_mandir}/man1/cdda2mp3.1
+
+
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -277,7 +285,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AN-* doc/cdrecord.ps Changelog README README.ATAPI README.DiskT@2
-%doc README.{WORM,audio,cdplus,cdtext,cdrw,clone,copy,linux,mkisofs,multi}
+%doc README.{WORM,audio,cdplus,cdtext,cdrw,clone,copy,mkisofs,multi}
 %doc README.{parallel,raw,rscsi,sony,verify} make_diskt@2.sh
 %doc cdrecord/cdrecord.dfl cdrecord/LICENSE
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/cdrecord.conf
@@ -314,15 +322,18 @@ rm -rf $RPM_BUILD_ROOT
 
 %files utils
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/btcflash
 %attr(755,root,root) %{_bindir}/devdump
 %attr(755,root,root) %{_bindir}/isodebug
 %attr(755,root,root) %{_bindir}/isoinfo
 %attr(755,root,root) %{_bindir}/isovfy
 %attr(755,root,root) %{_bindir}/isodump
+%{_mandir}/man1/btcflash.1*
 %{_mandir}/man8/isoinfo.8*
 %{_mandir}/man8/devdump.8*
 %{_mandir}/man8/isovfy.8*
 %{_mandir}/man8/isodump.8*
+%{_mandir}/man8/isodebug.8*
 
 %files mkisofs
 %defattr(644,root,root,755)
