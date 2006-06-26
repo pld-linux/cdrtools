@@ -7,7 +7,7 @@ Summary(ru):	Программа для записи CD/DVD, запускаемая из командной строки
 Summary(uk):	Програма для запису CD/DVD, яка запуска╓ться з командно╖ стр╕чки
 Name:		cdrtools
 Version:	2.01.01
-Release:	0.%{_alpha}.1
+Release:	0.%{_alpha}.2
 Epoch:		5
 License:	GPL v2
 Group:		Applications/System
@@ -213,6 +213,13 @@ fazer CD-ROMs de boot "El Torito".
 використову╓ться для запису CD-ROM'╕в ╕ ма╓ п╕дтримку створення
 завантажуваних El Torito CD-ROM'╕в.
 
+%package btcflash
+Summary:	BTC CD/DVD reader/writer firmware updater
+Group:		Application/System
+
+%description btcflash
+BTC CD/DVD reader/writer firmware updater.
+
 %prep
 %setup -q
 chmod +w -R *
@@ -322,13 +329,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files utils
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/btcflash
 %attr(755,root,root) %{_bindir}/devdump
 %attr(755,root,root) %{_bindir}/isodebug
 %attr(755,root,root) %{_bindir}/isoinfo
 %attr(755,root,root) %{_bindir}/isovfy
 %attr(755,root,root) %{_bindir}/isodump
-%{_mandir}/man1/btcflash.1*
 %{_mandir}/man8/isoinfo.8*
 %{_mandir}/man8/devdump.8*
 %{_mandir}/man8/isovfy.8*
@@ -346,3 +351,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/mkhybrid
 %{_mandir}/man8/mkisofs.8*
 %{_mandir}/man8/mkhybrid.8*
+
+%files btcflash
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/btcflash
+%{_mandir}/man1/btcflash.1*
