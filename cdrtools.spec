@@ -215,10 +215,15 @@ fazer CD-ROMs de boot "El Torito".
 
 %package btcflash
 Summary:	BTC CD/DVD reader/writer firmware updater
+Summary(pl):	Program do uaktualniania firmware'u czytników/nagrywarek CD/DVD BTC
 Group:		Application/System
 
 %description btcflash
 BTC CD/DVD reader/writer firmware updater.
+
+%description btcflash -l pl
+Program do uaktualniania firmware'u czytników/nagrywarek CD/DVD firmy
+BTC.
 
 %prep
 %setup -q
