@@ -1,4 +1,4 @@
-%define		_alpha	a10
+%define		_alpha	a11
 Summary:	A command line CD/DVD-Recorder
 Summary(es):	Un programa de grabaciСn de CD/DVD
 Summary(pl):	Program do nagrywania pЁyt CD/DVD
@@ -7,12 +7,12 @@ Summary(ru):	Программа для записи CD/DVD, запускаемая из командной строки
 Summary(uk):	Програма для запису CD/DVD, яка запуска╓ться з командно╖ стр╕чки
 Name:		cdrtools
 Version:	2.01.01
-Release:	0.%{_alpha}.2
+Release:	0.%{_alpha}.1
 Epoch:		5
 License:	GPL v2
 Group:		Applications/System
 Source0:	ftp://ftp.berlios.de/pub/cdrecord/alpha/%{name}-%{version}%{_alpha}.tar.bz2
-# Source0-md5:	dc189f1e34d484cb73639fe3b1067845
+# Source0-md5:	0f18966e4772b851bee385d0b07a18af
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 Patch2:		%{name}-man.patch
