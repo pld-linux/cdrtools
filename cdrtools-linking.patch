@@ -1,0 +1,24 @@
+diff -Nur cdrtools-2.01.01.orig/RULES/rules.cmd cdrtools-2.01.01.linking/RULES/rules.cmd
+--- cdrtools-2.01.01.orig/RULES/rules.cmd	2006-05-14 13:55:28.000000000 +0200
++++ cdrtools-2.01.01.linking/RULES/rules.cmd	2006-08-05 19:21:26.000000000 +0200
+@@ -30,7 +30,7 @@
+ all:		$(PTARGET)
+ 
+ $(PTARGET):	$(OFILES) $(SRCLIBS)
+-		$(LDCC) -o $@ $(POFILES) $(LDFLAGS) $(LDLIBS)
++		$(LDCC) $(LDFLAGS) -o $@ $(POFILES) $(LDLIBS)
+ #		$(CC) -o $@ $(OFILES) $(LDPATH) $(RUNPATH) $(SRCLIBS) $(LIBS)
+ 
+ ###########################################################################
+diff -Nur cdrtools-2.01.01.orig/RULES/rules.inc cdrtools-2.01.01.linking/RULES/rules.inc
+--- cdrtools-2.01.01.orig/RULES/rules.inc	2006-05-14 13:55:29.000000000 +0200
++++ cdrtools-2.01.01.linking/RULES/rules.inc	2006-08-05 19:21:41.000000000 +0200
+@@ -31,7 +31,7 @@
+ all:		$(PTARGETC) $(PTARGET)
+ 
+ $(PTARGETC):	$(OFILES) $(SRCLIBS)
+-		$(LDCC) -o $@ $(POFILES) $(LDFLAGS) $(LDLIBS)
++		$(LDCC) $(LDFLAGS) -o $@ $(POFILES) $(LDLIBS)
+ 
+ $(PTARGET):	$(OINCSDIR) $(PTARGETC)
+ 		@echo "	==> GENERATING include file \"$@\""; $(PTARGETC) > $@
