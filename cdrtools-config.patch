@@ -144,7 +144,7 @@ diff -ruN cdrtools-2.0-/doc/cdrecord.man cdrtools-2.0/doc/cdrecord.man
                the  characters  ',', '/', '@' or ':', it is inter-
                preted as an label name that may be  found  in  the
 -              file /etc/default/cdrecord (see FILES section).
-+              file /etc/cdrecord.man (see FILES section).
++              file /etc/cdrecord.conf (see FILES section).
  
         ggrraacceettiimmee==_#
                Set  the  grace  time before starting to write to _#
