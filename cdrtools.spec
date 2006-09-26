@@ -17,8 +17,7 @@ Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 Patch2:		%{name}-man.patch
 Patch3:		%{name}-no-kernel-headers.patch
-Patch4:		%{name}-min_gracetime.patch
-Patch5:		%{name}-linking.patch
+Patch4:		%{name}-linking.patch
 URL:		http://cdrecord.berlios.de/old/private/cdrecord.html
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -233,8 +232,7 @@ chmod +w -R *
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-#%patch4 -p1
-%patch5 -p1
+%patch4 -p1
 
 ln -sf i586-linux-gcc.rul RULES/x86_64-linux-gcc.rul
 ln -sf i586-linux-cc.rul RULES/x86_64-linux-cc.rul
