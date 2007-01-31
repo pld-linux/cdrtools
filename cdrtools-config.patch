@@ -60,9 +60,9 @@ diff -ruN cdrtools-2.0-/cdrecord/cdrecord.1 cdrtools-2.0/cdrecord/cdrecord.1
  it is interpreted as an label name that may be found in the file
 -/etc/default/cdrecord (see FILES section).
 +/etc/cdrecord.conf (see FILES section).
- .TP
- .BI gracetime= #
- Set the grace time before starting to write to
+ .sp
+ If no 
+ .B dev=
 @@ -1361,7 +1361,7 @@
  .TP
  .B CDR_DEVICE
@@ -294,9 +294,9 @@ diff -ruN cdrtools-2.0-/readcd/readcd.1 cdrtools-2.0/readcd/readcd.1
  it is interpreted as an label name that may be found in the file
 -/etc/default/cdrecord (see FILES section).
 +/etc/cdrecord.conf (see FILES section).
- .TP
- .BI timeout= #
- Set the default SCSI command timeout value to 
+ .sp
+ If no 
+ .B dev=
 diff -ruN cdrtools-2.0-/scgcheck/scgcheck.1 cdrtools-2.0/scgcheck/scgcheck.1
 --- cdrtools-2.0-/scgcheck/scgcheck.1	Tue Dec 24 16:32:01 2002
 +++ cdrtools-2.0/scgcheck/scgcheck.1	Thu Dec 26 18:25:53 2002
