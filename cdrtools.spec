@@ -273,12 +273,11 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_includedir}/schily/scg}
 install cdda2wav/cdda2mp3	$RPM_BUILD_ROOT%{_bindir}/
 install cdda2wav/cdda2ogg	$RPM_BUILD_ROOT%{_bindir}/
 
-# Installing Header files for use with devel package
-rm -f include/scg
-
-install include/*		$RPM_BUILD_ROOT%{_includedir}/schily
+install include/schily/*.h	$RPM_BUILD_ROOT%{_includedir}/schily
+install incs/*/align.h		$RPM_BUILD_ROOT%{_includedir}/schily
+install incs/*/avoffset.h	$RPM_BUILD_ROOT%{_includedir}/schily
 install incs/*/xconfig.h	$RPM_BUILD_ROOT%{_includedir}/schily
-install libscg/scg/*		$RPM_BUILD_ROOT%{_includedir}/schily/scg
+install libscg/scg/*.h		$RPM_BUILD_ROOT%{_includedir}/schily/scg
 
 install cdrecord/cdrecord.dfl	$RPM_BUILD_ROOT%{_sysconfdir}/cdrecord.conf
 
@@ -289,8 +288,6 @@ echo '.so isoinfo.8' > $RPM_BUILD_ROOT%{_mandir}/man8/devdump.8
 echo '.so isoinfo.8' > $RPM_BUILD_ROOT%{_mandir}/man8/isovfy.8
 echo '.so isoinfo.8' > $RPM_BUILD_ROOT%{_mandir}/man8/isodump.8
 echo '.so cdda2ogg.1' > $RPM_BUILD_ROOT%{_mandir}/man1/cdda2mp3.1
-
-
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -311,8 +308,10 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %{_libdir}/lib*.a
-%{_includedir}/schily
-%{_includedir}/*.h
+%dir %{_includedir}/schily
+%dir %{_includedir}/schily/scg
+%{_includedir}/schily/*.h
+%{_includedir}/schily/scg/*.h
 
 %files cdda2wav
 %defattr(644,root,root,755)
