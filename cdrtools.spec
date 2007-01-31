@@ -1,4 +1,4 @@
-%define		_alpha	a11
+%define		_alpha	a23
 Summary:	A command line CD/DVD-Recorder
 Summary(es):	Un programa de grabación de CD/DVD
 Summary(pl):	Program do nagrywania p³yt CD/DVD
@@ -12,7 +12,7 @@ Epoch:		5
 License:	GPL v2
 Group:		Applications/System
 Source0:	ftp://ftp.berlios.de/pub/cdrecord/alpha/%{name}-%{version}%{_alpha}.tar.bz2
-# Source0-md5:	0f18966e4772b851bee385d0b07a18af
+# Source0-md5:	89d335757232196899652f579fc241b9
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 Patch2:		%{name}-man.patch
