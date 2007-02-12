@@ -1,10 +1,10 @@
 %define		_alpha	a23
 Summary:	A command line CD/DVD-Recorder
-Summary(es):	Un programa de grabaciСn de CD/DVD
-Summary(pl):	Program do nagrywania pЁyt CD/DVD
-Summary(pt_BR):	Um programa de gravaГЦo de CD/DVD
-Summary(ru):	Программа для записи CD/DVD, запускаемая из командной строки
-Summary(uk):	Програма для запису CD/DVD, яка запуска╓ться з командно╖ стр╕чки
+Summary(es.UTF-8):   Un programa de grabaciцЁn de CD/DVD
+Summary(pl.UTF-8):   Program do nagrywania pе┌yt CD/DVD
+Summary(pt_BR.UTF-8):   Um programa de gravaц╖цёo de CD/DVD
+Summary(ru.UTF-8):   п÷я─п╬пЁя─п╟п╪п╪п╟ п╢п╩я▐ п╥п╟п©п╦я│п╦ CD/DVD, п╥п╟п©я┐я│п╨п╟п╣п╪п╟я▐ п╦п╥ п╨п╬п╪п╟п╫п╢п╫п╬п╧ я│я┌я─п╬п╨п╦
+Summary(uk.UTF-8):   п÷я─п╬пЁя─п╟п╪п╟ п╢п╩я▐ п╥п╟п©п╦я│я┐ CD/DVD, я▐п╨п╟ п╥п╟п©я┐я│п╨п╟я■я┌я▄я│я▐ п╥ п╨п╬п╪п╟п╫п╢п╫п╬я≈ я│я┌я─я√я┤п╨п╦
 Name:		cdrtools
 Version:	2.01.01
 Release:	0.%{_alpha}.1
@@ -29,33 +29,33 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Cdrecord allows you to create CD's on a CD-Recorder (SCSI/ATAPI).
 Supports data, audio, mixed, multi-session and CD+ discs etc.
 
-%description -l pl
-Cdrecord pozwala tworzyФ CD na nagrywarce CD (SCSI/ATAPI). ObsЁuguje
-dyski z danymi, d╪wiЙkiem, mieszane, wielosesyjne, CD+ i inne.
+%description -l pl.UTF-8
+Cdrecord pozwala tworzyд┤ CD na nagrywarce CD (SCSI/ATAPI). Obsе┌uguje
+dyski z danymi, dе╨wiд≥kiem, mieszane, wielosesyjne, CD+ i inne.
 
-%description -l pt_BR
-Cdrecord permite que vocЙ crie CDs em seu gravador de CDs SCSI/ATAPI.
-и possМvel gravar dados, Аudio, misturados, multi-seГЦo e CD+.
+%description -l pt_BR.UTF-8
+Cdrecord permite que vocц╙ crie CDs em seu gravador de CDs SCSI/ATAPI.
+ц┴ possц╜vel gravar dados, ц║udio, misturados, multi-seц╖цёo e CD+.
 
-%description -l ru
-Cdrecord - это программа для создания аудио и цифровых CD. Cdrecord
-работает со многими типами CD-рекордеров разных производителей,
-полностью поддерживает multi-session и сообщает об ошибках в формате,
-пригодном для чтения человеком.
+%description -l ru.UTF-8
+Cdrecord - я█я┌п╬ п©я─п╬пЁя─п╟п╪п╪п╟ п╢п╩я▐ я│п╬п╥п╢п╟п╫п╦я▐ п╟я┐п╢п╦п╬ п╦ я├п╦я└я─п╬п╡я▀я┘ CD. Cdrecord
+я─п╟п╠п╬я┌п╟п╣я┌ я│п╬ п╪п╫п╬пЁп╦п╪п╦ я┌п╦п©п╟п╪п╦ CD-я─п╣п╨п╬я─п╢п╣я─п╬п╡ я─п╟п╥п╫я▀я┘ п©я─п╬п╦п╥п╡п╬п╢п╦я┌п╣п╩п╣п╧,
+п©п╬п╩п╫п╬я│я┌я▄я▌ п©п╬п╢п╢п╣я─п╤п╦п╡п╟п╣я┌ multi-session п╦ я│п╬п╬п╠я┴п╟п╣я┌ п╬п╠ п╬я┬п╦п╠п╨п╟я┘ п╡ я└п╬я─п╪п╟я┌п╣,
+п©я─п╦пЁп╬п╢п╫п╬п╪ п╢п╩я▐ я┤я┌п╣п╫п╦я▐ я┤п╣п╩п╬п╡п╣п╨п╬п╪.
 
-%description -l uk
-Cdrecord - це програма для створення ауд╕о та програмних CD. Cdrecord
-працю╓ з багатьма типами CD-рекордер╕в р╕зних виробник╕в, повн╕стю
-п╕дтриму╓ multi-session ╕ пов╕домля╓ про помилки у формат╕, придатному
-для читання людиною.
+%description -l uk.UTF-8
+Cdrecord - я├п╣ п©я─п╬пЁя─п╟п╪п╟ п╢п╩я▐ я│я┌п╡п╬я─п╣п╫п╫я▐ п╟я┐п╢я√п╬ я┌п╟ п©я─п╬пЁя─п╟п╪п╫п╦я┘ CD. Cdrecord
+п©я─п╟я├я▌я■ п╥ п╠п╟пЁп╟я┌я▄п╪п╟ я┌п╦п©п╟п╪п╦ CD-я─п╣п╨п╬я─п╢п╣я─я√п╡ я─я√п╥п╫п╦я┘ п╡п╦я─п╬п╠п╫п╦п╨я√п╡, п©п╬п╡п╫я√я│я┌я▌
+п©я√п╢я┌я─п╦п╪я┐я■ multi-session я√ п©п╬п╡я√п╢п╬п╪п╩я▐я■ п©я─п╬ п©п╬п╪п╦п╩п╨п╦ я┐ я└п╬я─п╪п╟я┌я√, п©я─п╦п╢п╟я┌п╫п╬п╪я┐
+п╢п╩я▐ я┤п╦я┌п╟п╫п╫я▐ п╩я▌п╢п╦п╫п╬я▌.
 
 %package devel
 Summary:	The libschily SCSI user level transport library
-Summary(es):	La biblioteca SCSI libschily
-Summary(pl):	Biblioteka dostЙpu do poziomu SCSI przez u©ytkownika
-Summary(pt_BR):	A biblioteca SCSI libschily
-Summary(ru):	SCSI-библиотека libschily
-Summary(uk):	SCSI-б╕бл╕отека libschily
+Summary(es.UTF-8):   La biblioteca SCSI libschily
+Summary(pl.UTF-8):   Biblioteka dostд≥pu do poziomu SCSI przez uе╪ytkownika
+Summary(pt_BR.UTF-8):   A biblioteca SCSI libschily
+Summary(ru.UTF-8):   SCSI-п╠п╦п╠п╩п╦п╬я┌п╣п╨п╟ libschily
+Summary(uk.UTF-8):   SCSI-п╠я√п╠п╩я√п╬я┌п╣п╨п╟ libschily
 Group:		Development/Libraries
 Obsoletes:	cdrecord-devel
 
@@ -65,39 +65,39 @@ The SCSI library is suitable to talk to any SCSI device without having
 a special driver for it. Cdrecord may be easily ported to any system
 that has a SCSI device driver similar to the scg driver.
 
-%description devel -l pl
-Dystrybucja %{name} zawiera bibliotekЙ dostЙpu do warstwy transportu w
-SCSI. Poprzez bibliotekЙ mo©na komunikowaФ siЙ z dowolnym urz╠dzeniem
+%description devel -l pl.UTF-8
+Dystrybucja %{name} zawiera bibliotekд≥ dostд≥pu do warstwy transportu w
+SCSI. Poprzez bibliotekд≥ moе╪na komunikowaд┤ siд≥ z dowolnym urzд┘dzeniem
 SCSI bez potrzeby posiadania specjalnego sterownika do tego
-urz╠dzenia.
+urzд┘dzenia.
 
-%description devel -l pt_BR
-O cdrtools contИm uma biblioteca de transporte de dados por SCSI "user
+%description devel -l pt_BR.UTF-8
+O cdrtools contц╘m uma biblioteca de transporte de dados por SCSI "user
 level". A biblioteca SCSI pode ser usada para conversar com qualquer
 dispositivo SCSI sem a necessidade de um driver especial.
 
-%description devel -l ru
-Пакет cdrecord-devel содержит транспортные библиотеки
-пользовательского уровня для SCSI, которые могут работать с любым
-SCSI-устройством без специального драйвера для этого устройства.
-Cdrecord может быть легко портирован на любую систему с драйвером
-SCSI-устройства, похожим на драйвер scg.
+%description devel -l ru.UTF-8
+п÷п╟п╨п╣я┌ cdrecord-devel я│п╬п╢п╣я─п╤п╦я┌ я┌я─п╟п╫я│п©п╬я─я┌п╫я▀п╣ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦
+п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▄я│п╨п╬пЁп╬ я┐я─п╬п╡п╫я▐ п╢п╩я▐ SCSI, п╨п╬я┌п╬я─я▀п╣ п╪п╬пЁя┐я┌ я─п╟п╠п╬я┌п╟я┌я▄ я│ п╩я▌п╠я▀п╪
+SCSI-я┐я│я┌я─п╬п╧я│я┌п╡п╬п╪ п╠п╣п╥ я│п©п╣я├п╦п╟п╩я▄п╫п╬пЁп╬ п╢я─п╟п╧п╡п╣я─п╟ п╢п╩я▐ я█я┌п╬пЁп╬ я┐я│я┌я─п╬п╧я│я┌п╡п╟.
+Cdrecord п╪п╬п╤п╣я┌ п╠я▀я┌я▄ п╩п╣пЁп╨п╬ п©п╬я─я┌п╦я─п╬п╡п╟п╫ п╫п╟ п╩я▌п╠я┐я▌ я│п╦я│я┌п╣п╪я┐ я│ п╢я─п╟п╧п╡п╣я─п╬п╪
+SCSI-я┐я│я┌я─п╬п╧я│я┌п╡п╟, п©п╬я┘п╬п╤п╦п╪ п╫п╟ п╢я─п╟п╧п╡п╣я─ scg.
 
-%description devel -l uk
-Пакет cdrecord-devel м╕стить транспортн╕ б╕бл╕отеки користувацького
-р╕вня для SCSI, як╕ можуть працювати з будь-яким SCSI-пристро╓м без
-спец╕ального драйвера для цього пристрою. Cdrecord може бути легко
-портований на будь-яку систему з драйвером SCSI-пристроя, схожим на
-драйвер scg.
+%description devel -l uk.UTF-8
+п÷п╟п╨п╣я┌ cdrecord-devel п╪я√я│я┌п╦я┌я▄ я┌я─п╟п╫я│п©п╬я─я┌п╫я√ п╠я√п╠п╩я√п╬я┌п╣п╨п╦ п╨п╬я─п╦я│я┌я┐п╡п╟я├я▄п╨п╬пЁп╬
+я─я√п╡п╫я▐ п╢п╩я▐ SCSI, я▐п╨я√ п╪п╬п╤я┐я┌я▄ п©я─п╟я├я▌п╡п╟я┌п╦ п╥ п╠я┐п╢я▄-я▐п╨п╦п╪ SCSI-п©я─п╦я│я┌я─п╬я■п╪ п╠п╣п╥
+я│п©п╣я├я√п╟п╩я▄п╫п╬пЁп╬ п╢я─п╟п╧п╡п╣я─п╟ п╢п╩я▐ я├я▄п╬пЁп╬ п©я─п╦я│я┌я─п╬я▌. Cdrecord п╪п╬п╤п╣ п╠я┐я┌п╦ п╩п╣пЁп╨п╬
+п©п╬я─я┌п╬п╡п╟п╫п╦п╧ п╫п╟ п╠я┐п╢я▄-я▐п╨я┐ я│п╦я│я┌п╣п╪я┐ п╥ п╢я─п╟п╧п╡п╣я─п╬п╪ SCSI-п©я─п╦я│я┌я─п╬я▐, я│я┘п╬п╤п╦п╪ п╫п╟
+п╢я─п╟п╧п╡п╣я─ scg.
 
 %package cdda2wav
 Summary:	Get WAV files from digital audio cd's
-Summary(es):	Crea archivos tipo WAV a partir de CDs de audio
-Summary(fr):	convertisseur CD-Audio->.WAV
-Summary(pl):	Uzyskaj pliki WAV z cyfrowego kompaktu audio
-Summary(pt_BR):	Cria arquivos tipo WAV a partir de CDs de Аudio
-Summary(ru):	Утилита для получения файлов .WAV с digital audio CD
-Summary(uk):	Утил╕та для генерац╕╖ файл╕в .WAV з digital audio CD
+Summary(es.UTF-8):   Crea archivos tipo WAV a partir de CDs de audio
+Summary(fr.UTF-8):   convertisseur CD-Audio->.WAV
+Summary(pl.UTF-8):   Uzyskaj pliki WAV z cyfrowego kompaktu audio
+Summary(pt_BR.UTF-8):   Cria arquivos tipo WAV a partir de CDs de ц║udio
+Summary(ru.UTF-8):   пёя┌п╦п╩п╦я┌п╟ п╢п╩я▐ п©п╬п╩я┐я┤п╣п╫п╦я▐ я└п╟п╧п╩п╬п╡ .WAV я│ digital audio CD
+Summary(uk.UTF-8):   пёя┌п╦п╩я√я┌п╟ п╢п╩я▐ пЁп╣п╫п╣я─п╟я├я√я≈ я└п╟п╧п╩я√п╡ .WAV п╥ digital audio CD
 Group:		Applications/Sound
 Provides:	cdda2wav
 Obsoletes:	cdda2wav
@@ -109,72 +109,72 @@ cd data in digital form to your host. Data can be dumped into WAV or
 sun format sound files. Options control the recording format
 (stereo/mono; 8,12,16 bits; different rates).
 
-%description cdda2wav -l es
-Un utilitario para leer mЗsicas en accionadores de cdrom capaces de
-transmitir datos de CDs de audio en forma digital para tu mАquina. Los
+%description cdda2wav -l es.UTF-8
+Un utilitario para leer mц╨sicas en accionadores de cdrom capaces de
+transmitir datos de CDs de audio en forma digital para tu mц║quina. Los
 datos pueden ser grabados en formato WAV o sun. Existen opciones para
-controlar el formato de la grabaciСn (stereo/mono, 8, 12, 16 bits,
+controlar el formato de la grabaciцЁn (stereo/mono, 8, 12, 16 bits,
 tasas diferentes).
 
-%description cdda2wav -l pl
-NarzЙdzie do zczytywania danych z napЙdСw cdrom, ktСre s╠ w stanie
-wysyЁaФ strumieЯ audio. Dane mog╠ zostaФ zapisane w formacie plikСw
+%description cdda2wav -l pl.UTF-8
+Narzд≥dzie do zczytywania danych z napд≥dцЁw cdrom, ktцЁre sд┘ w stanie
+wysyе┌aд┤ strumieе└ audio. Dane mogд┘ zostaд┤ zapisane w formacie plikцЁw
 WAV lub suna.
 
-%description cdda2wav -l pt_BR
-Um utilitАrio para ler mЗsicas em acionadores de cdrom capazes de
-transmitir dados de CDs de Аudio em forma digital para sua mАquina. Os
-dados podem ser gravados em formato WAV ou sun. Existem opГУes para
-controlar o formato da gravaГЦo (estИreo/mono, 8, 12, 16 bits, taxas
+%description cdda2wav -l pt_BR.UTF-8
+Um utilitц║rio para ler mц╨sicas em acionadores de cdrom capazes de
+transmitir dados de CDs de ц║udio em forma digital para sua mц║quina. Os
+dados podem ser gravados em formato WAV ou sun. Existem opц╖ц╣es para
+controlar o formato da gravaц╖цёo (estц╘reo/mono, 8, 12, 16 bits, taxas
 diferentes).
 
-%description cdda2wav -l ru
-Cdda2wav - это сэмплер, способный считывать аудиоданные с CD в
-цифровой форме и сохранять их на диск в виде звуковых файлов формата
-.WAV или .sun. Форматы записи включают стерео/моно, 8/12/16 бит и
-различные частоты дискретизации. Cdda2wav также может быть использован
-как CD-плейер.
+%description cdda2wav -l ru.UTF-8
+Cdda2wav - я█я┌п╬ я│я█п╪п©п╩п╣я─, я│п©п╬я│п╬п╠п╫я▀п╧ я│я┤п╦я┌я▀п╡п╟я┌я▄ п╟я┐п╢п╦п╬п╢п╟п╫п╫я▀п╣ я│ CD п╡
+я├п╦я└я─п╬п╡п╬п╧ я└п╬я─п╪п╣ п╦ я│п╬я┘я─п╟п╫я▐я┌я▄ п╦я┘ п╫п╟ п╢п╦я│п╨ п╡ п╡п╦п╢п╣ п╥п╡я┐п╨п╬п╡я▀я┘ я└п╟п╧п╩п╬п╡ я└п╬я─п╪п╟я┌п╟
+.WAV п╦п╩п╦ .sun. п╓п╬я─п╪п╟я┌я▀ п╥п╟п©п╦я│п╦ п╡п╨п╩я▌я┤п╟я▌я┌ я│я┌п╣я─п╣п╬/п╪п╬п╫п╬, 8/12/16 п╠п╦я┌ п╦
+я─п╟п╥п╩п╦я┤п╫я▀п╣ я┤п╟я│я┌п╬я┌я▀ п╢п╦я│п╨я─п╣я┌п╦п╥п╟я├п╦п╦. Cdda2wav я┌п╟п╨п╤п╣ п╪п╬п╤п╣я┌ п╠я▀я┌я▄ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫
+п╨п╟п╨ CD-п©п╩п╣п╧п╣я─.
 
-%description cdda2wav -l uk
-Cdda2wav - це семплер, здатний зчитувати ауд╕одан╕ ╕ CD у цифров╕й
-форм╕ та збер╕гати ╖х на диск у вигляд╕ звукових файл╕в формату .WAV
-або .sun. Формати запису включають стерео/моно, 8/12/16 б╕т та р╕зн╕
-частоты дискретизац╕╖. Cdda2wav також може бути використаний як
-CD-плей╓р.
+%description cdda2wav -l uk.UTF-8
+Cdda2wav - я├п╣ я│п╣п╪п©п╩п╣я─, п╥п╢п╟я┌п╫п╦п╧ п╥я┤п╦я┌я┐п╡п╟я┌п╦ п╟я┐п╢я√п╬п╢п╟п╫я√ я√ CD я┐ я├п╦я└я─п╬п╡я√п╧
+я└п╬я─п╪я√ я┌п╟ п╥п╠п╣я─я√пЁп╟я┌п╦ я≈я┘ п╫п╟ п╢п╦я│п╨ я┐ п╡п╦пЁп╩я▐п╢я√ п╥п╡я┐п╨п╬п╡п╦я┘ я└п╟п╧п╩я√п╡ я└п╬я─п╪п╟я┌я┐ .WAV
+п╟п╠п╬ .sun. п╓п╬я─п╪п╟я┌п╦ п╥п╟п©п╦я│я┐ п╡п╨п╩я▌я┤п╟я▌я┌я▄ я│я┌п╣я─п╣п╬/п╪п╬п╫п╬, 8/12/16 п╠я√я┌ я┌п╟ я─я√п╥п╫я√
+я┤п╟я│я┌п╬я┌я▀ п╢п╦я│п╨я─п╣я┌п╦п╥п╟я├я√я≈. Cdda2wav я┌п╟п╨п╬п╤ п╪п╬п╤п╣ п╠я┐я┌п╦ п╡п╦п╨п╬я─п╦я│я┌п╟п╫п╦п╧ я▐п╨
+CD-п©п╩п╣п╧я■я─.
 
 %package readcd
 Summary:	Read/Write data Compact Discs
-Summary(pl):	Odczytuje/Zapisuje dane z PЁyt Kompaktowych
+Summary(pl.UTF-8):   Odczytuje/Zapisuje dane z Pе┌yt Kompaktowych
 Group:		Applications/System
 Obsoletes:	cdrecord-readcd
 
 %description readcd
 Read/Write data Compact Discs.
 
-%description readcd -l pl
-Odczytuje/Zapisuje dane z PЁyt Kompaktowych.
+%description readcd -l pl.UTF-8
+Odczytuje/Zapisuje dane z Pе┌yt Kompaktowych.
 
 %package utils
 Summary:	Dumping and verifying iso9660 images
-Summary(pl):	Zrzucanie i weryfikacja obrazСw iso9660
+Summary(pl.UTF-8):   Zrzucanie i weryfikacja obrazцЁw iso9660
 Group:		Applications/System
 
 %description utils
 Utility programs for dumping and verifying iso9660 images.
 
-%description utils -l pl
-NarzЙdzia do zrzucania i weryfikacji obrazСw iso9660.
+%description utils -l pl.UTF-8
+Narzд≥dzia do zrzucania i weryfikacji obrazцЁw iso9660.
 
 %package mkisofs
 Summary:	Creates an ISO9660 filesystem image
-Summary(de):	Erstellt ein Dateisystem-Abbild nach ISO9660
-Summary(es):	Crea una imagen de un sistema de archivos ISO9660
-Summary(fr):	CrИe un image systХme de fichiers ISO9660
-Summary(pl):	Tworzy obraz systemu plikСw ISO9660
-Summary(pt_BR):	Cria uma imagem de um sistema de arquivos ISO9660
-Summary(ru):	Создает образ файловой системы ISO9660
-Summary(tr):	ISO9660 dosya sistemi kopyasЩ oluЧturur
-Summary(uk):	Створю╓ образ файлово╖ системи ISO9660
+Summary(de.UTF-8):   Erstellt ein Dateisystem-Abbild nach ISO9660
+Summary(es.UTF-8):   Crea una imagen de un sistema de archivos ISO9660
+Summary(fr.UTF-8):   Crц╘e un image systц╗me de fichiers ISO9660
+Summary(pl.UTF-8):   Tworzy obraz systemu plikцЁw ISO9660
+Summary(pt_BR.UTF-8):   Cria uma imagem de um sistema de arquivos ISO9660
+Summary(ru.UTF-8):   п║п╬п╥п╢п╟п╣я┌ п╬п╠я─п╟п╥ я└п╟п╧п╩п╬п╡п╬п╧ я│п╦я│я┌п╣п╪я▀ ISO9660
+Summary(tr.UTF-8):   ISO9660 dosya sistemi kopyasд╠ oluе÷turur
+Summary(uk.UTF-8):   п║я┌п╡п╬я─я▌я■ п╬п╠я─п╟п╥ я└п╟п╧п╩п╬п╡п╬я≈ я│п╦я│я┌п╣п╪п╦ ISO9660
 Group:		Applications/System
 Provides:	mkisofs = %{epoch}:%{version}-%{release}
 Obsoletes:	mkisofs
@@ -183,46 +183,46 @@ Obsoletes:	mkisofs
 This is the mkisofs package. It is used to create ISO 9660 file system
 images for creating CD-ROMs.
 
-%description mkisofs -l es
-Este es el paquete mkisofs. Se le usa para crear imАgenes de sistema
-de archivos ISO 9660 en la creaciСn de CD-ROMs. Ahora incluye soporte
+%description mkisofs -l es.UTF-8
+Este es el paquete mkisofs. Se le usa para crear imц║genes de sistema
+de archivos ISO 9660 en la creaciцЁn de CD-ROMs. Ahora incluye soporte
 para hacer CD-ROMs de boot "El Torito".
 
-%description mkisofs -l pl
-To jest pakiet mkisofs. Jest on u©ywany do tworzenia obrazСw systemСw
-plikСw ISO9660 potrzebnych do tworzenia pЁyt CD-ROM.
+%description mkisofs -l pl.UTF-8
+To jest pakiet mkisofs. Jest on uе╪ywany do tworzenia obrazцЁw systemцЁw
+plikцЁw ISO9660 potrzebnych do tworzenia pе┌yt CD-ROM.
 
-%description mkisofs -l pt_BR
-Este И o pacote mkisofs. Ele И usado para criar imagens de sistema de
-arquivos ISO 9660 para criaГЦo de CD-ROMs. Agora inclui suporte para
+%description mkisofs -l pt_BR.UTF-8
+Este ц╘ o pacote mkisofs. Ele ц╘ usado para criar imagens de sistema de
+arquivos ISO 9660 para criaц╖цёo de CD-ROMs. Agora inclui suporte para
 fazer CD-ROMs de boot "El Torito".
 
-%description mkisofs -l ru
-Программа mkisofs используется для подготовки мастер-диска, т.е. она
-генерирует файловую систему ISO9660. Mkisofs делает снимок заданного
-дерева каталогов и генерирует бинарный образ этого дерева, который
-соответствует файловой системе ISO9660, записываемой на блочное
-устройство. Mkisofs используется для записи CD-ROM'ов и включает
-поддержку создания загружаемых El Torito CD-ROM'ов.
+%description mkisofs -l ru.UTF-8
+п÷я─п╬пЁя─п╟п╪п╪п╟ mkisofs п╦я│п©п╬п╩я▄п╥я┐п╣я┌я│я▐ п╢п╩я▐ п©п╬п╢пЁп╬я┌п╬п╡п╨п╦ п╪п╟я│я┌п╣я─-п╢п╦я│п╨п╟, я┌.п╣. п╬п╫п╟
+пЁп╣п╫п╣я─п╦я─я┐п╣я┌ я└п╟п╧п╩п╬п╡я┐я▌ я│п╦я│я┌п╣п╪я┐ ISO9660. Mkisofs п╢п╣п╩п╟п╣я┌ я│п╫п╦п╪п╬п╨ п╥п╟п╢п╟п╫п╫п╬пЁп╬
+п╢п╣я─п╣п╡п╟ п╨п╟я┌п╟п╩п╬пЁп╬п╡ п╦ пЁп╣п╫п╣я─п╦я─я┐п╣я┌ п╠п╦п╫п╟я─п╫я▀п╧ п╬п╠я─п╟п╥ я█я┌п╬пЁп╬ п╢п╣я─п╣п╡п╟, п╨п╬я┌п╬я─я▀п╧
+я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐п╣я┌ я└п╟п╧п╩п╬п╡п╬п╧ я│п╦я│я┌п╣п╪п╣ ISO9660, п╥п╟п©п╦я│я▀п╡п╟п╣п╪п╬п╧ п╫п╟ п╠п╩п╬я┤п╫п╬п╣
+я┐я│я┌я─п╬п╧я│я┌п╡п╬. Mkisofs п╦я│п©п╬п╩я▄п╥я┐п╣я┌я│я▐ п╢п╩я▐ п╥п╟п©п╦я│п╦ CD-ROM'п╬п╡ п╦ п╡п╨п╩я▌я┤п╟п╣я┌
+п©п╬п╢п╢п╣я─п╤п╨я┐ я│п╬п╥п╢п╟п╫п╦я▐ п╥п╟пЁя─я┐п╤п╟п╣п╪я▀я┘ El Torito CD-ROM'п╬п╡.
 
-%description mkisofs -l uk
-Програма mkisofs використову╓ться для п╕дготовки мастер-диску, вона
-генеру╓ файлову систему ISO9660. Mkisofs робить зн╕мок заданого дерева
-каталог╕в та генеру╓ б╕нарный образ цього дерева, який в╕дпов╕да╓
-файлов╕й систем╕ ISO9660, записуван╕й на блочний пристр╕й. Mkisofs
-використову╓ться для запису CD-ROM'╕в ╕ ма╓ п╕дтримку створення
-завантажуваних El Torito CD-ROM'╕в.
+%description mkisofs -l uk.UTF-8
+п÷я─п╬пЁя─п╟п╪п╟ mkisofs п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐я■я┌я▄я│я▐ п╢п╩я▐ п©я√п╢пЁп╬я┌п╬п╡п╨п╦ п╪п╟я│я┌п╣я─-п╢п╦я│п╨я┐, п╡п╬п╫п╟
+пЁп╣п╫п╣я─я┐я■ я└п╟п╧п╩п╬п╡я┐ я│п╦я│я┌п╣п╪я┐ ISO9660. Mkisofs я─п╬п╠п╦я┌я▄ п╥п╫я√п╪п╬п╨ п╥п╟п╢п╟п╫п╬пЁп╬ п╢п╣я─п╣п╡п╟
+п╨п╟я┌п╟п╩п╬пЁя√п╡ я┌п╟ пЁп╣п╫п╣я─я┐я■ п╠я√п╫п╟я─п╫я▀п╧ п╬п╠я─п╟п╥ я├я▄п╬пЁп╬ п╢п╣я─п╣п╡п╟, я▐п╨п╦п╧ п╡я√п╢п©п╬п╡я√п╢п╟я■
+я└п╟п╧п╩п╬п╡я√п╧ я│п╦я│я┌п╣п╪я√ ISO9660, п╥п╟п©п╦я│я┐п╡п╟п╫я√п╧ п╫п╟ п╠п╩п╬я┤п╫п╦п╧ п©я─п╦я│я┌я─я√п╧. Mkisofs
+п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐я■я┌я▄я│я▐ п╢п╩я▐ п╥п╟п©п╦я│я┐ CD-ROM'я√п╡ я√ п╪п╟я■ п©я√п╢я┌я─п╦п╪п╨я┐ я│я┌п╡п╬я─п╣п╫п╫я▐
+п╥п╟п╡п╟п╫я┌п╟п╤я┐п╡п╟п╫п╦я┘ El Torito CD-ROM'я√п╡.
 
 %package btcflash
 Summary:	BTC CD/DVD reader/writer firmware updater
-Summary(pl):	Program do uaktualniania firmware'u czytnikСw/nagrywarek CD/DVD BTC
+Summary(pl.UTF-8):   Program do uaktualniania firmware'u czytnikцЁw/nagrywarek CD/DVD BTC
 Group:		Application/System
 
 %description btcflash
 BTC CD/DVD reader/writer firmware updater.
 
-%description btcflash -l pl
-Program do uaktualniania firmware'u czytnikСw/nagrywarek CD/DVD firmy
+%description btcflash -l pl.UTF-8
+Program do uaktualniania firmware'u czytnikцЁw/nagrywarek CD/DVD firmy
 BTC.
 
 %prep
