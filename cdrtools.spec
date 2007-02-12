@@ -1,10 +1,10 @@
 %define		_alpha	a23
 Summary:	A command line CD/DVD-Recorder
-Summary(es.UTF-8):   Un programa de grabación de CD/DVD
-Summary(pl.UTF-8):   Program do nagrywania płyt CD/DVD
-Summary(pt_BR.UTF-8):   Um programa de gravação de CD/DVD
-Summary(ru.UTF-8):   Программа для записи CD/DVD, запускаемая из командной строки
-Summary(uk.UTF-8):   Програма для запису CD/DVD, яка запускається з командної стрічки
+Summary(es.UTF-8):	Un programa de grabación de CD/DVD
+Summary(pl.UTF-8):	Program do nagrywania płyt CD/DVD
+Summary(pt_BR.UTF-8):	Um programa de gravação de CD/DVD
+Summary(ru.UTF-8):	Программа для записи CD/DVD, запускаемая из командной строки
+Summary(uk.UTF-8):	Програма для запису CD/DVD, яка запускається з командної стрічки
 Name:		cdrtools
 Version:	2.01.01
 Release:	0.%{_alpha}.1
@@ -51,11 +51,11 @@ Cdrecord - це програма для створення аудіо та пр�
 
 %package devel
 Summary:	The libschily SCSI user level transport library
-Summary(es.UTF-8):   La biblioteca SCSI libschily
-Summary(pl.UTF-8):   Biblioteka dostępu do poziomu SCSI przez użytkownika
-Summary(pt_BR.UTF-8):   A biblioteca SCSI libschily
-Summary(ru.UTF-8):   SCSI-библиотека libschily
-Summary(uk.UTF-8):   SCSI-бібліотека libschily
+Summary(es.UTF-8):	La biblioteca SCSI libschily
+Summary(pl.UTF-8):	Biblioteka dostępu do poziomu SCSI przez użytkownika
+Summary(pt_BR.UTF-8):	A biblioteca SCSI libschily
+Summary(ru.UTF-8):	SCSI-библиотека libschily
+Summary(uk.UTF-8):	SCSI-бібліотека libschily
 Group:		Development/Libraries
 Obsoletes:	cdrecord-devel
 
@@ -92,12 +92,12 @@ SCSI-устройства, похожим на драйвер scg.
 
 %package cdda2wav
 Summary:	Get WAV files from digital audio cd's
-Summary(es.UTF-8):   Crea archivos tipo WAV a partir de CDs de audio
-Summary(fr.UTF-8):   convertisseur CD-Audio->.WAV
-Summary(pl.UTF-8):   Uzyskaj pliki WAV z cyfrowego kompaktu audio
-Summary(pt_BR.UTF-8):   Cria arquivos tipo WAV a partir de CDs de áudio
-Summary(ru.UTF-8):   Утилита для получения файлов .WAV с digital audio CD
-Summary(uk.UTF-8):   Утиліта для генерації файлів .WAV з digital audio CD
+Summary(es.UTF-8):	Crea archivos tipo WAV a partir de CDs de audio
+Summary(fr.UTF-8):	convertisseur CD-Audio->.WAV
+Summary(pl.UTF-8):	Uzyskaj pliki WAV z cyfrowego kompaktu audio
+Summary(pt_BR.UTF-8):	Cria arquivos tipo WAV a partir de CDs de áudio
+Summary(ru.UTF-8):	Утилита для получения файлов .WAV с digital audio CD
+Summary(uk.UTF-8):	Утиліта для генерації файлів .WAV з digital audio CD
 Group:		Applications/Sound
 Provides:	cdda2wav
 Obsoletes:	cdda2wav
@@ -144,7 +144,7 @@ CD-плейєр.
 
 %package readcd
 Summary:	Read/Write data Compact Discs
-Summary(pl.UTF-8):   Odczytuje/Zapisuje dane z Płyt Kompaktowych
+Summary(pl.UTF-8):	Odczytuje/Zapisuje dane z Płyt Kompaktowych
 Group:		Applications/System
 Obsoletes:	cdrecord-readcd
 
@@ -156,7 +156,7 @@ Odczytuje/Zapisuje dane z Płyt Kompaktowych.
 
 %package utils
 Summary:	Dumping and verifying iso9660 images
-Summary(pl.UTF-8):   Zrzucanie i weryfikacja obrazów iso9660
+Summary(pl.UTF-8):	Zrzucanie i weryfikacja obrazów iso9660
 Group:		Applications/System
 
 %description utils
@@ -167,14 +167,14 @@ Narzędzia do zrzucania i weryfikacji obrazów iso9660.
 
 %package mkisofs
 Summary:	Creates an ISO9660 filesystem image
-Summary(de.UTF-8):   Erstellt ein Dateisystem-Abbild nach ISO9660
-Summary(es.UTF-8):   Crea una imagen de un sistema de archivos ISO9660
-Summary(fr.UTF-8):   Crée un image système de fichiers ISO9660
-Summary(pl.UTF-8):   Tworzy obraz systemu plików ISO9660
-Summary(pt_BR.UTF-8):   Cria uma imagem de um sistema de arquivos ISO9660
-Summary(ru.UTF-8):   Создает образ файловой системы ISO9660
-Summary(tr.UTF-8):   ISO9660 dosya sistemi kopyası oluşturur
-Summary(uk.UTF-8):   Створює образ файлової системи ISO9660
+Summary(de.UTF-8):	Erstellt ein Dateisystem-Abbild nach ISO9660
+Summary(es.UTF-8):	Crea una imagen de un sistema de archivos ISO9660
+Summary(fr.UTF-8):	Crée un image système de fichiers ISO9660
+Summary(pl.UTF-8):	Tworzy obraz systemu plików ISO9660
+Summary(pt_BR.UTF-8):	Cria uma imagem de um sistema de arquivos ISO9660
+Summary(ru.UTF-8):	Создает образ файловой системы ISO9660
+Summary(tr.UTF-8):	ISO9660 dosya sistemi kopyası oluşturur
+Summary(uk.UTF-8):	Створює образ файлової системи ISO9660
 Group:		Applications/System
 Provides:	mkisofs = %{epoch}:%{version}-%{release}
 Obsoletes:	mkisofs
@@ -215,7 +215,7 @@ fazer CD-ROMs de boot "El Torito".
 
 %package btcflash
 Summary:	BTC CD/DVD reader/writer firmware updater
-Summary(pl.UTF-8):   Program do uaktualniania firmware'u czytników/nagrywarek CD/DVD BTC
+Summary(pl.UTF-8):	Program do uaktualniania firmware'u czytników/nagrywarek CD/DVD BTC
 Group:		Application/System
 
 %description btcflash
