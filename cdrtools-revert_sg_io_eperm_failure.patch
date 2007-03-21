@@ -1,0 +1,20 @@
+  * Add debian/patches/41_revert_sg_io_eperm_failure.dpatch:
+    - Between 2.01+01a01 and 2.01+01a03, upstream changed the behaviour of
+      SG_IO ioctl()s failing with EPERM; earlier releases ignored it, while
+      the current one aborts the program. While in principle, EPERM checking
+      is a good thing, it breaks burning for non-root users, so revert this
+      test for now.
+    - See also http://bugs.debian.org/374685.
+
+diff -urNad cdrtools-2.01+01a03~/libscg/scsi-linux-sg.c cdrtools-2.01+01a03/libscg/scsi-linux-sg.c
+--- cdrtools-2.01+01a03~/libscg/scsi-linux-sg.c	2005-05-16 23:48:37.000000000 +0200
++++ cdrtools-2.01+01a03/libscg/scsi-linux-sg.c	2006-08-17 12:01:37.000000000 +0200
+@@ -1291,7 +1291,7 @@
+ 			scglocal(scgp)->isold = 1;
+ 			return (sg_rwsend(scgp));
+ 		}
+-		if (sp->ux_errno == ENXIO || sp->ux_errno == EPERM ||
++		if (sp->ux_errno == ENXIO || /* sp->ux_errno == EPERM || */
+ 		    sp->ux_errno == EINVAL || sp->ux_errno == EACCES) {
+ 			return (-1);
+ 		}
