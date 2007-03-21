@@ -1,4 +1,4 @@
-%define		_alpha	a23
+%define		_alpha	a24
 Summary:	A command line CD/DVD-Recorder
 Summary(es.UTF-8):	Un programa de grabación de CD/DVD
 Summary(pl.UTF-8):	Program do nagrywania płyt CD/DVD
@@ -12,12 +12,13 @@ Epoch:		5
 License:	GPL v2
 Group:		Applications/System
 Source0:	ftp://ftp.berlios.de/pub/cdrecord/alpha/%{name}-%{version}%{_alpha}.tar.bz2
-# Source0-md5:	89d335757232196899652f579fc241b9
+# Source0-md5:	d435f2c1659920f0e008d2c55cdc98ee
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 Patch2:		%{name}-man.patch
 Patch3:		%{name}-no-kernel-headers.patch
 Patch4:		%{name}-linking.patch
+Patch5:		%{name}-revert_sg_io_eperm_failure.patch
 URL:		http://cdrecord.berlios.de/old/private/cdrecord.html
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -233,6 +234,7 @@ chmod +w -R *
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 ln -sf i586-linux-gcc.rul RULES/x86_64-linux-gcc.rul
 ln -sf i586-linux-cc.rul RULES/x86_64-linux-cc.rul
