@@ -1,4 +1,4 @@
-%define		_alpha	a24
+%define		_alpha	a40
 Summary:	A command line CD/DVD-Recorder
 Summary(es.UTF-8):	Un programa de grabación de CD/DVD
 Summary(pl.UTF-8):	Program do nagrywania płyt CD/DVD
@@ -9,14 +9,13 @@ Name:		cdrtools
 Version:	2.01.01
 Release:	0.%{_alpha}.1
 Epoch:		5
-License:	GPL v2
+License:	GPL v2/LGPL/CCDL
 Group:		Applications/System
 Source0:	ftp://ftp.berlios.de/pub/cdrecord/alpha/%{name}-%{version}%{_alpha}.tar.bz2
-# Source0-md5:	d435f2c1659920f0e008d2c55cdc98ee
+# Source0-md5:	2cec2eae123d4021a6e1da8b502d88f8
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 Patch2:		%{name}-man.patch
-Patch3:		%{name}-no-kernel-headers.patch
 Patch4:		%{name}-linking.patch
 Patch5:		%{name}-revert_sg_io_eperm_failure.patch
 URL:		http://cdrecord.berlios.de/old/private/cdrecord.html
@@ -232,7 +231,6 @@ chmod +w -R *
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 %patch4 -p1
 %patch5 -p1
 
@@ -296,9 +294,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AN-* doc/cdrecord.ps Changelog README README.ATAPI README.DiskT@2
-%doc README.{WORM,audio,cdplus,cdtext,cdrw,clone,copy,mkisofs,multi}
-%doc README.{parallel,raw,rscsi,sony,verify} make_diskt@2.sh
+%doc AN-* doc/cdrecord.ps Changelog README README.mkisofs cdrecord/README.ATAPI cdrecord/README.DiskT@2
+%doc cdrecord/README.{WORM,audio,cdplus,cdtext,cdrw,clone,copy,multi}
+%doc cdrecord/README.{parallel,raw,rscsi,sony,verify} make_diskt@2.sh
 %doc cdrecord/cdrecord.dfl cdrecord/LICENSE
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/cdrecord.conf
 %attr(755,root,root) %{_bindir}/cdrecord
