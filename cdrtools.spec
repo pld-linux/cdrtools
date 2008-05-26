@@ -354,6 +354,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc mkisofs/README.sort mkisofs/README.sparcboot
 %attr(755,root,root) %{_bindir}/mkisofs
 %attr(755,root,root) %{_bindir}/mkhybrid
+%{_libdir}/siconv
 %{_mandir}/man8/mkisofs.8*
 %{_mandir}/man8/mkhybrid.8*
 
