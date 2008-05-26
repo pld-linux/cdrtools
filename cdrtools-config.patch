@@ -1,6 +1,6 @@
-diff -ruN cdrtools-2.0-/README.ATAPI cdrtools-2.0/README.ATAPI
---- cdrtools-2.0-/README.ATAPI	Tue Dec 24 17:37:35 2002
-+++ cdrtools-2.0/README.ATAPI	Thu Dec 26 18:25:53 2002
+diff -ruN cdrtools-2.0-/cdrecord/README.ATAPI cdrtools-2.0/cdrecord/README.ATAPI
+--- cdrtools-2.0-/cdrecord/README.ATAPI	Tue Dec 24 17:37:35 2002
++++ cdrtools-2.0/cdrecord/README.ATAPI	Thu Dec 26 18:25:53 2002
 @@ -462,14 +462,14 @@
        ln -s scd1 cdrw  # NOTE: see above, maybe cdrom
     Check the new SCSI settings:
