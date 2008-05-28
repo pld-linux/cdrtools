@@ -1,0 +1,32 @@
+--- cdrtools-2.01.01/DEFAULTS/Defaults.linux.orig	2007-05-08 16:56:55.000000000 +0200
++++ cdrtools-2.01.01/DEFAULTS/Defaults.linux	2008-05-28 18:12:17.188195788 +0200
+@@ -33,15 +33,11 @@
+ # LINUX_SRC_INCLUDE is used in RULES/*-linux-*cc*.rul
+ #
+ ###########################################################################
+-LINUX_INCL_PATH=	/usr/src/linux/include
+-
+-_LINUX_SRC_INCLUDE=	$(_UNIQ)$(MAY_LINUX_SRC_INCLUDE)
+-__LINUX_SRC_INCLUDE=	$(_LINUX_SRC_INCLUDE:$(_UNIQ)=$(LINUX_INCL_PATH))
+-LINUX_SRC_INCLUDE=      $(__LINUX_SRC_INCLUDE:$(_UNIQ)no%=%)
++LINUX_SRC_INCLUDE=
+ 
+ DEFINCDIRS=	$(SRCROOT)/include
+-LDPATH=		-L/opt/schily/lib
+-RUNPATH=	-R$(INS_BASE)/lib -R/opt/schily/lib -R$(OLIBSDIR)
++LDPATH=
++RUNPATH=
+ 
+ ###########################################################################
+ #
+--- cdrtools-2.01.01/RULES/rules.cnf.orig	2007-06-05 11:18:19.000000000 +0200
++++ cdrtools-2.01.01/RULES/rules.cnf	2008-05-28 18:37:19.405802291 +0200
+@@ -51,7 +51,7 @@
+ 		cd $(OINCSDIR); \
+ 		CONFIG_NOFAIL=TRUE CC="$(XCC_COM)" CFLAGS="$(CFLAGS)" \
+ 		CXXFLAGS="$(C++FLAGS)" CPPFLAGS="$(OSDEFS)" \
+-		LDFLAGS="$(LDOPTS)" sh ../../conf/configure $(CONFFLAGS)
++		LDFLAGS="$(LDFLAGS1) $(LDOPTS)" sh ../../conf/configure $(CONFFLAGS)
+ ###########################################################################
+ include $(OINCSDIR)/Inull
+ include $(OINCSDIR)/rules.cnf
