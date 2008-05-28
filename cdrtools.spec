@@ -242,6 +242,9 @@ ln -sf i586-linux-cc.rul RULES/x86_64-linux-cc.rul
 %{__perl} -pi -e 's/^(INSDIR=.*)lib/$1%{_lib}/' \
 	libfile/Makefile libhfs_iso/Makefile lib*/*.mk
 
+%{__perl} -pi -e 's/lib\/siconv/%{_lib}\/siconv/g' \
+	libsiconv/{Makefile,sic_nls.c} libsiconv/*/*.mk
+
 # kill annoying beep and sleep
 %{__perl} -pi -e 's/^__gmake_warn.*//' RULES/mk-gmake.id
 
