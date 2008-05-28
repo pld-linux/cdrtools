@@ -1,4 +1,4 @@
-%define		_alpha	a40
+%define		subver	a40
 Summary:	A command line CD/DVD-Recorder
 Summary(es.UTF-8):	Un programa de grabación de CD/DVD
 Summary(pl.UTF-8):	Program do nagrywania płyt CD/DVD
@@ -7,15 +7,16 @@ Summary(ru.UTF-8):	Программа для записи CD/DVD, запуска
 Summary(uk.UTF-8):	Програма для запису CD/DVD, яка запускається з командної стрічки
 Name:		cdrtools
 Version:	2.01.01
-Release:	0.%{_alpha}.1
+Release:	0.%{subver}.1
 Epoch:		5
-License:	GPL v2/LGPL/CCDL
+License:	GPL v2 (mkisofs), LGPL v2.1 (cdda2wav), CDDL v1.0 (the rest)
 Group:		Applications/System
-Source0:	ftp://ftp.berlios.de/pub/cdrecord/alpha/%{name}-%{version}%{_alpha}.tar.bz2
+Source0:	ftp://ftp.berlios.de/pub/cdrecord/alpha/%{name}-%{version}%{subver}.tar.bz2
 # Source0-md5:	2cec2eae123d4021a6e1da8b502d88f8
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-smmap.patch
 Patch2:		%{name}-man.patch
+Patch3:		%{name}-make.patch
 Patch4:		%{name}-linking.patch
 Patch5:		%{name}-revert_sg_io_eperm_failure.patch
 URL:		http://cdrecord.berlios.de/old/private/cdrecord.html
@@ -231,6 +232,7 @@ chmod +w -R *
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 %patch4 -p1
 %patch5 -p1
 
@@ -260,7 +262,8 @@ cd ..
 	LDCC="%{__cc}" \
 	COPTOPT="%{rpmcflags}" \
 	CFLAGS="%{rpmcflags}" \
-	LDFLAGS="%{rpmldflags}"
+	LDFLAGS1="%{rpmldflags}" \
+	XEXEEXT=
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -303,6 +306,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/scgcheck
 %attr(755,root,root) %{_sbindir}/rscsi
 %{_mandir}/man1/cdrecord.1*
+%{_mandir}/man1/rscsi.1*
 %{_mandir}/man1/scgcheck.1*
 
 %files devel
