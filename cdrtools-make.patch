@@ -19,14 +19,14 @@
  
  ###########################################################################
  #
---- cdrtools-2.01.01/RULES/rules.cnf.orig	2007-06-05 11:18:19.000000000 +0200
-+++ cdrtools-2.01.01/RULES/rules.cnf	2008-05-28 18:37:19.405802291 +0200
-@@ -51,7 +51,7 @@
+--- cdrtools-2.01.01/RULES/rules.cnf.orig	2008-08-01 20:04:08.000000000 +0200
++++ cdrtools-2.01.01/RULES/rules.cnf	2008-10-06 22:18:00.000000000 +0200
+@@ -61,7 +61,7 @@
  		cd $(OINCSDIR); \
  		CONFIG_NOFAIL=TRUE CC="$(XCC_COM)" CFLAGS="$(CFLAGS)" \
  		CXXFLAGS="$(C++FLAGS)" CPPFLAGS="$(OSDEFS)" \
--		LDFLAGS="$(LDOPTS)" sh ../../conf/configure $(CONFFLAGS)
-+		LDFLAGS="$(LDFLAGS1) $(LDOPTS)" sh ../../conf/configure $(CONFFLAGS)
+-		LDFLAGS="$(LDOPTS)" sh ../../autoconf/configure $(CONFFLAGS)
++		LDFLAGS="$(LDFLAGS1) $(LDOPTS)" sh ../../autoconf/configure $(CONFFLAGS)
  ###########################################################################
  include $(OINCSDIR)/Inull
  include $(OINCSDIR)/rules.cnf
