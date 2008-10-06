@@ -1,4 +1,4 @@
-%define		subver	a40
+%define		subver	a50
 Summary:	A command line CD/DVD-Recorder
 Summary(es.UTF-8):	Un programa de grabación de CD/DVD
 Summary(pl.UTF-8):	Program do nagrywania płyt CD/DVD
@@ -12,9 +12,8 @@ Epoch:		5
 License:	GPL v2 (mkisofs), LGPL v2.1 (cdda2wav), CDDL v1.0 (the rest)
 Group:		Applications/System
 Source0:	ftp://ftp.berlios.de/pub/cdrecord/alpha/%{name}-%{version}%{subver}.tar.bz2
-# Source0-md5:	2cec2eae123d4021a6e1da8b502d88f8
+# Source0-md5:	352f5d2fd68f7ffa3945936dbc53821a
 Patch0:		%{name}-config.patch
-Patch1:		%{name}-smmap.patch
 Patch2:		%{name}-man.patch
 Patch3:		%{name}-make.patch
 Patch4:		%{name}-linking.patch
@@ -230,7 +229,6 @@ BTC.
 %setup -q
 chmod +w -R *
 %patch0 -p1
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -251,11 +249,15 @@ ln -sf i586-linux-cc.rul RULES/x86_64-linux-cc.rul
 sed -i -e "s/-o \$(INSUSR) -g \$(INSGRP)//g" RULES/rules.prg
 
 %build
+sed -i -e 's#/usr/bin/gm4#%{_bindir}/m4#g' autoconf/autoconf
 cd conf
 cp -f /usr/share/automake/config.* .
+cd ../autoconf
 cp xconfig.h.in xconfig.h.in.org
 sed -e 's#/\*.*\*/##g' xconfig.h.in.org > xconfig.h.in
-rm -f acgeneral.m4 acspecific.m4 autoheader.m4 acoldnames.m4 autoconf.m4
+for a in acgeneral.m4 acspecific.m4 autoheader.m4 acoldnames.m4 autoconf.m4; do
+	:> $a
+done
 # don't run aclocal, aclocal.m4 contains only local defs
 %{__autoconf}
 cd ..
