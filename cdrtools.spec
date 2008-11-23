@@ -264,6 +264,8 @@ for a in acgeneral.m4 acspecific.m4 autoheader.m4 acoldnames.m4 autoconf.m4; do
 done
 # don't run aclocal, aclocal.m4 contains only local defs
 %{__autoconf}
+cd ../cdda2wav
+%{__autoconf}
 cd ..
 
 %{__make} -j1 \
