@@ -115,9 +115,9 @@ diff -ruN cdrtools-2.0-/cdrecord/cdrecord.dfl cdrtools-2.0/cdrecord/cdrecord.dfl
  #
  #CDR_SPEED=40
  
-diff -ruN cdrtools-2.0-/cdrecord/defaults.c cdrtools-2.0/cdrecord/defaults.c
---- cdrtools-2.0-/cdrecord/defaults.c	Wed Aug 14 19:52:00 2002
-+++ cdrtools-2.0/cdrecord/defaults.c	Thu Dec 26 18:25:53 2002
+diff -ruN cdrtools-2.0-/libcdrdeflt/cdrdeflt.c cdrtools-2.0/libcdrdeflt/cdrdeflt.c
+--- cdrtools-2.0-/libcdrdeflt/cdrdeflt.c	Wed Aug 14 19:52:00 2002
++++ cdrtools-2.0/libcdrdeflt/cdrdeflt.c	Thu Dec 26 18:25:53 2002
 @@ -53,7 +53,7 @@
  	 * don't contribute work and don't give support, they are causing extra
  	 * work for me and this way slow down the cdrecord development.
