@@ -1,4 +1,4 @@
-%define		subver	a50
+%define		subver	a53
 Summary:	A command line CD/DVD-Recorder
 Summary(es.UTF-8):	Un programa de grabación de CD/DVD
 Summary(pl.UTF-8):	Program do nagrywania płyt CD/DVD
@@ -12,7 +12,7 @@ Epoch:		5
 License:	GPL v2 (mkisofs), LGPL v2.1 (cdda2wav), CDDL v1.0 (the rest)
 Group:		Applications/System
 Source0:	ftp://ftp.berlios.de/pub/cdrecord/alpha/%{name}-%{version}%{subver}.tar.bz2
-# Source0-md5:	352f5d2fd68f7ffa3945936dbc53821a
+# Source0-md5:	9a17ad56fa96ceabddea55b15d1a4457
 Patch0:		%{name}-config.patch
 Patch2:		%{name}-man.patch
 Patch3:		%{name}-make.patch
@@ -24,6 +24,8 @@ BuildRequires:	automake
 Provides:	cdrecord
 Obsoletes:	cdrecord
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		specflags	-finput-charset=ISO-8859-1 -fexec-charset=UTF-8 -D__attribute_const__=const
 
 %description
 Cdrecord allows you to create CD's on a CD-Recorder (SCSI/ATAPI).
@@ -234,6 +236,9 @@ chmod +w -R *
 %patch4 -p1
 %patch5 -p1
 
+# Remove profiled make files
+rm -f $(find . -name '*_p.mk')
+
 ln -sf i586-linux-gcc.rul RULES/x86_64-linux-gcc.rul
 ln -sf i586-linux-cc.rul RULES/x86_64-linux-cc.rul
 
@@ -253,8 +258,7 @@ sed -i -e 's#/usr/bin/gm4#%{_bindir}/m4#g' autoconf/autoconf
 cd conf
 cp -f /usr/share/automake/config.* .
 cd ../autoconf
-cp xconfig.h.in xconfig.h.in.org
-sed -e 's#/\*.*\*/##g' xconfig.h.in.org > xconfig.h.in
+sed -i -e 's#/\*.*\*/##g' xconfig.h.in
 for a in acgeneral.m4 acspecific.m4 autoheader.m4 acoldnames.m4 autoconf.m4; do
 	:> $a
 done
@@ -262,7 +266,7 @@ done
 %{__autoconf}
 cd ..
 
-%{__make} \
+%{__make} -j1 \
 	CC="%{__cc}" \
 	LDCC="%{__cc}" \
 	COPTOPT="%{rpmcflags}" \
