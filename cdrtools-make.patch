@@ -1,6 +1,6 @@
---- cdrtools-2.01.01/DEFAULTS/Defaults.linux.orig	2007-05-08 16:56:55.000000000 +0200
-+++ cdrtools-2.01.01/DEFAULTS/Defaults.linux	2008-05-28 18:12:17.188195788 +0200
-@@ -33,15 +33,11 @@
+--- cdrtools-2.01.01/DEFAULTS/Defaults.linux.orig	2009-06-04 23:10:45.000000000 +0200
++++ cdrtools-2.01.01/DEFAULTS/Defaults.linux	2009-10-13 09:23:44.000000000 +0200
+@@ -40,16 +40,11 @@
  # LINUX_SRC_INCLUDE is used in RULES/*-linux-*cc*.rul
  #
  ###########################################################################
@@ -13,14 +13,15 @@
  
  DEFINCDIRS=	$(SRCROOT)/include
 -LDPATH=		-L/opt/schily/lib
--RUNPATH=	-R$(INS_BASE)/lib -R/opt/schily/lib -R$(OLIBSDIR)
+-#RUNPATH=	-R$(INS_BASE)/lib -R/opt/schily/lib -R$(OLIBSDIR)
+-RUNPATH=	-R$(INS_BASE)/lib -R/opt/schily/lib
 +LDPATH=
 +RUNPATH=
  
  ###########################################################################
  #
 --- cdrtools-2.01.01/RULES/rules.cnf.orig	2008-08-01 20:04:08.000000000 +0200
-+++ cdrtools-2.01.01/RULES/rules.cnf	2008-10-06 22:18:00.000000000 +0200
++++ cdrtools-2.01.01/RULES/rules.cnf	2009-10-13 09:28:29.000000000 +0200
 @@ -61,7 +61,7 @@
  		cd $(OINCSDIR); \
  		CONFIG_NOFAIL=TRUE CC="$(XCC_COM)" CFLAGS="$(CFLAGS)" \

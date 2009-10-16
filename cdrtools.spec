@@ -1,4 +1,4 @@
-%define		subver	a59
+%define		subver	a66
 Summary:	A command line CD/DVD-Recorder
 Summary(es.UTF-8):	Un programa de grabación de CD/DVD
 Summary(pl.UTF-8):	Program do nagrywania płyt CD/DVD
@@ -12,7 +12,7 @@ Epoch:		5
 License:	GPL v2 (mkisofs), LGPL v2.1 (cdda2wav), CDDL v1.0 (the rest)
 Group:		Applications/System
 Source0:	ftp://ftp.berlios.de/pub/cdrecord/alpha/%{name}-%{version}%{subver}.tar.bz2
-# Source0-md5:	a5bd27c5916889098dacdacd393c99e5
+# Source0-md5:	813ec0e673597ae3038521dd1e2cfcbf
 Patch0:		%{name}-config.patch
 Patch2:		%{name}-man.patch
 Patch3:		%{name}-make.patch
@@ -253,6 +253,8 @@ ln -sf i586-linux-cc.rul RULES/x86_64-linux-cc.rul
 
 sed -i -e "s/-o \$(INSUSR) -g \$(INSGRP)//g" RULES/rules.prg
 
+%{__sed} -i -e "s/AC_RCHECK_FUNCS/AC_CHECK_FUNCS/g" autoconf/configure*
+
 %build
 sed -i -e 's#/usr/bin/gm4#%{_bindir}/m4#g' autoconf/autoconf
 cd conf
@@ -289,7 +291,7 @@ install cdda2wav/cdda2ogg	$RPM_BUILD_ROOT%{_bindir}/
 
 install include/schily/*.h	$RPM_BUILD_ROOT%{_includedir}/schily
 install incs/*/align.h		$RPM_BUILD_ROOT%{_includedir}/schily
-install incs/*/avoffset.h	$RPM_BUILD_ROOT%{_includedir}/schily
+install include/*/avoffset.h	$RPM_BUILD_ROOT%{_includedir}/schily
 install incs/*/xconfig.h	$RPM_BUILD_ROOT%{_includedir}/schily
 install libscg/scg/*.h		$RPM_BUILD_ROOT%{_includedir}/schily/scg
 
