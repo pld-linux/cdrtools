@@ -1,16 +1,19 @@
---- cdrtools-2.01.01/DEFAULTS/Defaults.linux.orig	2009-11-03 09:34:11.000000000 +0100
-+++ cdrtools-2.01.01/DEFAULTS/Defaults.linux	2009-11-03 09:35:52.000000000 +0100
-@@ -44,12 +44,11 @@
- 
- _LINUX_SRC_INCLUDE=	$(_UNIQ)$(MAY_LINUX_SRC_INCLUDE)
- __LINUX_SRC_INCLUDE=	$(_LINUX_SRC_INCLUDE:$(_UNIQ)=$(LINUX_INCL_PATH))
+--- cdrtools-2.01.01/DEFAULTS/Defaults.linux.orig	2007-05-08 16:56:55.000000000 +0200
++++ cdrtools-2.01.01/DEFAULTS/Defaults.linux	2008-05-28 18:12:17.188195788 +0200
+@@ -33,15 +33,11 @@
+ # LINUX_SRC_INCLUDE is used in RULES/*-linux-*cc*.rul
+ #
+ ###########################################################################
+-LINUX_INCL_PATH=	/usr/src/linux/include
+-
+-_LINUX_SRC_INCLUDE=	$(_UNIQ)$(MAY_LINUX_SRC_INCLUDE)
+-__LINUX_SRC_INCLUDE=	$(_LINUX_SRC_INCLUDE:$(_UNIQ)=$(LINUX_INCL_PATH))
 -LINUX_SRC_INCLUDE=      $(__LINUX_SRC_INCLUDE:$(_UNIQ)no%=%)
 +LINUX_SRC_INCLUDE=
  
  DEFINCDIRS=	$(SRCROOT)/include
 -LDPATH=		-L/opt/schily/lib
--#RUNPATH=	-R$(INS_BASE)/lib -R/opt/schily/lib -R$(OLIBSDIR)
--RUNPATH=	-R$(INS_BASE)/lib -R/opt/schily/lib
+-RUNPATH=	-R$(INS_BASE)/lib -R/opt/schily/lib -R$(OLIBSDIR)
 +LDPATH=
 +RUNPATH=
  
