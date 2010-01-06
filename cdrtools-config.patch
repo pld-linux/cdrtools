@@ -42,28 +42,53 @@ diff -ruN cdrtools-2.0-/README.unixware cdrtools-2.0/README.unixware
  ===================================================================
  
  Running cdrecord with the old address method will result in an error!
-diff -ruN cdrtools-2.0-/cdrecord/cdrecord.1 cdrtools-2.0/cdrecord/cdrecord.1
---- cdrtools-2.0-/cdrecord/cdrecord.1	Tue Dec 24 16:28:40 2002
-+++ cdrtools-2.0/cdrecord/cdrecord.1	Thu Dec 26 18:25:53 2002
-@@ -146,7 +146,7 @@
- described below.
- 
- .PP
+diff -ruN cdrtools-2.0/cdrecord/cdrecord.1.orig cdrtools-2.0/cdrecord/cdrecord.1
+--- cdrtools-2.0/cdrecord/cdrecord.1.orig	2010-01-03 22:32:07.000000000 +0100
++++ cdrtools-2.0/cdrecord/cdrecord.1	2010-01-05 08:57:54.000000000 +0100
+@@ -71,7 +71,7 @@
+ explained below refers to
+ .IR scsibus / target / lun
+ of the CD/DVD/BluRay-Recorder.
 -If a file /etc/default/cdrecord exists, the parameter to the
 +If a file /etc/cdrecord.conf exists, the parameter to the
  .B dev=
  option may also be a drive name label in said file (see FILES section).
  
-@@ -621,7 +621,7 @@
+@@ -1199,13 +1199,13 @@
+ option is present,
+ .B cdrecord
+ will try to get a drive specific speed value from the file
+-.B /etc/default/cdrecord
++.B /etc/cdrecord.conf
+ and if it cannot find one, it will try to get the speed value from the
+ .B CDR_SPEED
+ environment and later from the 
+ .B CDR_SPEED=
+ entry in
+-.BR /etc/default/cdrecord .
++.BR /etc/cdrecord.conf .
+ If no speed value could be found, cdrecord uses a drive specific default speed.
+ The default for all new (MMC compliant) drives is to use the maximum supported by the drive.
+ If you use 
+@@ -1499,7 +1499,7 @@
+ .B CDR_DEVICE
+ environment.
+ .sp
+-If a file /etc/default/cdrecord exists, and
++If a file /etc/cdrecord.conf exists, and
+ if the argument to the
  .B dev=
- option does not contain the characters ',', '/', '@' or ':',
- it is interpreted as an label name that may be found in the file
+ option
+@@ -1508,7 +1508,7 @@
+ environment
+ does not contain the characters ',', '/', '@' or ':',
+ it is interpreted as a device label name that was defined in the file
 -/etc/default/cdrecord (see FILES section).
 +/etc/cdrecord.conf (see FILES section).
  .sp
- If no 
- .B dev=
-@@ -1361,7 +1361,7 @@
+ .B \h'-2m'Autotarget Mode
+ .br
+@@ -2152,7 +2152,7 @@
  .TP
  .B CDR_DEVICE
  This may either hold a device identifier that is suitable to the open
@@ -72,7 +97,7 @@ diff -ruN cdrtools-2.0-/cdrecord/cdrecord.1 cdrtools-2.0/cdrecord/cdrecord.1
  .TP
  .B CDR_SPEED
  Sets the default speed value for writing (see also 
-@@ -1417,8 +1417,11 @@
+@@ -2220,8 +2220,11 @@
  
  .SH FILES
  .TP
@@ -86,12 +111,12 @@ diff -ruN cdrtools-2.0-/cdrecord/cdrecord.1 cdrtools-2.0/cdrecord/cdrecord.1
  For example:
  .SM CDR_FIFOSIZE=8m
  or
-@@ -1427,7 +1430,7 @@
+@@ -2230,7 +2233,7 @@
  .TP
  CDR_DEVICE
  This may either hold a device identifier that is suitable to the open
 -call of the SCSI transport library or a label in the file /etc/default/cdrecord 
-+call of the SCSI transport library or a label in the file /etc/cdrecord.conf 
++call of the SCSI transport library or a label in the file /etc/cdrecord.conf
  that allows to identify a specific drive on the system.
  .TP
  CDR_SPEED
@@ -285,27 +310,33 @@ diff -ruN cdrtools-2.0-/doc/scgcheck.ps cdrtools-2.0/doc/scgcheck.ps
  10/Times-Italic@0 SF(#).48 E F0 .13(Set the def)144 124.8 R .13
  (ault SCSI command timeout v)-.1 F .13(alue to)-.25 F F2(#)2.63 E F0
  2.63(seconds. The)3.53 F(def)2.63 E .13(ault SCSI command timeout is)-.1
-diff -ruN cdrtools-2.0-/readcd/readcd.1 cdrtools-2.0/readcd/readcd.1
---- cdrtools-2.0-/readcd/readcd.1	Tue Dec 24 16:28:41 2002
-+++ cdrtools-2.0/readcd/readcd.1	Thu Dec 26 18:25:53 2002
-@@ -186,7 +186,7 @@
+diff -ruN cdrtools-2.0/readcd/readcd.1.orig cdrtools-2.0/readcd/readcd.1
+--- cdrtools-2.0/readcd/readcd.1.orig	2009-12-06 23:02:40.000000000 +0100
++++ cdrtools-2.0/readcd/readcd.1	2010-01-05 09:05:53.000000000 +0100
+@@ -64,7 +64,7 @@
+ explained below refers to
+ .IR scsibus / target / lun
+ of the CD/DVD/BluRay-Recorder.
+-If a file /etc/default/cdrecord exists, the parameter to the
++If a file /etc/cdrecord.conf exists, the parameter to the
  .B dev=
- option does not contain the characters ',', '/', '@' or ':',
- it is interpreted as an label name that may be found in the file
+ option may also be a drive name label in said file (see FILES section).
+ 
+@@ -440,7 +440,7 @@
+ .B CDR_DEVICE
+ environment.
+ .sp
+-If a file /etc/default/cdrecord exists, and
++If a file /etc/cdrecord.conf exists, and
+ if the argument to the
+ .B dev=
+ option
+@@ -449,7 +449,7 @@
+ environment
+ does not contain the characters ',', '/', '@' or ':',
+ it is interpreted as a device label name that was defined in the file
 -/etc/default/cdrecord (see FILES section).
 +/etc/cdrecord.conf (see FILES section).
  .sp
- If no 
- .B dev=
-diff -ruN cdrtools-2.0-/scgcheck/scgcheck.1 cdrtools-2.0/scgcheck/scgcheck.1
---- cdrtools-2.0-/scgcheck/scgcheck.1	Tue Dec 24 16:32:01 2002
-+++ cdrtools-2.0/scgcheck/scgcheck.1	Thu Dec 26 18:25:53 2002
-@@ -170,7 +170,7 @@
- .B dev=
- option does not contain the characters ',', '/', '@' or ':',
- it is interpreted as an label name that may be found in the file
--/etc/default/cdrecord (see FILES section).
-+/etc/cdrecord.conf (see FILES section).
- .TP
- .BI timeout= #
- Set the default SCSI command timeout value to 
+ .B \h'-2m'Autotarget Mode
+ .br
