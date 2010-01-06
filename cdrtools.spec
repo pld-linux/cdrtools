@@ -14,7 +14,6 @@ Group:		Applications/System
 Source0:	ftp://ftp.berlios.de/pub/cdrecord/alpha/%{name}-%{version}%{subver}.tar.bz2
 # Source0-md5:	007158667682bfca8d21c15be74543c4
 Patch0:		%{name}-config.patch
-Patch1:		%{name}-path.patch
 Patch2:		%{name}-man.patch
 Patch3:		%{name}-make.patch
 Patch4:		%{name}-linking.patch
@@ -233,7 +232,6 @@ BTC.
 %setup -q
 chmod +w -R *
 %patch0 -p1
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -252,6 +250,12 @@ ln -sf i586-linux-cc.rul RULES/x86_64-linux-cc.rul
 
 %{__sed} -i -e "s/-o \$(INSUSR) -g \$(INSGRP)//g" RULES/rules.prg
 %{__sed} -i -e 's#/\*.*\*/##g' autoconf/xconfig.h.in
+
+%{__sed} -i -e 's/^(INSDIR=.*)lib/$1%{_lib}/' \
+	libfile/Makefile libhfs_iso/Makefile lib*/*.mk
+%{__sed} -i -e 's/lib\/siconv/%{_lib}\/siconv/g' \
+	libsiconv/{Makefile,sic_nls.c} libsiconv/*/*.mk
+%{__sed} -i -e 's#/usr/bin/gm4#%{_bindir}/m4#g' autoconf/autoconf
 
 cd ./autoconf
 for a in acgeneral.m4 acspecific.m4 autoheader.m4 acoldnames.m4 autoconf.m4; do
