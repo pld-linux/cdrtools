@@ -1,4 +1,4 @@
-%define		subver	a59
+%define		subver	a71
 Summary:	A command line CD/DVD-Recorder
 Summary(es.UTF-8):	Un programa de grabación de CD/DVD
 Summary(pl.UTF-8):	Program do nagrywania płyt CD/DVD
@@ -12,12 +12,14 @@ Epoch:		5
 License:	GPL v2 (mkisofs), LGPL v2.1 (cdda2wav), CDDL v1.0 (the rest)
 Group:		Applications/System
 Source0:	ftp://ftp.berlios.de/pub/cdrecord/alpha/%{name}-%{version}%{subver}.tar.bz2
-# Source0-md5:	a5bd27c5916889098dacdacd393c99e5
+# Source0-md5:	007158667682bfca8d21c15be74543c4
 Patch0:		%{name}-config.patch
+Patch1:		%{name}-path.patch
 Patch2:		%{name}-man.patch
 Patch3:		%{name}-make.patch
 Patch4:		%{name}-linking.patch
 Patch5:		%{name}-revert_sg_io_eperm_failure.patch
+Patch6:		%{name}-rename.patch
 URL:		http://cdrecord.berlios.de/old/private/cdrecord.html
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -218,7 +220,7 @@ fazer CD-ROMs de boot "El Torito".
 %package btcflash
 Summary:	BTC CD/DVD reader/writer firmware updater
 Summary(pl.UTF-8):	Program do uaktualniania firmware'u czytników/nagrywarek CD/DVD BTC
-Group:		Application/System
+Group:		Applications/System
 
 %description btcflash
 BTC CD/DVD reader/writer firmware updater.
@@ -231,34 +233,27 @@ BTC.
 %setup -q
 chmod +w -R *
 %patch0 -p1
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 # Remove profiled make files
 rm -f $(find . -name '*_p.mk')
 
+cp -f /usr/share/automake/config.* ./conf
 ln -sf i586-linux-gcc.rul RULES/x86_64-linux-gcc.rul
 ln -sf i586-linux-cc.rul RULES/x86_64-linux-cc.rul
 
-%{__perl} -pi -e 's/^(INSDIR=.*)lib/$1%{_lib}/' \
-	libfile/Makefile libhfs_iso/Makefile lib*/*.mk
-
-%{__perl} -pi -e 's/lib\/siconv/%{_lib}\/siconv/g' \
-	libsiconv/{Makefile,sic_nls.c} libsiconv/*/*.mk
-
 # kill annoying beep and sleep
-%{__perl} -pi -e 's/^__gmake_warn.*//' RULES/mk-gmake.id
+%{__sed} -i -e 's/^__gmake_warn.*//' RULES/mk-gmake.id
 
-sed -i -e "s/-o \$(INSUSR) -g \$(INSGRP)//g" RULES/rules.prg
+%{__sed} -i -e "s/-o \$(INSUSR) -g \$(INSGRP)//g" RULES/rules.prg
+%{__sed} -i -e 's#/\*.*\*/##g' autoconf/xconfig.h.in
 
-%build
-sed -i -e 's#/usr/bin/gm4#%{_bindir}/m4#g' autoconf/autoconf
-cd conf
-cp -f /usr/share/automake/config.* .
-cd ../autoconf
-sed -i -e 's#/\*.*\*/##g' xconfig.h.in
+cd ./autoconf
 for a in acgeneral.m4 acspecific.m4 autoheader.m4 acoldnames.m4 autoconf.m4; do
 	:> $a
 done
@@ -268,6 +263,7 @@ cd ../cdda2wav
 %{__autoconf}
 cd ..
 
+%build
 %{__make} -j1 \
 	CC="%{__cc}" \
 	LDCC="%{__cc}" \
@@ -315,6 +311,7 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/cdrecord.conf
 %attr(755,root,root) %{_bindir}/cdrecord
 %attr(755,root,root) %{_bindir}/scgcheck
+%attr(755,root,root) %{_bindir}/scgskeleton
 %attr(755,root,root) %{_sbindir}/rscsi
 %{_mandir}/man1/cdrecord.1*
 %{_mandir}/man1/rscsi.1*
@@ -327,6 +324,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_includedir}/schily/scg
 %{_includedir}/schily/*.h
 %{_includedir}/schily/scg/*.h
+%{_includedir}/scg/*.h
 
 %files cdda2wav
 %defattr(644,root,root,755)
