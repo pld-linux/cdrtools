@@ -280,7 +280,7 @@ cd ..
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_includedir}/schily/scg}
 
-%{__make} install \
+%{__make} -j1 install \
 	MANDIR=share/man \
 	INS_BASE=$RPM_BUILD_ROOT%{_prefix}
 
