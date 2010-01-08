@@ -242,19 +242,19 @@ chmod +w -R *
 rm -f $(find . -name '*_p.mk')
 
 cp -f /usr/share/automake/config.* ./conf
-ln -sf i586-linux-gcc.rul RULES/x86_64-linux-gcc.rul
-ln -sf i586-linux-cc.rul RULES/x86_64-linux-cc.rul
+#ln -sf i586-linux-gcc.rul RULES/x86_64-linux-gcc.rul
+#ln -sf i586-linux-cc.rul RULES/x86_64-linux-cc.rul
 
 # kill annoying beep and sleep
-%{__sed} -i -e 's/^__gmake_warn.*//' RULES/mk-gmake.id
+%{__sed} -i -e 's/^__gmake_warn.*//g' RULES/mk-gmake.id
 
 %{__sed} -i -e "s/-o \$(INSUSR) -g \$(INSGRP)//g" RULES/rules.prg
 %{__sed} -i -e 's#/\*.*\*/##g' autoconf/xconfig.h.in
 
-%{__sed} -i -e 's/^(INSDIR=.*)lib/$1%{_lib}/' \
-	libfile/Makefile libhfs_iso/Makefile lib*/*.mk
+%{__sed} -i -e 's/^\(INSDIR=.*\)lib$/\1%{_lib}/g' lib*/*.mk
 %{__sed} -i -e 's/lib\/siconv/%{_lib}\/siconv/g' \
-	libsiconv/{Makefile,sic_nls.c} libsiconv/*/*.mk
+	libsiconv/{sic_nls.c,*/*.mk} mkisofs/{diag/isoinfo.c,mkisofs.c}
+
 %{__sed} -i -e 's#/usr/bin/gm4#%{_bindir}/m4#g' autoconf/autoconf
 
 cd ./autoconf
