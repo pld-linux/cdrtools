@@ -7,7 +7,7 @@ Summary(ru.UTF-8):	Программа для записи CD/DVD, запуска
 Summary(uk.UTF-8):	Програма для запису CD/DVD, яка запускається з командної стрічки
 Name:		cdrtools
 Version:	2.01.01
-Release:	0.%{subver}.1
+Release:	0.%{subver}.2
 Epoch:		5
 License:	GPL v2 (mkisofs), LGPL v2.1 (cdda2wav), CDDL v1.0 (the rest)
 Group:		Applications/System
@@ -303,6 +303,8 @@ echo '.so isoinfo.8' > $RPM_BUILD_ROOT%{_mandir}/man8/isovfy.8
 echo '.so isoinfo.8' > $RPM_BUILD_ROOT%{_mandir}/man8/isodump.8
 echo '.so cdda2ogg.1' > $RPM_BUILD_ROOT%{_mandir}/man1/cdda2mp3.1
 
+rm -rf $RPM_BUILD_ROOT%{_includedir}/scg
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -328,7 +330,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_includedir}/schily/scg
 %{_includedir}/schily/*.h
 %{_includedir}/schily/scg/*.h
-%{_includedir}/scg/*.h
 
 %files cdda2wav
 %defattr(644,root,root,755)
