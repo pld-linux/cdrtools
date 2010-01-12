@@ -101,9 +101,9 @@ diff -ruN cdrtools-2.0/cdrecord/cdrecord.1.orig cdrtools-2.0/cdrecord/cdrecord.1
  
  .SH FILES
  .TP
--/etc/default/cdrecord
+-.B /etc/default/cdrecord
 -Default values can be set for the following options in /etc/default/cdrecord.
-+/etc/cdrecord.conf
++.B /etc/cdrecord.conf
 +Default values can be set for the following options in /etc/cdrecord.conf .
 +Note that this path has been changed from standard location in cdrtools
 +distribution (/etc/default/cdrecord) to be consistent with other packages
