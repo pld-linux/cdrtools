@@ -1,4 +1,4 @@
-%define		subver	a76
+%define		subver	a77
 Summary:	A command line CD/DVD-Recorder
 Summary(es.UTF-8):	Un programa de grabación de CD/DVD
 Summary(pl.UTF-8):	Program do nagrywania płyt CD/DVD
@@ -12,7 +12,7 @@ Epoch:		5
 License:	GPL v2 (mkisofs), LGPL v2.1 (cdda2wav), CDDL v1.0 (the rest)
 Group:		Applications/System
 Source0:	ftp://ftp.berlios.de/pub/cdrecord/alpha/%{name}-%{version}%{subver}.tar.bz2
-# Source0-md5:	db6ec34ae7bffd86d6ee7affa055e45a
+# Source0-md5:	0564e79a18d9a6768dbbb02a7717c5ab
 Patch0:		%{name}-config.patch
 Patch2:		%{name}-man.patch
 Patch3:		%{name}-make.patch
