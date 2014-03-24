@@ -285,16 +285,16 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_includedir}/schily/scg}
 	MANDIR=share/man \
 	INS_BASE=$RPM_BUILD_ROOT%{_prefix}
 
-install cdda2wav/cdda2mp3	$RPM_BUILD_ROOT%{_bindir}/
-install cdda2wav/cdda2ogg	$RPM_BUILD_ROOT%{_bindir}/
+install -p cdda2wav/cdda2mp3	$RPM_BUILD_ROOT%{_bindir}
+install -p cdda2wav/cdda2ogg	$RPM_BUILD_ROOT%{_bindir}
 
-install include/schily/*.h	$RPM_BUILD_ROOT%{_includedir}/schily
-install incs/*/align.h		$RPM_BUILD_ROOT%{_includedir}/schily
-install incs/*/avoffset.h	$RPM_BUILD_ROOT%{_includedir}/schily
-install incs/*/xconfig.h	$RPM_BUILD_ROOT%{_includedir}/schily
-install libscg/scg/*.h		$RPM_BUILD_ROOT%{_includedir}/schily/scg
+cp -p include/schily/*.h	$RPM_BUILD_ROOT%{_includedir}/schily
+cp -p incs/*/align.h		$RPM_BUILD_ROOT%{_includedir}/schily
+cp -p incs/*/avoffset.h	$RPM_BUILD_ROOT%{_includedir}/schily
+cp -p incs/*/xconfig.h	$RPM_BUILD_ROOT%{_includedir}/schily
+cp -p libscg/scg/*.h		$RPM_BUILD_ROOT%{_includedir}/schily/scg
 
-install cdrecord/cdrecord.dfl	$RPM_BUILD_ROOT%{_sysconfdir}/cdrecord.conf
+cp -p cdrecord/cdrecord.dfl	$RPM_BUILD_ROOT%{_sysconfdir}/cdrecord.conf
 
 # fix manual pages
 chmod u+rw $RPM_BUILD_ROOT -R
