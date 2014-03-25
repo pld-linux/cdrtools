@@ -6,13 +6,13 @@ Summary(pt_BR.UTF-8):	Um programa de gravação de CD/DVD
 Summary(ru.UTF-8):	Программа для записи CD/DVD, запускаемая из командной строки
 Summary(uk.UTF-8):	Програма для запису CD/DVD, яка запускається з командної стрічки
 Name:		cdrtools
-Version:	2.01.01
-Release:	0.%{subver}.1
+Version:	3.00
+Release:	1
 Epoch:		5
 License:	GPL v2 (mkisofs), LGPL v2.1 (cdda2wav), CDDL v1.0 (the rest)
 Group:		Applications/System
-Source0:	ftp://ftp.berlios.de/pub/cdrecord/alpha/%{name}-%{version}%{subver}.tar.bz2
-# Source0-md5:	0564e79a18d9a6768dbbb02a7717c5ab
+Source0:	ftp://ftp.berlios.de/pub/cdrecord/%{name}-%{version}.tar.bz2
+# Source0-md5:	f9fbab08fbd458b0d2312976d8c5f558
 Patch0:		%{name}-config.patch
 Patch2:		%{name}-man.patch
 Patch3:		%{name}-make.patch
@@ -231,7 +231,7 @@ BTC.
 
 %prep
 %setup -q
-chmod +w -R *
+chmod -R u+rw -R .
 %patch0 -p1
 %patch2 -p1
 %patch3 -p1
@@ -240,11 +240,9 @@ chmod +w -R *
 %patch6 -p1
 
 # Remove profiled make files
-rm -f $(find . -name '*_p.mk')
+rm -v $(find . -name '*_p.mk')
 
-cp -f /usr/share/automake/config.* ./conf
-#ln -sf i586-linux-gcc.rul RULES/x86_64-linux-gcc.rul
-#ln -sf i586-linux-cc.rul RULES/x86_64-linux-cc.rul
+cp -p /usr/share/automake/config.* conf
 
 # kill annoying beep and sleep
 %{__sed} -i -e 's/^__gmake_warn.*//g' RULES/mk-gmake.id
@@ -258,18 +256,28 @@ cp -f /usr/share/automake/config.* ./conf
 
 %{__sed} -i -e 's#/usr/bin/gm4#%{_bindir}/m4#g' autoconf/autoconf
 
-cd ./autoconf
+cd autoconf
+install -d m4
+mv acgeneral.m4 acspecific.m4 autoheader.m4 acoldnames.m4 autoconf.m4 m4
+mv aclocal.m4 acinclude.m4
+
 for a in acgeneral.m4 acspecific.m4 autoheader.m4 acoldnames.m4 autoconf.m4; do
 	:> $a
 done
-# don't run aclocal, aclocal.m4 contains only local defs
+
+# extract only needed functions
+sed -ne '/AC_INCL_CHECK_TYPE/,/dnl ###/p' m4/acgeneral.m4 >> acinclude.m4
+
+%build
+cd autoconf
+%{__aclocal} -I .
 %{__autoconf}
 cd ../cdda2wav
 %{__autoconf}
 cd ..
-
-%build
 %{__make} -j1 \
+	PARCH=%{_arch}-%{_target_vendor} \
+	O_ARCH=%{_target_os} \
 	CC="%{__cc}" \
 	LDCC="%{__cc}" \
 	COPTOPT="%{rpmcflags}" \
@@ -280,31 +288,24 @@ cd ..
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_includedir}/schily/scg}
-
 %{__make} -j1 install \
-	MANDIR=share/man \
-	INS_BASE=$RPM_BUILD_ROOT%{_prefix}
+	PARCH=%{_arch}-%{_target_vendor} \
+	O_ARCH=%{_target_os} \
+	DEFINSUMASK=002 \
+	DEFINSMODEF=644 \
+	DEFINSMODEX=755 \
+	INS_BASE=%{_prefix} \
+	DESTDIR=$RPM_BUILD_ROOT
 
-install -p cdda2wav/cdda2mp3	$RPM_BUILD_ROOT%{_bindir}
-install -p cdda2wav/cdda2ogg	$RPM_BUILD_ROOT%{_bindir}
-
-cp -p include/schily/*.h	$RPM_BUILD_ROOT%{_includedir}/schily
-cp -p incs/*/align.h		$RPM_BUILD_ROOT%{_includedir}/schily
-cp -p incs/*/avoffset.h	$RPM_BUILD_ROOT%{_includedir}/schily
-cp -p incs/*/xconfig.h	$RPM_BUILD_ROOT%{_includedir}/schily
-cp -p libscg/scg/*.h		$RPM_BUILD_ROOT%{_includedir}/schily/scg
+cp -p libscg/scg/*.h $RPM_BUILD_ROOT%{_includedir}/schily/scg
 
 cp -p cdrecord/cdrecord.dfl	$RPM_BUILD_ROOT%{_sysconfdir}/cdrecord.conf
 
-# fix manual pages
-chmod u+rw $RPM_BUILD_ROOT -R
-
-echo '.so isoinfo.8' > $RPM_BUILD_ROOT%{_mandir}/man8/devdump.8
-echo '.so isoinfo.8' > $RPM_BUILD_ROOT%{_mandir}/man8/isovfy.8
-echo '.so isoinfo.8' > $RPM_BUILD_ROOT%{_mandir}/man8/isodump.8
-echo '.so cdda2ogg.1' > $RPM_BUILD_ROOT%{_mandir}/man1/cdda2mp3.1
-
-rm -rf $RPM_BUILD_ROOT%{_includedir}/scg
+rm -r $RPM_BUILD_ROOT%{_includedir}/scg
+rm -r $RPM_BUILD_ROOT%{_includedir}/schily/%{_target_platform}-cc
+rm -r $RPM_BUILD_ROOT%{_docdir}/{mkisofs,rscsi,cdrecord,cdda2wav,libparanoia}
+rm $RPM_BUILD_ROOT%{_mandir}/man5/makefiles.5*
+rm $RPM_BUILD_ROOT%{_mandir}/man5/makerules.5*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -323,6 +324,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/cdrecord.1*
 %{_mandir}/man1/rscsi.1*
 %{_mandir}/man1/scgcheck.1*
+%{_mandir}/man1/scgskeleton.1*
 
 %files devel
 %defattr(644,root,root,755)

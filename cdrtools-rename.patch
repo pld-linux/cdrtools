@@ -1,6 +1,11 @@
---- cdrtools-2.01.01.orig/autoconf/configure.in	2009-12-31 16:15:52.000000000 +0100
-+++ cdrtools-2.01.01/autoconf/configure.in	2010-01-06 09:38:12.000000000 +0100
-@@ -354,13 +354,13 @@
+--- cdrtools-3.00/./autoconf/configure.in~	2010-05-07 20:00:25.000000000 +0300
++++ cdrtools-3.00/./autoconf/configure.in	2014-03-24 23:12:01.206179037 +0200
+@@ -370,17 +370,17 @@
+ dnl POSIX rules. The new POSIX interfaces in question should be called
+ dnl fdexec*() to follow the rules of other similar POSIX functions.
+ dnl
+-dnl We use AC_RCHECK_FUNCS() because some Linux distros define a
++dnl We use AC_CHECK_FUNCS() because some Linux distros define a
  dnl fexecve() that returns ENOSYS an AC_CHECK_FUNCS() would return FALSE
  dnl
  echo Checking for POSIX violations by the POSIX.1-2008 standard:
@@ -17,8 +22,8 @@
  echo End of tests for POSIX violations by the POSIX.1-2008 standard.
  
  dnl Check whether a symbol is either defined in an include file or
---- cdrtools-2.01.01/include/schily/schily.h.orig	2010-01-06 08:17:45.000000000 +0100
-+++ cdrtools-2.01.01/include/schily/schily.h	2010-01-06 08:19:08.000000000 +0100
+--- cdrtools-3.00/include/schily/schily.h~	2009-10-23 00:18:55.000000000 +0300
++++ cdrtools-3.00/include/schily/schily.h	2014-03-24 23:14:00.498115198 +0200
 @@ -144,7 +144,6 @@
  #define	fexecl		js_fexecl
  #define	fexecle		js_fexecle
@@ -53,15 +58,15 @@
  extern	int	getstr __PR((char *, int));
  extern	int	breakline __PR((char *, char, char **, int));
  extern	int	getallargs __PR((int *, char * const**, const char *, ...));
---- cdrtools-2.01.01/libfind/find.c.orig	2010-01-06 08:21:03.000000000 +0100
-+++ cdrtools-2.01.01/libfind/find.c	2010-01-06 08:21:50.000000000 +0100
-@@ -1747,7 +1747,7 @@
+--- cdrtools-3.00/libfind/find.c~	2010-04-27 21:42:14.000000000 +0300
++++ cdrtools-3.00/libfind/find.c	2014-03-24 23:15:42.452619081 +0200
+@@ -1878,7 +1878,7 @@
  #endif
- 		av[ac] = NULL;	/* -exec {} \; is not NULL terminated */
+ 		pp[ac] = NULL;	/* -exec {} \; is not NULL terminated */
  
 -		fexecve(av[0], state->std[0], state->std[1], state->std[2],
 +		js_fexecve(av[0], state->std[0], state->std[1], state->std[2],
- 							av, state->env);
+ 							pp, state->env);
  		err = geterrno();
  #ifdef	PLUS_DEBUG
 --- cdrtools-2.01.01/libscg/scsitransp.c.orig	2009-09-07 21:09:48.000000000 +0200
@@ -242,14 +247,14 @@
 -	return (getline(lbuf, len));
 +	return (js_getline(lbuf, len));
  }
---- cdrtools-2.01.01/scgcheck/sense.c.orig	2010-01-06 08:22:58.000000000 +0100
-+++ cdrtools-2.01.01/scgcheck/sense.c	2010-01-06 08:24:02.000000000 +0100
+--- cdrtools-3.00/scgcheck/sense.c~	2010-05-24 12:19:15.000000000 +0300
++++ cdrtools-3.00/scgcheck/sense.c	2014-03-24 23:16:55.065826928 +0200
 @@ -116,7 +116,7 @@
  
  			printf("Ready to eject tray? Enter <CR> to continue: ");
  			flushit();
--			(void) getline(abuf, sizeof(abuf));
-+			(void) js_getline(abuf, sizeof(abuf));
+-			(void) getline(abuf, sizeof (abuf));
++			(void) js_getline(abuf, sizeof (abuf));
  			if (abuf[0] != 'n') {
  				scsi_unload(scgp, (cdr_t *)0);
  				needload = TRUE;
