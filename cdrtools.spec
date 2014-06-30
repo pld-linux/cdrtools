@@ -1,17 +1,17 @@
 %define		subver	a77
-Summary:	A command line CD/DVD-Recorder
-Summary(es.UTF-8):	Un programa de grabación de CD/DVD
-Summary(pl.UTF-8):	Program do nagrywania płyt CD/DVD
-Summary(pt_BR.UTF-8):	Um programa de gravação de CD/DVD
-Summary(ru.UTF-8):	Программа для записи CD/DVD, запускаемая из командной строки
-Summary(uk.UTF-8):	Програма для запису CD/DVD, яка запускається з командної стрічки
+Summary:	A command line CD/DVD/Blu-ray Recorder
+Summary(es.UTF-8):	Un programa de grabación de CD/DVD/Blu-ray
+Summary(pl.UTF-8):	Program do nagrywania płyt CD/DVD/Blu-ray
+Summary(pt_BR.UTF-8):	Um programa de gravação de CD/DVD/Blu-ray
+Summary(ru.UTF-8):	Программа для записи CD/DVD/Blu-ray, запускаемая из командной строки
+Summary(uk.UTF-8):	Програма для запису CD/DVD/Blu-ray, яка запускається з командної стрічки
 Name:		cdrtools
 Version:	3.00
 Release:	1
 Epoch:		5
 License:	GPL v2 (mkisofs), LGPL v2.1 (cdda2wav), CDDL v1.0 (the rest)
 Group:		Applications/System
-Source0:	ftp://ftp.berlios.de/pub/cdrecord/%{name}-%{version}.tar.bz2
+Source0:	http://downloads.sourceforge.net/project/cdrtools/%{name}-%{version}.tar.bz2
 # Source0-md5:	f9fbab08fbd458b0d2312976d8c5f558
 Patch0:		%{name}-config.patch
 Patch2:		%{name}-man.patch
@@ -19,7 +19,7 @@ Patch3:		%{name}-make.patch
 Patch4:		%{name}-linking.patch
 Patch5:		%{name}-revert_sg_io_eperm_failure.patch
 Patch6:		%{name}-rename.patch
-URL:		http://cdrecord.berlios.de/old/private/cdrecord.html
+URL:		http://cdrecord.org/private/cdrecord.html
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	iconv
@@ -30,8 +30,10 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		specflags	-finput-charset=ISO-8859-1 -fexec-charset=UTF-8 -D__attribute_const__=const
 
 %description
-Cdrecord allows you to create CD's on a CD-Recorder (SCSI/ATAPI).
-Supports data, audio, mixed, multi-session and CD+ discs etc.
+Cdrecord allows you to burn CDs, DVDs and BDs with compatible recorders
+(SCSI/ATAPI). Supports data, audio, mixed, multi-session and CD+ discs,
+single and dual-layer DVDs, both custom and automatic layer-jump recording 
+for dual-layer DVDs, and Blu-ray.
 
 %description -l pl.UTF-8
 Cdrecord pozwala tworzyć CD na nagrywarce CD (SCSI/ATAPI). Obsługuje
@@ -184,8 +186,9 @@ Provides:	mkisofs = %{epoch}:%{version}-%{release}
 Obsoletes:	mkisofs
 
 %description mkisofs
-This is the mkisofs package. It is used to create ISO 9660 file system
-images for creating CD-ROMs.
+This is the mkisofs package. It is used to create ISO-9660/HFS/UDF
+file system images for creating CDs, DVDs and BDs. Supports Joliet,
+Rock Ridge, Apple extensions, El Torito, EFI and many POSIX features.
 
 %description mkisofs -l es.UTF-8
 Este es el paquete mkisofs. Se le usa para crear imágenes de sistema
