@@ -7,7 +7,7 @@ Summary(ru.UTF-8):	Программа для записи CD/DVD, запуска
 Summary(uk.UTF-8):	Програма для запису CD/DVD, яка запускається з командної стрічки
 Name:		cdrtools
 Version:	3.00
-Release:	1
+Release:	2
 Epoch:		5
 License:	GPL v2 (mkisofs), LGPL v2.1 (cdda2wav), CDDL v1.0 (the rest)
 Group:		Applications/System
@@ -302,7 +302,11 @@ cp -p libscg/scg/*.h $RPM_BUILD_ROOT%{_includedir}/schily/scg
 cp -p cdrecord/cdrecord.dfl	$RPM_BUILD_ROOT%{_sysconfdir}/cdrecord.conf
 
 rm -r $RPM_BUILD_ROOT%{_includedir}/scg
+%ifarch x32
+rm -r $RPM_BUILD_ROOT%{_includedir}/schily/x32-pld-linux-cc
+%else
 rm -r $RPM_BUILD_ROOT%{_includedir}/schily/%{_target_platform}-cc
+%endif
 rm -r $RPM_BUILD_ROOT%{_docdir}/{mkisofs,rscsi,cdrecord,cdda2wav,libparanoia}
 rm $RPM_BUILD_ROOT%{_mandir}/man5/makefiles.5*
 rm $RPM_BUILD_ROOT%{_mandir}/man5/makerules.5*
