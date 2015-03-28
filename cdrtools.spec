@@ -11,7 +11,7 @@ Release:	2
 Epoch:		5
 License:	GPL v2 (mkisofs), LGPL v2.1 (cdda2wav), CDDL v1.0 (the rest)
 Group:		Applications/System
-Source0:	ftp://ftp.berlios.de/pub/cdrecord/%{name}-%{version}.tar.bz2
+Source0:	http://downloads.sourceforge.net/project/%{name}/%{name}-%{version}.tar.bz2
 # Source0-md5:	f9fbab08fbd458b0d2312976d8c5f558
 Patch0:		%{name}-config.patch
 Patch2:		%{name}-man.patch
@@ -19,7 +19,7 @@ Patch3:		%{name}-make.patch
 Patch4:		%{name}-linking.patch
 Patch5:		%{name}-revert_sg_io_eperm_failure.patch
 Patch6:		%{name}-rename.patch
-URL:		http://cdrecord.berlios.de/old/private/cdrecord.html
+URL:		http://cdrtools.sourceforge.net/private/cdrecord.html
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	iconv
