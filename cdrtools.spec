@@ -1,17 +1,16 @@
-%define		subver	a77
-Summary:	A command line CD/DVD-Recorder
-Summary(es.UTF-8):	Un programa de grabación de CD/DVD
-Summary(pl.UTF-8):	Program do nagrywania płyt CD/DVD
-Summary(pt_BR.UTF-8):	Um programa de gravação de CD/DVD
-Summary(ru.UTF-8):	Программа для записи CD/DVD, запускаемая из командной строки
-Summary(uk.UTF-8):	Програма для запису CD/DVD, яка запускається з командної стрічки
+Summary:	Highly portable CD/DVD/BluRay command line recording software
+Summary(es.UTF-8):	Un programa de grabación de CD/DVD/BluRay
+Summary(pl.UTF-8):	Oprogramowanie do nagrywania płyt CD/DVD/BluRay
+Summary(pt_BR.UTF-8):	Um programa de gravação de CD/DVD/BluRay
+Summary(ru.UTF-8):	Программа для записи CD/DVD/BluRay, запускаемая из командной строки
+Summary(uk.UTF-8):	Програма для запису CD/DVD/BluRay, яка запускається з командної стрічки
 Name:		cdrtools
 Version:	3.00
 Release:	2
 Epoch:		5
 License:	GPL v2 (mkisofs), LGPL v2.1 (cdda2wav), CDDL v1.0 (the rest)
 Group:		Applications/System
-Source0:	ftp://ftp.berlios.de/pub/cdrecord/%{name}-%{version}.tar.bz2
+Source0:	http://downloads.sourceforge.net/cdrtools/%{name}-%{version}.tar.bz2
 # Source0-md5:	f9fbab08fbd458b0d2312976d8c5f558
 Patch0:		%{name}-config.patch
 Patch2:		%{name}-man.patch
@@ -19,7 +18,7 @@ Patch3:		%{name}-make.patch
 Patch4:		%{name}-linking.patch
 Patch5:		%{name}-revert_sg_io_eperm_failure.patch
 Patch6:		%{name}-rename.patch
-URL:		http://cdrecord.berlios.de/old/private/cdrecord.html
+URL:		http://cdrtools.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	iconv
@@ -30,12 +29,12 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		specflags	-finput-charset=ISO-8859-1 -fexec-charset=UTF-8 -D__attribute_const__=const
 
 %description
-Cdrecord allows you to create CD's on a CD-Recorder (SCSI/ATAPI).
-Supports data, audio, mixed, multi-session and CD+ discs etc.
+Cdrtools is a set of command line programs that allows to record
+CD/DVD/BluRay media.
 
 %description -l pl.UTF-8
-Cdrecord pozwala tworzyć CD na nagrywarce CD (SCSI/ATAPI). Obsługuje
-dyski z danymi, dźwiękiem, mieszane, wielosesyjne, CD+ i inne.
+Cdrtools jest zestawemn narzędzi pozwalającym na nagrywanie płyt
+CD/DVD/BluRay z linii poleceń.
 
 %description -l pt_BR.UTF-8
 Cdrecord permite que você crie CDs em seu gravador de CDs SCSI/ATAPI.
