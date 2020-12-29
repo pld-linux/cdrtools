@@ -1,6 +1,6 @@
---- cdrtools-2.01.01/DEFAULTS/Defaults.linux.orig	2009-06-04 23:10:45.000000000 +0200
-+++ cdrtools-2.01.01/DEFAULTS/Defaults.linux	2010-01-05 09:18:52.000000000 +0100
-@@ -40,16 +40,11 @@
+--- cdrtools-3.01/DEFAULTS/Defaults.linux.orig	2020-12-28 19:35:02.348260976 +0100
++++ cdrtools-3.01/DEFAULTS/Defaults.linux	2020-12-28 20:53:15.129504665 +0100
+@@ -40,17 +40,12 @@
  # LINUX_SRC_INCLUDE is used in RULES/*-linux-*cc*.rul
  #
  ###########################################################################
@@ -12,6 +12,7 @@
 +LINUX_SRC_INCLUDE=
  
  DEFINCDIRS=	$(SRCROOT)/include
+ DEFOSINCDIRS=
 -LDPATH=		-L/opt/schily/lib
 -#RUNPATH=	-R$(INS_BASE)/lib -R/opt/schily/lib -R$(OLIBSDIR)
 -RUNPATH=	-R$(INS_BASE)/lib -R/opt/schily/lib
@@ -20,12 +21,12 @@
  
  ###########################################################################
  #
---- cdrtools-2.01.01/RULES/rules.cnf.orig	2008-08-01 20:04:08.000000000 +0200
-+++ cdrtools-2.01.01/RULES/rules.cnf	2008-10-06 22:18:00.000000000 +0200
-@@ -61,7 +61,7 @@
+--- cdrtools-3.01/RULES/rules.cnf.orig	2020-12-28 19:35:02.348260976 +0100
++++ cdrtools-3.01/RULES/rules.cnf	2020-12-28 20:53:58.149271607 +0100
+@@ -64,7 +64,7 @@
  		cd $(OINCSDIR); \
  		CONFIG_NOFAIL=TRUE CC="$(XCC_COM)" CFLAGS="$(CFLAGS)" \
- 		CXXFLAGS="$(C++FLAGS)" CPPFLAGS="$(OSDEFS)" \
+ 		CXXFLAGS="$(C++FLAGS)" CPPFLAGS="$(OS_DEFS)" \
 -		LDFLAGS="$(LDOPTS)" sh ../../autoconf/configure $(CONFFLAGS)
 +		LDFLAGS="$(LDFLAGS1) $(LDOPTS)" sh ../../autoconf/configure $(CONFFLAGS)
  ###########################################################################

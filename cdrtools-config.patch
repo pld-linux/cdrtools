@@ -134,3 +134,92 @@
  .sp
  .B \h'-2m'Autotarget Mode
  .br
+--- cdrtools-3.01/cdrecord/Makefile.dfl.orig	2010-05-14 20:14:37.000000000 +0200
++++ cdrtools-3.01/cdrecord/Makefile.dfl	2020-12-29 17:48:56.424679180 +0100
+@@ -8,11 +8,12 @@
+ ###########################################################################
+ 
+ INSMODE=	0644
+-INSDIR=		etc/default
++INSDIR=		etc
+ INSBASE=	$(INS_RBASE:%/=%)
+ INSFLAGS=	-noclobber
+ TARGET=		cdrecord
+ AUXSRCEXT=	.dfl
++_EXEEXT=        .conf
+ #XMK_FILE=	Makefile.man
+ 
+ ###########################################################################
+--- cdrtools-3.01/rscsi/rscsi.1.orig	2009-11-15 20:27:50.000000000 +0100
++++ cdrtools-3.01/rscsi/rscsi.1	2020-12-29 18:41:07.327717623 +0100
+@@ -514,8 +514,11 @@
+ to exit.
+ .SH FILES
+ .TP
+-/etc/default/rscsi
+-Default values can be set for the following options in /etc/default/rscsi.
++/etc/rscsi.conf
++Default values can be set for the following options in /etc/rscsi/conf .
++Note that this path has been changed from standard location in cdrtools
++distribution (/etc/default/rscsi) to be consistent with other packages
++which don't use /etc/default directory in general.
+ For example:
+ .sp
+ .BR DEBUG= /tmp/rscsi.debug
+@@ -583,7 +586,7 @@
+ will compare the 
+ .B "host entry 
+ from 
+-.B /etc/default/rscsi
++.B /etc/rscsi.conf
+ with the following strings:
+ .RS
+ .TP 10
+@@ -644,7 +647,7 @@
+ If you like to debug
+ .B rscsi
+ edit
+-.B /etc/default/rscsi
++.B /etc/rscsi.conf
+ and insert a 
+ .B DEBUG
+ entry.
+--- cdrtools-3.01/rscsi/rscsi.dfl.orig	2005-08-09 15:19:20.000000000 +0200
++++ cdrtools-3.01/rscsi/rscsi.dfl	2020-12-29 19:21:24.784621135 +0100
+@@ -1,6 +1,6 @@
+ #ident @(#)rscsi.dfl	1.3 05/08/09 Copyr 2000 J. Schilling
+ #
+-# This file is /etc/default/rscsi
++# This file is /etc/rscsi.conf
+ #
+ # NOTE: If this file is not present, rscsi will reject to work.
+ #
+--- cdrtools-3.01/rscsi/rscsi.c.orig	2010-05-24 11:27:48.000000000 +0200
++++ cdrtools-3.01/rscsi/rscsi.c	2020-12-29 17:51:01.767333474 +0100
+@@ -134,9 +134,9 @@
+ 	 * don't contribute work and don't give support, they are causing extra
+ 	 * work for me and this way slow down the development.
+ 	 */
+-	if (defltopen("/etc/default/rscsi") < 0) {
++	if (defltopen("/etc/rscsi.conf") < 0) {
+ 		rscsierror(geterrno(), errmsgstr(geterrno()),
+-			"Remote configuration error: Cannot open /etc/default/rscsi");
++			"Remote configuration error: Cannot open /etc/rscsi.conf");
+ /*		rscsirespond(-1, geterrno());*/
+ 		exit(EX_BAD);
+ 	}
+--- cdrtools-3.01/rscsi/Makefile.dfl.orig	2010-05-14 20:17:15.000000000 +0200
++++ cdrtools-3.01/rscsi/Makefile.dfl	2020-12-29 19:21:55.414455199 +0100
+@@ -8,10 +8,11 @@
+ ###########################################################################
+ 
+ INSMODE=	0644
+-INSDIR=		etc/default
++INSDIR=		etc
+ INSBASE=	$(INS_RBASE:%/=%)
+ TARGET=		rscsi
+ AUXSRCEXT=	.dfl
++_EXEEXT=	.conf
+ #XMK_FILE=	Makefile.man
+ 
+ ###########################################################################

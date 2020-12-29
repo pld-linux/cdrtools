@@ -5,23 +5,24 @@ Summary(pt_BR.UTF-8):	Um programa de gravação de CD/DVD/BluRay
 Summary(ru.UTF-8):	Программа для записи CD/DVD/BluRay, запускаемая из командной строки
 Summary(uk.UTF-8):	Програма для запису CD/DVD/BluRay, яка запускається з командної стрічки
 Name:		cdrtools
-Version:	3.00
-Release:	2
+Version:	3.01
+Release:	1
 Epoch:		5
-License:	GPL v2 (mkisofs), LGPL v2.1 (cdda2wav), CDDL v1.0 (the rest)
+License:	GPL v2 (mkisofs), CDDL v1.0 (the rest)
 Group:		Applications/System
 Source0:	http://downloads.sourceforge.net/cdrtools/%{name}-%{version}.tar.bz2
-# Source0-md5:	f9fbab08fbd458b0d2312976d8c5f558
+# Source0-md5:	7d45c5b7e1f78d85d1583b361aee6e8b
 Patch0:		%{name}-config.patch
 Patch2:		%{name}-man.patch
 Patch3:		%{name}-make.patch
 Patch4:		%{name}-linking.patch
 Patch5:		%{name}-revert_sg_io_eperm_failure.patch
-Patch6:		%{name}-rename.patch
 URL:		http://cdrtools.sourceforge.net/
+BuildRequires:	acl-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	iconv
+BuildRequires:	libcap-devel
 Provides:	cdrecord
 Obsoletes:	cdrecord
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -236,10 +237,9 @@ chmod -R u+rw -R .
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 
 # Remove profiled make files
-rm -v $(find . -name '*_p.mk')
+%{__rm} -v $(find . -name '*_p.mk')
 
 cp -p /usr/share/automake/config.* conf
 
@@ -257,15 +257,18 @@ cp -p /usr/share/automake/config.* conf
 
 cd autoconf
 install -d m4
-mv acgeneral.m4 acspecific.m4 autoheader.m4 acoldnames.m4 autoconf.m4 m4
-mv aclocal.m4 acinclude.m4
+%{__mv} acgeneral.m4 acspecific.m4 autoheader.m4 acoldnames.m4 autoconf.m4 m4
+%{__mv} aclocal.m4 acinclude.m4
 
 for a in acgeneral.m4 acspecific.m4 autoheader.m4 acoldnames.m4 autoconf.m4; do
 	:> $a
 done
 
 # extract only needed functions
-sed -ne '/AC_INCL_CHECK_TYPE/,/dnl ###/p' m4/acgeneral.m4 >> acinclude.m4
+sed -n -e '/AC_TRY_COMPILE2/,/dnl ###/ { s/AC_LANG/_AC_LANG/; p }' \
+	-e '/AC_RCHECK_FUNC/,/dnl ### Checking compiler/ { s/AC_LANG/_AC_LANG/; p }' \
+	-e '/AC_INCL_CHECK_TYPE/,/dnl ###/p' m4/acgeneral.m4 >> acinclude.m4
+sed -n -e '/CONFIG_RMTCALL/,/^])/p' m4/acspecific.m4 >> acinclude.m4
 
 %build
 cd autoconf
@@ -298,28 +301,24 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_includedir}/schily/scg}
 
 cp -p libscg/scg/*.h $RPM_BUILD_ROOT%{_includedir}/schily/scg
 
-cp -p cdrecord/cdrecord.dfl	$RPM_BUILD_ROOT%{_sysconfdir}/cdrecord.conf
-
-rm -r $RPM_BUILD_ROOT%{_includedir}/scg
+%{__rm} -r $RPM_BUILD_ROOT%{_includedir}/scg
 %ifarch x32
-rm -r $RPM_BUILD_ROOT%{_includedir}/schily/x32-pld-linux-cc
+%{__rm} -r $RPM_BUILD_ROOT%{_includedir}/schily/x32-pld-linux-cc
 %else
-rm -r $RPM_BUILD_ROOT%{_includedir}/schily/%{_target_platform}-cc
+%{__rm} -r $RPM_BUILD_ROOT%{_includedir}/schily/%{_target_platform}-cc
 %endif
-rm -r $RPM_BUILD_ROOT%{_docdir}/{mkisofs,rscsi,cdrecord,cdda2wav,libparanoia}
-rm $RPM_BUILD_ROOT%{_mandir}/man5/makefiles.5*
-rm $RPM_BUILD_ROOT%{_mandir}/man5/makerules.5*
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/{mkisofs,rscsi,cdrecord,cdda2wav,libparanoia}
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man5/makefiles.5*
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man5/makerules.5*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AN-* doc/cdrecord.ps Changelog README README.mkisofs cdrecord/README.ATAPI cdrecord/README.DiskT@2
-%doc cdrecord/README.{WORM,audio,cdplus,cdtext,cdrw,clone,copy,multi}
-%doc cdrecord/README.{parallel,raw,rscsi,sony,verify} make_diskt@2.sh
-%doc cdrecord/cdrecord.dfl cdrecord/LICENSE
+%doc AN-* CDDL.Schily.txt COPYING Changelog README make_diskt@2.sh cdrecord/README.{ATAPI,DiskT@2,WORM,audio,cdplus,cdtext,cdrw,clone,copy,multi,parallel,raw,rscsi,sony,verify} cdrecord/{LICENSE,cdrecord.dfl} doc/cdrecord.ps
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/cdrecord.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/rscsi.conf
 %attr(755,root,root) %{_bindir}/cdrecord
 %attr(755,root,root) %{_bindir}/scgcheck
 %attr(755,root,root) %{_bindir}/scgskeleton
@@ -331,19 +330,27 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libcdrdeflt.a
+%{_libdir}/libdeflt.a
+%{_libdir}/libedc_ecc.a
+%{_libdir}/libedc_ecc_dec.a
+%{_libdir}/libfile.a
+%{_libdir}/libfind.a
+%{_libdir}/libhfs.a
+%{_libdir}/libmdigest.a
+%{_libdir}/libparanoia.a
+%{_libdir}/librscg.a
+%{_libdir}/libscg.a
+%{_libdir}/libscgcmd.a
+%{_libdir}/libsiconv.a
 %dir %{_includedir}/schily
-%dir %{_includedir}/schily/scg
 %{_includedir}/schily/*.h
+%dir %{_includedir}/schily/scg
 %{_includedir}/schily/scg/*.h
 
 %files cdda2wav
 %defattr(644,root,root,755)
-%doc cdda2wav/Frontends cdda2wav/HOWTOUSE cdda2wav/OtherProgs
-%doc cdda2wav/README cdda2wav/THANKS cdda2wav/TODO
-%doc cdda2wav/cdda2mp3.new cdda2wav/cdda_links cdda2wav/pitchplay
-%doc cdda2wav/readmult cdda2wav/tracknames.pl cdda2wav/tracknames.txt
-%doc cdda2wav/FAQ
+%doc cdda2wav/{FAQ,Frontends,HOWTOUSE,OtherProgs,README,THANKS,TODO,cdda2mp3.new,cdda_links,pitchplay,readmult,tracknames.pl,tracknames.txt}
 %attr(755,root,root) %{_bindir}/cdda2wav
 %attr(755,root,root) %{_bindir}/cdda2mp3
 %attr(755,root,root) %{_bindir}/cdda2ogg
@@ -371,11 +378,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files mkisofs
 %defattr(644,root,root,755)
-%doc mkisofs/README.compression mkisofs/README.eltorito mkisofs/README
-%doc mkisofs/README.graft_dirs mkisofs/README.hfs_boot mkisofs/README.hfs_magic
-%doc mkisofs/README.hide mkisofs/README.joliet mkisofs/README.mkhybrid
-%doc mkisofs/README.prep_boot mkisofs/README.rootinfo mkisofs/README.session
-%doc mkisofs/README.sort mkisofs/README.sparcboot
+%doc README.mkisofs mkisofs/README mkisofs/README.{compression,eltorito,graft_dirs,hfs_boot,hfs_magic,hide,joliet,mkhybrid,prep_boot,rootinfo,session,sort,sparcboot}
 %attr(755,root,root) %{_bindir}/mkisofs
 %attr(755,root,root) %{_bindir}/mkhybrid
 %{_libdir}/siconv
