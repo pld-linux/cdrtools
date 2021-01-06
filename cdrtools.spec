@@ -290,6 +290,7 @@ cd ..
 %{__make} -j1 \
 	PARCH=%{parch} \
 	O_ARCH=%{_target_os} \
+	CCOM=gcc \
 	CC="%{__cc}" \
 	LDCC="%{__cc}" \
 	COPTOPT="%{rpmcflags}" \
@@ -303,6 +304,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} -j1 install \
 	PARCH=%{parch} \
 	O_ARCH=%{_target_os} \
+	CCOM=gcc \
 	DEFINSUMASK=002 \
 	DEFINSMODEF=644 \
 	DEFINSMODEX=755 \
