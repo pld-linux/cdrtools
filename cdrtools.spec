@@ -29,6 +29,16 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		specflags	-finput-charset=ISO-8859-1 -fexec-charset=UTF-8 -D__attribute_const__=const
 
+%ifarch %{ix86}
+%define		parch		i686
+%endif
+%ifarch %{x8664}
+%define		parch		amd64
+%endif
+%ifnarch %{ix86} %{x8664}
+%define		parch		%{_arch}
+%endif
+
 %description
 Cdrtools is a set of command line programs that allows to record
 CD/DVD/BluRay media.
@@ -278,7 +288,7 @@ cd ../cdda2wav
 %{__autoconf}
 cd ..
 %{__make} -j1 \
-	PARCH=%{_arch}-%{_target_vendor} \
+	PARCH=%{parch} \
 	O_ARCH=%{_target_os} \
 	CC="%{__cc}" \
 	LDCC="%{__cc}" \
@@ -289,27 +299,23 @@ cd ..
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_includedir}/schily/scg}
+
 %{__make} -j1 install \
-	PARCH=%{_arch}-%{_target_vendor} \
+	PARCH=%{parch} \
 	O_ARCH=%{_target_os} \
 	DEFINSUMASK=002 \
 	DEFINSMODEF=644 \
 	DEFINSMODEX=755 \
 	INS_BASE=%{_prefix} \
+	XEXEEXT= \
 	DESTDIR=$RPM_BUILD_ROOT
 
-cp -p libscg/scg/*.h $RPM_BUILD_ROOT%{_includedir}/schily/scg
-
-%{__rm} -r $RPM_BUILD_ROOT%{_includedir}/scg
-%ifarch x32
-%{__rm} -r $RPM_BUILD_ROOT%{_includedir}/schily/x32-pld-linux-cc
-%else
-%{__rm} -r $RPM_BUILD_ROOT%{_includedir}/schily/%{_target_platform}-cc
-%endif
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/{mkisofs,rscsi,cdrecord,cdda2wav,libparanoia}
+# schily build system is not packaged
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/man5/makefiles.5*
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/man5/makerules.5*
+# belong to glibc/POSIX man pages
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/{error,fexecve,fnmatch,fprintf,getline,printf,sprintf,strlen}.3
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -342,11 +348,59 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/librscg.a
 %{_libdir}/libscg.a
 %{_libdir}/libscgcmd.a
+%{_libdir}/libschily.a
 %{_libdir}/libsiconv.a
-%dir %{_includedir}/schily
-%{_includedir}/schily/*.h
-%dir %{_includedir}/schily/scg
-%{_includedir}/schily/scg/*.h
+%{_includedir}/scg
+%{_includedir}/schily
+%{_mandir}/man3/absfpath.3*
+%{_mandir}/man3/absnpath.3*
+%{_mandir}/man3/abspath.3*
+%{_mandir}/man3/astoi.3*
+%{_mandir}/man3/astol.3*
+%{_mandir}/man3/breakline.3*
+%{_mandir}/man3/comerr.3*
+%{_mandir}/man3/comerrno.3*
+%{_mandir}/man3/errmsg.3*
+%{_mandir}/man3/errmsgno.3*
+%{_mandir}/man3/fdown.3*
+%{_mandir}/man3/fdup.3*
+%{_mandir}/man3/fexecl.3*
+%{_mandir}/man3/fexecle.3*
+%{_mandir}/man3/fexecv.3*
+%{_mandir}/man3/fgetline.3*
+%{_mandir}/man3/file_raise.3*
+%{_mandir}/man3/fileclose.3*
+%{_mandir}/man3/fileluopen.3*
+%{_mandir}/man3/fileopen.3*
+%{_mandir}/man3/filepos.3*
+%{_mandir}/man3/fileread.3*
+%{_mandir}/man3/filereopen.3*
+%{_mandir}/man3/fileseek.3*
+%{_mandir}/man3/filesize.3*
+%{_mandir}/man3/filestat.3*
+%{_mandir}/man3/filewrite.3*
+%{_mandir}/man3/findline.3*
+%{_mandir}/man3/flush.3*
+%{_mandir}/man3/format.3*
+%{_mandir}/man3/fpipe.3*
+%{_mandir}/man3/getallargs.3*
+%{_mandir}/man3/getargs.3*
+%{_mandir}/man3/geterrno.3*
+%{_mandir}/man3/getfiles.3*
+%{_mandir}/man3/handlecond.3*
+%{_mandir}/man3/movebytes.3*
+%{_mandir}/man3/ofindline.3*
+%{_mandir}/man3/patcompile.3*
+%{_mandir}/man3/patmatch.3*
+%{_mandir}/man3/peekc.3*
+%{_mandir}/man3/raisecond.3*
+%{_mandir}/man3/resolvefpath.3*
+%{_mandir}/man3/resolvenpath.3*
+%{_mandir}/man3/resolvepath.3*
+%{_mandir}/man3/spawnl.3*
+%{_mandir}/man3/spawnv.3*
+%{_mandir}/man3/strcatl.3*
+%{_mandir}/man3/streql.3*
 
 %files cdda2wav
 %defattr(644,root,root,755)
