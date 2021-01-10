@@ -6,7 +6,7 @@ Summary(ru.UTF-8):	Программа для записи CD/DVD/BluRay, зап�
 Summary(uk.UTF-8):	Програма для запису CD/DVD/BluRay, яка запускається з командної стрічки
 Name:		cdrtools
 Version:	3.01
-Release:	1
+Release:	2
 Epoch:		5
 License:	GPL v2 (mkisofs), CDDL v1.0 (the rest)
 Group:		Applications/System
