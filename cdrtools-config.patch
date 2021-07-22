@@ -23,7 +23,7 @@
 -.BR /etc/default/cdrecord .
 +.BR /etc/cdrecord.conf .
  If no speed value could be found, cdrecord uses a drive specific default speed.
- The default for all new (MMC compliant) drives is to use the maximum supported by the drive.
+ The default for all new (MMC-compliant) drives is to use the maximum supported by the drive.
  If you use 
 @@ -1505,7 +1505,7 @@
  .B CDR_DEVICE
@@ -78,7 +78,7 @@
 --- cdrtools-2.01.01.orig/cdrecord/cdrecord.dfl	2008-12-30 14:29:50.000000000 +0100
 +++ cdrtools-2.01.01/cdrecord/cdrecord.dfl	2010-02-08 14:15:04.000000000 +0100
 @@ -1,6 +1,6 @@
- #ident @(#)cdrecord.dfl	1.7 08/12/30 Copyr 1998 J. Schilling
+ #ident @(#)cdrecord.dfl	1.8 14/01/03 Copyr 1998-2014 J. Schilling
  #
 -# This file is /etc/default/cdrecord
 +# This file is /etc/cdrecord.conf
