@@ -282,6 +282,7 @@ sed -n -e '/CONFIG_RMTCALL/,/^])/p' m4/acspecific.m4 >> acinclude.m4
 
 %build
 cd autoconf
+cp /usr/share/automake/config.sub .
 %{__aclocal} -I .
 %{__autoconf}
 cd ../cdda2wav
