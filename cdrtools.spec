@@ -10,7 +10,7 @@ Release:	2
 Epoch:		5
 License:	GPL v2 (mkisofs), CDDL v1.0 (the rest)
 Group:		Applications/System
-Source0:	http://downloads.sourceforge.net/cdrtools/%{name}-%{version}.tar.bz2
+Source0:	https://downloads.sourceforge.net/cdrtools/%{name}-%{version}.tar.bz2
 # Source0-md5:	7d45c5b7e1f78d85d1583b361aee6e8b
 Patch0:		%{name}-config.patch
 Patch2:		%{name}-man.patch
