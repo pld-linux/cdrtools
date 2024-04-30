@@ -6,7 +6,7 @@ Summary(ru.UTF-8):	Программа для записи CD/DVD/BluRay, зап�
 Summary(uk.UTF-8):	Програма для запису CD/DVD/BluRay, яка запускається з командної стрічки
 Name:		cdrtools
 Version:	3.01
-Release:	2
+Release:	3
 Epoch:		5
 License:	GPL v2 (mkisofs), CDDL v1.0 (the rest)
 Group:		Applications/System
@@ -17,6 +17,7 @@ Patch2:		%{name}-man.patch
 Patch3:		%{name}-make.patch
 Patch4:		%{name}-linking.patch
 Patch5:		%{name}-revert_sg_io_eperm_failure.patch
+Patch6:		%{name}-mkisofs-fix.patch
 URL:		http://cdrtools.sourceforge.net/
 BuildRequires:	acl-devel
 BuildRequires:	autoconf
@@ -247,6 +248,7 @@ chmod -R u+rw -R .
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 # Remove profiled make files
 %{__rm} -v $(find . -name '*_p.mk')
