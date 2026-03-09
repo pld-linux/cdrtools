@@ -6,7 +6,7 @@ Summary(ru.UTF-8):	Программа для записи CD/DVD/BluRay, зап�
 Summary(uk.UTF-8):	Програма для запису CD/DVD/BluRay, яка запускається з командної стрічки
 Name:		cdrtools
 Version:	3.01
-Release:	5
+Release:	6
 Epoch:		5
 License:	GPL v2 (mkisofs), CDDL v1.0 (the rest)
 Group:		Applications/System
@@ -28,7 +28,7 @@ Provides:	cdrecord
 Obsoletes:	cdrecord
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		specflags	-finput-charset=ISO-8859-1 -fexec-charset=UTF-8 -D__attribute_const__=const
+%define		specflags	-finput-charset=ISO-8859-1 -fexec-charset=UTF-8 -D__attribute_const__=const -fcommon -std=gnu89
 
 %ifarch %{ix86}
 %define		parch		i686
@@ -261,9 +261,9 @@ cp -p /usr/share/automake/config.* conf
 %{__sed} -i -e "s/-o \$(INSUSR) -g \$(INSGRP)//g" RULES/rules.prg
 %{__sed} -i -e 's#/\*.*\*/##g' autoconf/xconfig.h.in
 
-%{__sed} -i -e 's/^\(INSDIR=.*\)lib$/\1%{_lib}/g' lib*/*.mk
+%{__sed} -i -e 's/^\(INSDIR=.*\)lib$/\1%{_lib}/g' $(find . -name "*.mk")
 %{__sed} -i -e 's/lib\/siconv/%{_lib}\/siconv/g' \
-	libsiconv/{sic_nls.c,*/*.mk} mkisofs/{diag/isoinfo.c,mkisofs.c}
+	$(find libsiconv mkisofs -type f)
 
 %{__sed} -i -e 's#/usr/bin/gm4#%{_bindir}/m4#g' autoconf/autoconf
 
@@ -285,6 +285,7 @@ sed -n -e '/CONFIG_RMTCALL/,/^])/p' m4/acspecific.m4 >> acinclude.m4
 %build
 cd autoconf
 cp /usr/share/automake/config.sub .
+cp /usr/share/automake/config.guess .
 %{__aclocal} -I .
 %{__autoconf}
 cd ../cdda2wav
@@ -439,7 +440,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README.mkisofs mkisofs/README mkisofs/README.{compression,eltorito,graft_dirs,hfs_boot,hfs_magic,hide,joliet,mkhybrid,prep_boot,rootinfo,session,sort,sparcboot}
 %attr(755,root,root) %{_bindir}/mkisofs
-%attr(755,root,root) %{_bindir}/mkhybrid
+%{_bindir}/mkhybrid
 %{_libdir}/siconv
 %{_mandir}/man8/mkisofs.8*
 %{_mandir}/man8/mkhybrid.8*
